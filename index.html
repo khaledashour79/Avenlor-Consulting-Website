@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Governance & Internal Controls Advisory</title>
+<style>
+  :root{
+    --ink:#0A1424;
+    --ink-2:#101E33;
+    --steel:#24425A;
+    --paper:#F1F3F2;
+    --paper-2:#E7EAE7;
+    --gold:#AD8A52;
+    --gold-soft:#C7AB7C;
+    --slate:#6C7783;
+    --line:#D7DBD8;
+    --line-dark:#233247;
+    --white:#FFFFFF;
+    --font-display: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    --font-mono: "SF Mono", "IBM Plex Mono", "Courier New", monospace;
+    --font-ar: "Tahoma", "Segoe UI", Arial, sans-serif;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important;}
+  }
+
+  body{
+    font-family:var(--font-body);
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  html[dir="rtl"] body{ font-family: var(--font-ar); }
+
+  a{color:inherit;text-decoration:none;}
+  button{font-family:inherit;cursor:pointer;border:none;background:none;}
+  img{max-width:100%;display:block;}
+
+  .wrap{
+    max-width:1180px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  /* ---------- FOCUS STATES ---------- */
+  a:focus-visible, button:focus-visible{
+    outline:2px solid var(--gold);
+    outline-offset:3px;
+  }
+
+  /* ---------- NAV ---------- */
+  header{
+    position:sticky;
+    top:0;
+    z-index:100;
+    background:rgba(10,20,36,0.92);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line-dark);
+  }
+  .nav{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:20px 0;
+  }
+  .logo{
+    color:var(--white);
+    font-weight:800;
+    font-size:15px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .logo-mark{
+    width:9px;height:9px;
+    background:var(--gold);
+    display:inline-block;
+    transform:rotate(45deg);
+    flex-shrink:0;
+  }
+  .navlinks{
+    display:flex;
+    gap:36px;
+    list-style:none;
+  }
+  .navlinks a{
+    color:#B7C2CE;
+    font-size:14px;
+    font-weight:500;
+    letter-spacing:0.01em;
+    transition:color 0.2s ease;
+  }
+  .navlinks a:hover{color:var(--white);}
+
+  .navright{display:flex;align-items:center;gap:20px;}
+
+  .langtoggle{
+    display:flex;
+    border:1px solid var(--line-dark);
+    border-radius:999px;
+    padding:3px;
+    gap:2px;
+  }
+  .langtoggle button{
+    padding:6px 14px;
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:0.05em;
+    color:#8493A2;
+    border-radius:999px;
+    transition:all 0.2s ease;
+  }
+  .langtoggle button.active{
+    background:var(--gold);
+    color:var(--ink);
+  }
+
+  .navcta{
+    background:var(--gold);
+    color:var(--ink);
+    font-size:13px;
+    font-weight:700;
+    padding:10px 20px;
+    border-radius:2px;
+    letter-spacing:0.02em;
+    white-space:nowrap;
+    transition:background 0.2s ease;
+  }
+  .navcta:hover{background:var(--gold-soft);}
+
+  .navtoggle{display:none;}
+
+  @media (max-width:860px){
+    .navlinks{display:none;}
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    background:linear-gradient(180deg, var(--ink) 0%, var(--ink-2) 100%);
+    color:var(--white);
+    padding:96px 0 80px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image:
+      linear-gradient(var(--line-dark) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line-dark) 1px, transparent 1px);
+    background-size:64px 64px;
+    opacity:0.35;
+    mask-image:linear-gradient(180deg, transparent, black 30%, black 70%, transparent);
+  }
+  .hero-inner{
+    position:relative;
+    display:grid;
+    grid-template-columns:1.15fr 0.85fr;
+    gap:56px;
+    align-items:start;
+  }
+  @media (max-width:900px){
+    .hero-inner{grid-template-columns:1fr;}
+  }
+
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:12px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--gold-soft);
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:24px;
+  }
+  .eyebrow .rule{width:28px;height:1px;background:var(--gold-soft);}
+
+  .hero h1{
+    font-family:var(--font-display);
+    font-size:clamp(34px, 4.6vw, 54px);
+    font-weight:800;
+    letter-spacing:-0.02em;
+    line-height:1.1;
+    margin-bottom:24px;
+  }
+  .hero h1 em{
+    font-style:normal;
+    color:var(--gold-soft);
+  }
+  .hero p.lead{
+    font-size:18px;
+    color:#B7C2CE;
+    max-width:520px;
+    margin-bottom:36px;
+  }
+  .hero-actions{
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+    margin-bottom:48px;
+  }
+  .btn-primary{
+    background:var(--gold);
+    color:var(--ink);
+    padding:14px 26px;
+    font-weight:700;
+    font-size:14px;
+    border-radius:2px;
+    letter-spacing:0.02em;
+    transition:background 0.2s ease, transform 0.2s ease;
+  }
+  .btn-primary:hover{background:var(--gold-soft); transform:translateY(-1px);}
+  .btn-secondary{
+    border:1px solid var(--line-dark);
+    color:var(--white);
+    padding:14px 26px;
+    font-weight:600;
+    font-size:14px;
+    border-radius:2px;
+    transition:border-color 0.2s ease;
+  }
+  .btn-secondary:hover{border-color:var(--gold-soft);}
+
+  .hero-stats{
+    display:flex;
+    gap:40px;
+  }
+  .stat-num{
+    font-family:var(--font-mono);
+    font-size:26px;
+    font-weight:700;
+    color:var(--white);
+  }
+  .stat-label{
+    font-size:12px;
+    color:#8493A2;
+    margin-top:4px;
+  }
+
+  /* ---------- REGISTER (signature element) ---------- */
+  .register{
+    background:rgba(255,255,255,0.03);
+    border:1px solid var(--line-dark);
+    border-radius:4px;
+    overflow:hidden;
+  }
+  .register-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:16px 20px;
+    border-bottom:1px solid var(--line-dark);
+    font-family:var(--font-mono);
+    font-size:11px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:#8493A2;
+  }
+  .register-dot{
+    width:7px;height:7px;
+    border-radius:50%;
+    background:#5FAE7A;
+    display:inline-block;
+    margin-inline-end:8px;
+    box-shadow:0 0 0 3px rgba(95,174,122,0.15);
+  }
+  .register-list{list-style:none;}
+  .register-item{
+    display:flex;
+    gap:14px;
+    padding:15px 20px;
+    border-bottom:1px solid var(--line-dark);
+    opacity:0;
+    animation:fadeSlide 0.6s ease forwards;
+  }
+  .register-item:last-child{border-bottom:none;}
+  .register-item:nth-child(1){animation-delay:0.15s;}
+  .register-item:nth-child(2){animation-delay:0.35s;}
+  .register-item:nth-child(3){animation-delay:0.55s;}
+  .register-item:nth-child(4){animation-delay:0.75s;}
+  .register-item:nth-child(5){animation-delay:0.95s;}
+  @keyframes fadeSlide{
+    from{opacity:0; transform:translateY(6px);}
+    to{opacity:1; transform:translateY(0);}
+  }
+  .register-code{
+    font-family:var(--font-mono);
+    font-size:12px;
+    color:var(--gold-soft);
+    flex-shrink:0;
+    width:52px;
+  }
+  .register-text{
+    font-size:13.5px;
+    color:#C7CFD8;
+  }
+  .register-text b{color:var(--white); font-weight:600;}
+
+  /* ---------- SECTION SHELL ---------- */
+  section{padding:88px 0;}
+  .section-head{
+    max-width:640px;
+    margin-bottom:56px;
+  }
+  .section-eyebrow{
+    font-family:var(--font-mono);
+    font-size:12px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin-bottom:14px;
+  }
+  .section-head h2{
+    font-family:var(--font-display);
+    font-size:clamp(26px, 3.2vw, 36px);
+    font-weight:800;
+    letter-spacing:-0.01em;
+    line-height:1.2;
+    margin-bottom:16px;
+    color:var(--ink);
+  }
+  .section-head p{
+    color:var(--slate);
+    font-size:16px;
+  }
+
+  /* ---------- SERVICES ---------- */
+  .services{background:var(--white);}
+  .service-grid{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+  }
+  @media (max-width:760px){
+    .service-grid{grid-template-columns:1fr;}
+  }
+  .service-card{
+    background:var(--white);
+    padding:36px;
+  }
+  .service-card.featured{
+    background:var(--ink);
+    color:var(--white);
+  }
+  .service-tag{
+    font-family:var(--font-mono);
+    font-size:11px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin-bottom:16px;
+    display:block;
+  }
+  .service-card.featured .service-tag{color:var(--gold-soft);}
+  .service-card h3{
+    font-size:20px;
+    font-weight:700;
+    margin-bottom:12px;
+    letter-spacing:-0.01em;
+  }
+  .service-card p{
+    color:var(--slate);
+    font-size:14.5px;
+    margin-bottom:18px;
+  }
+  .service-card.featured p{color:#B7C2CE;}
+  .service-for{
+    font-size:13px;
+    color:var(--ink);
+    padding-top:16px;
+    border-top:1px solid var(--line);
+  }
+  .service-card.featured .service-for{
+    color:var(--white);
+    border-top:1px solid var(--line-dark);
+  }
+  .service-for b{color:var(--gold); font-weight:700;}
+
+  /* ---------- APPROACH ---------- */
+  .approach{background:var(--paper);}
+  .approach-list{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:28px;
+  }
+  @media (max-width:860px){
+    .approach-list{grid-template-columns:repeat(2, 1fr);}
+  }
+  @media (max-width:520px){
+    .approach-list{grid-template-columns:1fr;}
+  }
+  .approach-step{
+    border-top:2px solid var(--ink);
+    padding-top:20px;
+  }
+  .approach-num{
+    font-family:var(--font-mono);
+    font-size:13px;
+    color:var(--gold);
+    margin-bottom:14px;
+    display:block;
+  }
+  .approach-step h3{
+    font-size:17px;
+    font-weight:700;
+    margin-bottom:10px;
+  }
+  .approach-step p{
+    font-size:14px;
+    color:var(--slate);
+  }
+
+  /* ---------- CREDENTIALS ---------- */
+  .credentials{background:var(--white);}
+  .cred-grid{
+    display:grid;
+    grid-template-columns:0.9fr 1.1fr;
+    gap:64px;
+    align-items:start;
+  }
+  @media (max-width:860px){
+    .cred-grid{grid-template-columns:1fr; gap:40px;}
+  }
+  .cred-list{list-style:none;}
+  .cred-item{
+    display:flex;
+    gap:16px;
+    padding:20px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .cred-item:first-child{padding-top:0;}
+  .cred-icon{
+    width:32px;height:32px;
+    border:1px solid var(--gold);
+    border-radius:2px;
+    flex-shrink:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--gold);
+    font-family:var(--font-mono);
+    font-size:12px;
+    font-weight:700;
+  }
+  .cred-item h4{font-size:15px;font-weight:700;margin-bottom:4px;}
+  .cred-item p{font-size:14px;color:var(--slate);}
+
+  .cred-quote{
+    background:var(--paper);
+    border-inline-start:3px solid var(--gold);
+    padding:32px;
+  }
+  .cred-quote p{
+    font-size:19px;
+    font-weight:500;
+    line-height:1.5;
+    color:var(--ink);
+    font-style:normal;
+  }
+  .cred-quote .attribution{
+    margin-top:20px;
+    font-family:var(--font-mono);
+    font-size:12px;
+    color:var(--slate);
+    letter-spacing:0.03em;
+  }
+
+  /* ---------- CASE STUDIES ---------- */
+  .cases{background:var(--ink); color:var(--white);}
+  .case-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:28px;
+  }
+  @media (max-width:900px){
+    .case-grid{grid-template-columns:1fr;}
+  }
+  .case-card{
+    border:1px solid var(--line-dark);
+    padding:28px;
+    border-radius:2px;
+    background:rgba(255,255,255,0.02);
+  }
+  .case-sector{
+    font-family:var(--font-mono);
+    font-size:11px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--gold-soft);
+    margin-bottom:18px;
+  }
+  .case-row{margin-bottom:14px;}
+  .case-row .k{
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    color:#8493A2;
+    margin-bottom:4px;
+  }
+  .case-row .v{
+    font-size:14.5px;
+    color:#DCE3E9;
+    line-height:1.45;
+  }
+  .case-row:last-child{margin-bottom:0;}
+  .case-row .v b{color:var(--white);}
+
+  /* ---------- CONTACT ---------- */
+  .contact{background:var(--paper);}
+  .contact-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:64px;
+  }
+  @media (max-width:860px){
+    .contact-grid{grid-template-columns:1fr; gap:40px;}
+  }
+  .contact-info h2{
+    font-family:var(--font-display);
+    font-size:clamp(26px,3.2vw,36px);
+    font-weight:800;
+    letter-spacing:-0.01em;
+    margin-bottom:18px;
+  }
+  .contact-info p{color:var(--slate); font-size:16px; margin-bottom:28px;}
+  .contact-links{list-style:none;}
+  .contact-links li{
+    padding:14px 0;
+    border-bottom:1px solid var(--line);
+    display:flex;
+    justify-content:space-between;
+    font-size:14.5px;
+  }
+  .contact-links .k{color:var(--slate);}
+  .contact-links .v{font-weight:600;}
+
+  form{display:flex;flex-direction:column;gap:16px;}
+  .field label{
+    display:block;
+    font-size:12px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:0.05em;
+    color:var(--slate);
+    margin-bottom:8px;
+  }
+  .field input, .field select, .field textarea{
+    width:100%;
+    padding:13px 14px;
+    border:1px solid var(--line);
+    border-radius:2px;
+    font-family:inherit;
+    font-size:14.5px;
+    background:var(--white);
+    color:var(--ink);
+  }
+  .field input:focus, .field select:focus, .field textarea:focus{
+    outline:2px solid var(--gold);
+    outline-offset:1px;
+    border-color:var(--gold);
+  }
+  .field textarea{resize:vertical; min-height:100px;}
+  .submit-btn{
+    background:var(--ink);
+    color:var(--white);
+    padding:15px 26px;
+    font-weight:700;
+    font-size:14px;
+    border-radius:2px;
+    letter-spacing:0.02em;
+    margin-top:6px;
+    transition:background 0.2s ease;
+  }
+  .submit-btn:hover{background:var(--steel);}
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    background:var(--ink);
+    color:#8493A2;
+    padding:32px 0;
+  }
+  .footer-inner{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-size:13px;
+    flex-wrap:wrap;
+    gap:12px;
+  }
+  .footer-inner a{color:#B7C2CE;}
+
+  /* ---------- RTL OVERRIDES ---------- */
+  html[dir="rtl"] .cred-quote{
+    border-inline-start:none;
+    border-inline-end:3px solid var(--gold);
+  }
+  html[dir="rtl"] .register-code{
+    text-align:right;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <div class="logo"><span class="logo-mark"></span><span data-i18n="logo">GOVERNANCE ADVISORY</span></div>
+    <ul class="navlinks">
+      <li><a href="#services" data-i18n="nav_services">Services</a></li>
+      <li><a href="#approach" data-i18n="nav_approach">Approach</a></li>
+      <li><a href="#credentials" data-i18n="nav_credentials">Credentials</a></li>
+      <li><a href="#cases" data-i18n="nav_cases">Insights</a></li>
+    </ul>
+    <div class="navright">
+      <div class="langtoggle">
+        <button id="btn-en" class="active" onclick="setLang('en')">EN</button>
+        <button id="btn-ar" onclick="setLang('ar')">AR</button>
+      </div>
+      <a class="navcta" href="#contact" data-i18n="nav_cta">Book a Call</a>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-inner">
+    <div>
+      <div class="eyebrow"><span class="rule"></span><span data-i18n="hero_eyebrow">Independent Advisory</span></div>
+      <h1 data-i18n="hero_h1">Governance and internal controls <em>that hold up to scrutiny.</em></h1>
+      <p class="lead" data-i18n="hero_lead">Independent advisory for listed companies, family businesses, and government entities building governance frameworks and internal controls that satisfy boards, auditors, and regulators alike.</p>
+      <div class="hero-actions">
+        <a class="btn-primary" href="#contact" data-i18n="hero_cta1">Discuss Your Governance Gap</a>
+        <a class="btn-secondary" href="#services" data-i18n="hero_cta2">View Services</a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="stat-num">10+</div>
+          <div class="stat-label" data-i18n="stat1">Years in listed-company governance</div>
+        </div>
+        <div>
+          <div class="stat-num">3</div>
+          <div class="stat-label" data-i18n="stat2">Sectors advised</div>
+        </div>
+        <div>
+          <div class="stat-num">AR/EN</div>
+          <div class="stat-label" data-i18n="stat3">Bilingual engagement</div>
+        </div>
+      </div>
+    </div>
+    <div class="register">
+      <div class="register-head">
+        <span><span class="register-dot"></span><span data-i18n="reg_head">Active control register</span></span>
+        <span data-i18n="reg_year">FY2026</span>
+      </div>
+      <ul class="register-list">
+        <li class="register-item">
+          <span class="register-code">GOV-01</span>
+          <span class="register-text" data-i18n="reg1"><b>Board oversight</b> — charter & committee structure</span>
+        </li>
+        <li class="register-item">
+          <span class="register-code">IC-04</span>
+          <span class="register-text" data-i18n="reg2"><b>Segregation of duties</b> — control gap assessment</span>
+        </li>
+        <li class="register-item">
+          <span class="register-code">RC-02</span>
+          <span class="register-text" data-i18n="reg3"><b>Regulatory alignment</b> — compliance mapping</span>
+        </li>
+        <li class="register-item">
+          <span class="register-code">IC-07</span>
+          <span class="register-text" data-i18n="reg4"><b>Remediation plan</b> — control owner sign-off</span>
+        </li>
+        <li class="register-item">
+          <span class="register-code">GOV-05</span>
+          <span class="register-text" data-i18n="reg5"><b>Policy design</b> — delegation of authority</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="services" id="services">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-eyebrow" data-i18n="services_eyebrow">What I Do</div>
+      <h2 data-i18n="services_h2">Governance and controls, applied where they matter most</h2>
+      <p data-i18n="services_p">Every engagement starts with internal controls and governance — the foundation regulators, auditors, and boards all test against.</p>
+    </div>
+    <div class="service-grid">
+      <div class="service-card featured">
+        <span class="service-tag" data-i18n="s1_tag">Primary</span>
+        <h3 data-i18n="s1_h3">Governance Framework Design</h3>
+        <p data-i18n="s1_p">Board and committee structures, policy design, and delegation-of-authority frameworks built to withstand regulatory and audit review.</p>
+        <div class="service-for" data-i18n="s1_for"><b>For:</b> boards preparing for listing, restructuring, or regulatory review</div>
+      </div>
+      <div class="service-card featured">
+        <span class="service-tag" data-i18n="s2_tag">Primary</span>
+        <h3 data-i18n="s2_h3">Internal Controls Review</h3>
+        <p data-i18n="s2_p">Control gap assessments and remediation planning aligned to recognized frameworks, with clear ownership at every step.</p>
+        <div class="service-for" data-i18n="s2_for"><b>For:</b> finance and operations teams facing an upcoming audit</div>
+      </div>
+      <div class="service-card">
+        <span class="service-tag" data-i18n="s3_tag">Advisory</span>
+        <h3 data-i18n="s3_h3">Risk & Compliance Advisory</h3>
+        <p data-i18n="s3_p">Regulatory alignment and compliance mapping tailored to the entity's sector and regulator.</p>
+        <div class="service-for" data-i18n="s3_for"><b>For:</b> organizations navigating new or changing regulatory requirements</div>
+      </div>
+      <div class="service-card">
+        <span class="service-tag" data-i18n="s4_tag">Specialized</span>
+        <h3 data-i18n="s4_h3">Logistics Operations Advisory</h3>
+        <p data-i18n="s4_p">Governance and controls expertise applied specifically to logistics and supply chain operations.</p>
+        <div class="service-for" data-i18n="s4_for"><b>For:</b> logistics operators seeking operational discipline alongside compliance</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="approach" id="approach">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-eyebrow" data-i18n="approach_eyebrow">Methodology</div>
+      <h2 data-i18n="approach_h2">A structured, four-step engagement</h2>
+      <p data-i18n="approach_p">Governance work fails when it is ad hoc. Every engagement follows the same disciplined sequence.</p>
+    </div>
+    <div class="approach-list">
+      <div class="approach-step">
+        <span class="approach-num">01</span>
+        <h3 data-i18n="a1_h3">Assess</h3>
+        <p data-i18n="a1_p">Map the current control environment and identify gaps against regulatory and governance benchmarks.</p>
+      </div>
+      <div class="approach-step">
+        <span class="approach-num">02</span>
+        <h3 data-i18n="a2_h3">Design</h3>
+        <p data-i18n="a2_p">Build the framework, policy, or control structure specific to the organization's size and sector.</p>
+      </div>
+      <div class="approach-step">
+        <span class="approach-num">03</span>
+        <h3 data-i18n="a3_h3">Implement</h3>
+        <p data-i18n="a3_p">Work with control owners to embed the changes into daily operations, not just the policy manual.</p>
+      </div>
+      <div class="approach-step">
+        <span class="approach-num">04</span>
+        <h3 data-i18n="a4_h3">Monitor</h3>
+        <p data-i18n="a4_p">Establish ongoing testing and reporting so the framework stays effective after the engagement ends.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="credentials" id="credentials">
+  <div class="wrap cred-grid">
+    <div>
+      <div class="section-eyebrow" data-i18n="cred_eyebrow">Background</div>
+      <h2 style="font-family:var(--font-display);font-size:clamp(26px,3.2vw,36px);font-weight:800;letter-spacing:-0.01em;margin-bottom:24px;" data-i18n="cred_h2">Experience across listed-company governance</h2>
+      <ul class="cred-list">
+        <li class="cred-item">
+          <div class="cred-icon">01</div>
+          <div>
+            <h4 data-i18n="c1_h4">Listed-Company Governance</h4>
+            <p data-i18n="c1_p">CEO-level and internal-controls oversight within a publicly listed logistics group.</p>
+          </div>
+        </li>
+        <li class="cred-item">
+          <div class="cred-icon">02</div>
+          <div>
+            <h4 data-i18n="c2_h4">Multi-Entity Oversight</h4>
+            <p data-i18n="c2_p">Governance and controls responsibility spanning multiple operating entities within one group.</p>
+          </div>
+        </li>
+        <li class="cred-item">
+          <div class="cred-icon">03</div>
+          <div>
+            <h4 data-i18n="c3_h4">Bilingual Operating Environment</h4>
+            <p data-i18n="c3_p">Engagements delivered fluently in both Arabic and English, matched to the client's governance language.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="cred-quote">
+      <p data-i18n="quote_p">"Governance that only exists on paper is not governance — it's exposure. The work is making the framework the way the organization actually operates."</p>
+      <div class="attribution" data-i18n="quote_attr">— Engagement philosophy</div>
+    </div>
+  </div>
+</section>
+
+<section class="cases" id="cases">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-eyebrow" data-i18n="cases_eyebrow">Insights</div>
+      <h2 style="color:var(--white);" data-i18n="cases_h2">Representative engagements</h2>
+      <p style="color:#B7C2CE;" data-i18n="cases_p">Anonymized to protect client confidentiality. Details available on request under NDA.</p>
+    </div>
+    <div class="case-grid">
+      <div class="case-card">
+        <div class="case-sector" data-i18n="case1_sector">Logistics — Listed Group</div>
+        <div class="case-row">
+          <div class="k" data-i18n="k_challenge">Challenge</div>
+          <div class="v" data-i18n="case1_challenge">Segregation-of-duties gaps flagged ahead of an external audit.</div>
+        </div>
+        <div class="case-row">
+          <div class="k" data-i18n="k_approach">Approach</div>
+          <div class="v" data-i18n="case1_approach">Control gap assessment, remediation plan, and control-owner sign-off process.</div>
+        </div>
+        <div class="case-row">
+          <div class="k" data-i18n="k_outcome">Outcome</div>
+          <div class="v" data-i18n="case1_outcome"><b>Zero material findings</b> at the following audit cycle.</div>
+        </div>
+      </div>
+      <div class="case-card">
+        <div class="case-sector" data-i18n="case2_sector">Family Business</div>
+        <div class="case-row">
+          <div class="k" data-i18n="k_challenge">Challenge</div>
+          <div class="v" data-i18n="case2_challenge">No formal governance structure ahead of a generational transition.</div>
+        </div>
+        <div class="case-row">
+          <div class="k" data-i18n="k_approach">Approach</div>
+          <div class="v" data-i18n="case2_approach">Board charter design and delegation-of-authority framework built from scratch.</div>
+        </div>
+        <div class="case-row">
+          <div class="k" data-i18n="k_outcome">Outcome</div>
+          <div class="v" data-i18n="case2_outcome"><b>Formal board</b> operating within one quarter.</div>
+        </div>
+      </div>
+      <div class="case-card">
+        <div class="case-sector" data-i18n="case3_sector">Government-Linked Entity</div>
+        <div class="case-row">
+          <div class="k" data-i18n="k_challenge">Challenge</div>
+          <div class="v" data-i18n="case3_challenge">New regulatory requirements outpacing existing compliance mapping.</div>
+        </div>
+        <div class="case-row">
+          <div class="k" data-i18n="k_approach">Approach</div>
+          <div class="v" data-i18n="case3_approach">Full compliance mapping exercise against the updated regulatory framework.</div>
+        </div>
+        <div class="case-row">
+          <div class="k" data-i18n="k_outcome">Outcome</div>
+          <div class="v" data-i18n="case3_outcome"><b>Full alignment</b> confirmed ahead of the regulator's deadline.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap contact-grid">
+    <div class="contact-info">
+      <h2 data-i18n="contact_h2">Start with a conversation</h2>
+      <p data-i18n="contact_p">Every engagement begins with a short call to understand the organization and where governance currently stands.</p>
+      <ul class="contact-links">
+        <li><span class="k" data-i18n="contact_email_k">Email</span><span class="v">advisory@yourdomain.com</span></li>
+        <li><span class="k" data-i18n="contact_linkedin_k">LinkedIn</span><span class="v">linkedin.com/in/yourname</span></li>
+        <li><span class="k" data-i18n="contact_location_k">Based in</span><span class="v" data-i18n="contact_location_v">Saudi Arabia</span></li>
+      </ul>
+    </div>
+    <form onsubmit="return false;">
+      <div class="field">
+        <label data-i18n="f_name">Name</label>
+        <input type="text" required>
+      </div>
+      <div class="field">
+        <label data-i18n="f_org">Organization type</label>
+        <select>
+          <option data-i18n="f_org_1">Listed / large corporate</option>
+          <option data-i18n="f_org_2">SME / family business</option>
+          <option data-i18n="f_org_3">Government / semi-government</option>
+          <option data-i18n="f_org_4">Other</option>
+        </select>
+      </div>
+      <div class="field">
+        <label data-i18n="f_interest">Area of interest</label>
+        <select>
+          <option data-i18n="f_int_1">Governance framework design</option>
+          <option data-i18n="f_int_2">Internal controls review</option>
+          <option data-i18n="f_int_3">Risk & compliance advisory</option>
+          <option data-i18n="f_int_4">Logistics operations advisory</option>
+        </select>
+      </div>
+      <div class="field">
+        <label data-i18n="f_message">Message</label>
+        <textarea></textarea>
+      </div>
+      <button class="submit-btn" data-i18n="f_submit">Request a Consultation</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-inner">
+    <span data-i18n="footer_left">© 2026 Governance & Internal Controls Advisory. All rights reserved.</span>
+    <span data-i18n="footer_right">Independent advisory — not affiliated with any current employer.</span>
+  </div>
+</footer>
+
+<script>
+const i18n = {
+  en: {
+    logo:"GOVERNANCE ADVISORY", nav_services:"Services", nav_approach:"Approach", nav_credentials:"Credentials", nav_cases:"Insights", nav_cta:"Book a Call",
+    hero_eyebrow:"Independent Advisory",
+    hero_h1:'Governance and internal controls <em>that hold up to scrutiny.</em>',
+    hero_lead:"Independent advisory for listed companies, family businesses, and government entities building governance frameworks and internal controls that satisfy boards, auditors, and regulators alike.",
+    hero_cta1:"Discuss Your Governance Gap", hero_cta2:"View Services",
+    stat1:"Years in listed-company governance", stat2:"Sectors advised", stat3:"Bilingual engagement",
+    reg_head:"Active control register", reg_year:"FY2026",
+    reg1:"<b>Board oversight</b> — charter & committee structure",
+    reg2:"<b>Segregation of duties</b> — control gap assessment",
+    reg3:"<b>Regulatory alignment</b> — compliance mapping",
+    reg4:"<b>Remediation plan</b> — control owner sign-off",
+    reg5:"<b>Policy design</b> — delegation of authority",
+    services_eyebrow:"What I Do", services_h2:"Governance and controls, applied where they matter most",
+    services_p:"Every engagement starts with internal controls and governance — the foundation regulators, auditors, and boards all test against.",
+    s1_tag:"Primary", s1_h3:"Governance Framework Design",
+    s1_p:"Board and committee structures, policy design, and delegation-of-authority frameworks built to withstand regulatory and audit review.",
+    s1_for:"<b>For:</b> boards preparing for listing, restructuring, or regulatory review",
+    s2_tag:"Primary", s2_h3:"Internal Controls Review",
+    s2_p:"Control gap assessments and remediation planning aligned to recognized frameworks, with clear ownership at every step.",
+    s2_for:"<b>For:</b> finance and operations teams facing an upcoming audit",
+    s3_tag:"Advisory", s3_h3:"Risk & Compliance Advisory",
+    s3_p:"Regulatory alignment and compliance mapping tailored to the entity's sector and regulator.",
+    s3_for:"<b>For:</b> organizations navigating new or changing regulatory requirements",
+    s4_tag:"Specialized", s4_h3:"Logistics Operations Advisory",
+    s4_p:"Governance and controls expertise applied specifically to logistics and supply chain operations.",
+    s4_for:"<b>For:</b> logistics operators seeking operational discipline alongside compliance",
+    approach_eyebrow:"Methodology", approach_h2:"A structured, four-step engagement",
+    approach_p:"Governance work fails when it is ad hoc. Every engagement follows the same disciplined sequence.",
+    a1_h3:"Assess", a1_p:"Map the current control environment and identify gaps against regulatory and governance benchmarks.",
+    a2_h3:"Design", a2_p:"Build the framework, policy, or control structure specific to the organization's size and sector.",
+    a3_h3:"Implement", a3_p:"Work with control owners to embed the changes into daily operations, not just the policy manual.",
+    a4_h3:"Monitor", a4_p:"Establish ongoing testing and reporting so the framework stays effective after the engagement ends.",
+    cred_eyebrow:"Background", cred_h2:"Experience across listed-company governance",
+    c1_h4:"Listed-Company Governance", c1_p:"CEO-level and internal-controls oversight within a publicly listed logistics group.",
+    c2_h4:"Multi-Entity Oversight", c2_p:"Governance and controls responsibility spanning multiple operating entities within one group.",
+    c3_h4:"Bilingual Operating Environment", c3_p:"Engagements delivered fluently in both Arabic and English, matched to the client's governance language.",
+    quote_p:'"Governance that only exists on paper is not governance — it\'s exposure. The work is making the framework the way the organization actually operates."',
+    quote_attr:"— Engagement philosophy",
+    cases_eyebrow:"Insights", cases_h2:"Representative engagements",
+    cases_p:"Anonymized to protect client confidentiality. Details available on request under NDA.",
+    case1_sector:"Logistics — Listed Group", case2_sector:"Family Business", case3_sector:"Government-Linked Entity",
+    k_challenge:"Challenge", k_approach:"Approach", k_outcome:"Outcome",
+    case1_challenge:"Segregation-of-duties gaps flagged ahead of an external audit.",
+    case1_approach:"Control gap assessment, remediation plan, and control-owner sign-off process.",
+    case1_outcome:"<b>Zero material findings</b> at the following audit cycle.",
+    case2_challenge:"No formal governance structure ahead of a generational transition.",
+    case2_approach:"Board charter design and delegation-of-authority framework built from scratch.",
+    case2_outcome:"<b>Formal board</b> operating within one quarter.",
+    case3_challenge:"New regulatory requirements outpacing existing compliance mapping.",
+    case3_approach:"Full compliance mapping exercise against the updated regulatory framework.",
+    case3_outcome:"<b>Full alignment</b> confirmed ahead of the regulator's deadline.",
+    contact_h2:"Start with a conversation",
+    contact_p:"Every engagement begins with a short call to understand the organization and where governance currently stands.",
+    contact_email_k:"Email", contact_linkedin_k:"LinkedIn", contact_location_k:"Based in", contact_location_v:"Saudi Arabia",
+    f_name:"Name", f_org:"Organization type",
+    f_org_1:"Listed / large corporate", f_org_2:"SME / family business", f_org_3:"Government / semi-government", f_org_4:"Other",
+    f_interest:"Area of interest",
+    f_int_1:"Governance framework design", f_int_2:"Internal controls review", f_int_3:"Risk & compliance advisory", f_int_4:"Logistics operations advisory",
+    f_message:"Message", f_submit:"Request a Consultation",
+    footer_left:"© 2026 Governance & Internal Controls Advisory. All rights reserved.",
+    footer_right:"Independent advisory — not affiliated with any current employer."
+  },
+  ar: {
+    logo:"الاستشارات الحوكمية", nav_services:"الخدمات", nav_approach:"المنهجية", nav_credentials:"الخبرات", nav_cases:"رؤى", nav_cta:"احجز مكالمة",
+    hero_eyebrow:"استشارات مستقلة",
+    hero_h1:'حوكمة وضبط داخلي <em>تصمد أمام أي تدقيق.</em>',
+    hero_lead:"استشارات مستقلة للشركات المدرجة والمنشآت العائلية والجهات الحكومية، لبناء أطر حوكمة وأنظمة ضبط داخلي ترضي مجالس الإدارة والمدققين والجهات التنظيمية.",
+    hero_cta1:"ناقش فجوة الحوكمة لديك", hero_cta2:"عرض الخدمات",
+    stat1:"سنوات خبرة في حوكمة الشركات المدرجة", stat2:"قطاعات تمت استشارتها", stat3:"تعامل ثنائي اللغة",
+    reg_head:"سجل الضوابط النشطة", reg_year:"السنة المالية 2026",
+    reg1:"<b>رقابة مجلس الإدارة</b> — الميثاق وهيكل اللجان",
+    reg2:"<b>فصل المهام</b> — تقييم فجوات الضبط",
+    reg3:"<b>التوافق التنظيمي</b> — مطابقة الامتثال",
+    reg4:"<b>خطة المعالجة</b> — اعتماد مالك الضابط",
+    reg5:"<b>تصميم السياسات</b> — تفويض الصلاحيات",
+    services_eyebrow:"ما أقدمه", services_h2:"حوكمة وضوابط، مطبّقة حيث تُحدث الأثر الأكبر",
+    services_p:"كل تكليف يبدأ بالضبط الداخلي والحوكمة — الأساس الذي تختبره الجهات التنظيمية والمدققون ومجالس الإدارة.",
+    s1_tag:"أساسي", s1_h3:"تصميم إطار الحوكمة",
+    s1_p:"هياكل مجالس الإدارة واللجان، وتصميم السياسات، وأطر تفويض الصلاحيات المصممة لتصمد أمام المراجعة التنظيمية والتدقيق.",
+    s1_for:"<b>لمن:</b> مجالس الإدارة الاستعداد للإدراج أو إعادة الهيكلة أو المراجعة التنظيمية",
+    s2_tag:"أساسي", s2_h3:"مراجعة الضبط الداخلي",
+    s2_p:"تقييم فجوات الضبط وخطط المعالجة وفق أطر معتمدة، مع تحديد واضح للمسؤولية في كل خطوة.",
+    s2_for:"<b>لمن:</b> فرق المالية والعمليات استعداداً لتدقيق قادم",
+    s3_tag:"استشاري", s3_h3:"استشارات المخاطر والامتثال",
+    s3_p:"توافق تنظيمي ومطابقة امتثال مصممة وفق قطاع الجهة والجهة الرقابية المعنية.",
+    s3_for:"<b>لمن:</b> الجهات التي تواجه متطلبات تنظيمية جديدة أو متغيرة",
+    s4_tag:"متخصص", s4_h3:"استشارات عمليات اللوجستيات",
+    s4_p:"خبرة الحوكمة والضبط مطبّقة تحديداً على عمليات اللوجستيات وسلاسل الإمداد.",
+    s4_for:"<b>لمن:</b> مشغلو اللوجستيات الباحثون عن انضباط تشغيلي إلى جانب الامتثال",
+    approach_eyebrow:"المنهجية", approach_h2:"تكليف منظم من أربع خطوات",
+    approach_p:"عمل الحوكمة يفشل عندما يكون عشوائياً. كل تكليف يتبع نفس التسلسل المنضبط.",
+    a1_h3:"التقييم", a1_p:"رسم بيئة الضبط الحالية وتحديد الفجوات مقابل المعايير التنظيمية والحوكمية.",
+    a2_h3:"التصميم", a2_p:"بناء الإطار أو السياسة أو هيكل الضبط الملائم لحجم المنشأة وقطاعها.",
+    a3_h3:"التنفيذ", a3_p:"العمل مع ملّاك الضوابط لترسيخ التغييرات في العمليات اليومية، لا في دليل السياسات فقط.",
+    a4_h3:"المتابعة", a4_p:"إرساء اختبار وتقارير مستمرة لضمان بقاء الإطار فعّالاً بعد انتهاء التكليف.",
+    cred_eyebrow:"الخلفية", cred_h2:"خبرة في حوكمة الشركات المدرجة",
+    c1_h4:"حوكمة الشركات المدرجة", c1_p:"إشراف على مستوى الرئيس التنفيذي والضبط الداخلي ضمن مجموعة لوجستية مدرجة علناً.",
+    c2_h4:"إشراف متعدد الكيانات", c2_p:"مسؤولية حوكمة وضبط تمتد عبر عدة كيانات تشغيلية ضمن مجموعة واحدة.",
+    c3_h4:"بيئة تشغيل ثنائية اللغة", c3_p:"تكليفات تُنفَّذ بطلاقة باللغتين العربية والإنجليزية، وفق لغة الحوكمة لدى العميل.",
+    quote_p:'"الحوكمة التي توجد على الورق فقط ليست حوكمة — إنها تعرّض للمخاطر. العمل الحقيقي هو جعل الإطار هو الطريقة التي تعمل بها المنشأة فعلياً."',
+    quote_attr:"— فلسفة العمل",
+    cases_eyebrow:"رؤى", cases_h2:"نماذج من التكليفات",
+    cases_p:"تم إخفاء الهوية لحماية سرية العملاء. التفاصيل متاحة عند الطلب بموجب اتفاقية عدم إفصاح.",
+    case1_sector:"لوجستيات — مجموعة مدرجة", case2_sector:"منشأة عائلية", case3_sector:"جهة مرتبطة بالحكومة",
+    k_challenge:"التحدي", k_approach:"المنهج", k_outcome:"النتيجة",
+    case1_challenge:"فجوات في فصل المهام تم رصدها قبل تدقيق خارجي.",
+    case1_approach:"تقييم فجوات الضبط، وخطة معالجة، وعملية اعتماد من ملّاك الضوابط.",
+    case1_outcome:"<b>صفر ملاحظات جوهرية</b> في دورة التدقيق التالية.",
+    case2_challenge:"غياب هيكل حوكمة رسمي قبل انتقال بين الأجيال.",
+    case2_approach:"تصميم ميثاق مجلس إدارة وإطار تفويض صلاحيات من الصفر.",
+    case2_outcome:"<b>مجلس إدارة رسمي</b> يعمل خلال ربع سنة واحد.",
+    case3_challenge:"متطلبات تنظيمية جديدة تفوق سرعة مطابقة الامتثال الحالية.",
+    case3_approach:"عملية مطابقة امتثال كاملة مقابل الإطار التنظيمي المحدَّث.",
+    case3_outcome:"<b>توافق كامل</b> تم تأكيده قبل الموعد النهائي للجهة التنظيمية.",
+    contact_h2:"ابدأ بمحادثة",
+    contact_p:"كل تكليف يبدأ بمكالمة قصيرة لفهم المنشأة والوضع الحالي للحوكمة فيها.",
+    contact_email_k:"البريد الإلكتروني", contact_linkedin_k:"لينكدإن", contact_location_k:"مقر العمل", contact_location_v:"المملكة العربية السعودية",
+    f_name:"الاسم", f_org:"نوع الجهة",
+    f_org_1:"شركة مدرجة / كبرى", f_org_2:"منشأة صغيرة أو متوسطة / عائلية", f_org_3:"جهة حكومية / شبه حكومية", f_org_4:"أخرى",
+    f_interest:"مجال الاهتمام",
+    f_int_1:"تصميم إطار الحوكمة", f_int_2:"مراجعة الضبط الداخلي", f_int_3:"استشارات المخاطر والامتثال", f_int_4:"استشارات عمليات اللوجستيات",
+    f_message:"الرسالة", f_submit:"اطلب استشارة",
+    footer_left:"© 2026 الاستشارات الحوكمية وضبط الداخلي. جميع الحقوق محفوظة.",
+    footer_right:"استشارات مستقلة — غير مرتبطة بأي جهة عمل حالية."
+  }
+};
+
+function setLang(lang){
+  document.documentElement.lang = lang;
+  document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+  document.getElementById('btn-en').classList.toggle('active', lang==='en');
+  document.getElementById('btn-ar').classList.toggle('active', lang==='ar');
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const key = el.getAttribute('data-i18n');
+    const val = i18n[lang][key];
+    if(val !== undefined) el.innerHTML = val;
+  });
+}
+</script>
+
+</body>
+</html>
