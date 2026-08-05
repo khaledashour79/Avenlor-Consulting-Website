@@ -13,7 +13,7 @@
     --paper-2:#E7EAE7;
     --gold:#AD8A52;
     --gold-soft:#C7AB7C;
-    --slate:#6C7783;
+    --slate:#5B6672;
     --line:#D7DBD8;
     --line-dark:#233247;
     --white:#FFFFFF;
@@ -139,10 +139,45 @@
   }
   .navcta:hover{background:var(--gold-soft);}
 
-  .navtoggle{display:none;}
+  .navlinks-cta{display:none;}
+
+  .navtoggle{
+    display:none;
+    width:40px;height:40px;
+    align-items:center;
+    justify-content:center;
+    color:var(--white);
+  }
+  .navtoggle svg{width:22px;height:22px;}
 
   @media (max-width:860px){
-    .navlinks{display:none;}
+    .navtoggle{display:flex;}
+    .navright{gap:12px;}
+    .navcta{display:none;}
+    .navlinks{
+      display:none;
+      position:absolute;
+      top:100%;
+      left:0;
+      right:0;
+      flex-direction:column;
+      gap:0;
+      background:rgba(10,20,36,0.98);
+      backdrop-filter:blur(10px);
+      border-bottom:1px solid var(--line-dark);
+      padding:8px 0;
+    }
+    .navlinks.open{display:flex;}
+    .navlinks a{
+      display:block;
+      padding:14px 32px;
+      font-size:15px;
+    }
+    .navlinks-cta{display:block;}
+    .navlinks-cta a{
+      color:var(--gold-soft);
+      font-weight:700;
+    }
   }
 
   /* ---------- HERO ---------- */
@@ -619,13 +654,17 @@
 <header>
   <div class="wrap nav">
     <div class="logo"><span class="logo-mark"></span><span data-i18n="logo">GOVERNANCE ADVISORY</span></div>
-    <ul class="navlinks">
+    <ul class="navlinks" id="navlinks">
       <li><a href="#services" data-i18n="nav_services">Services</a></li>
       <li><a href="#approach" data-i18n="nav_approach">Approach</a></li>
       <li><a href="#credentials" data-i18n="nav_credentials">Credentials</a></li>
       <li><a href="#cases" data-i18n="nav_cases">Insights</a></li>
+      <li class="navlinks-cta"><a href="#contact" data-i18n="nav_cta">Book a Call</a></li>
     </ul>
     <div class="navright">
+      <button class="navtoggle" id="navtoggle" aria-label="Toggle navigation menu" aria-controls="navlinks" aria-expanded="false" onclick="toggleNav()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+      </button>
       <div class="langtoggle">
         <button id="btn-en" class="active" onclick="setLang('en')">EN</button>
         <button id="btn-ar" onclick="setLang('ar')">AR</button>
@@ -1031,6 +1070,19 @@ const i18n = {
     footer_right:"استشارات مستقلة — غير مرتبطة بأي جهة عمل حالية."
   }
 };
+
+function toggleNav(){
+  const links = document.getElementById('navlinks');
+  const btn = document.getElementById('navtoggle');
+  const open = links.classList.toggle('open');
+  btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+}
+document.getElementById('navlinks').addEventListener('click', function(e){
+  if(e.target.closest('a')){
+    this.classList.remove('open');
+    document.getElementById('navtoggle').setAttribute('aria-expanded','false');
+  }
+});
 
 function setLang(lang){
   document.documentElement.lang = lang;
