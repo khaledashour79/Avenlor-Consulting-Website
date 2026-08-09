@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Governance & Internal Controls Advisory</title>
+<title>Avenlor Consulting — Governance & Internal Controls Advisory</title>
 <style>
   :root{
     --ink:#0A1424;
@@ -583,6 +583,8 @@
   }
   .contact-links .k{color:var(--slate);}
   .contact-links .v{font-weight:600;}
+  a.v{transition:color 0.2s ease;}
+  a.v:hover{color:var(--gold);}
 
   form{display:flex;flex-direction:column;gap:16px;}
   .field label{
@@ -872,7 +874,7 @@
 
 <header>
   <div class="wrap nav">
-    <div class="logo"><span class="logo-mark"></span><span data-i18n="logo">GOVERNANCE ADVISORY</span></div>
+    <div class="logo"><span class="logo-mark"></span><span data-i18n="logo">AVENLOR CONSULTING</span></div>
     <ul class="navlinks" id="navlinks">
       <li><a href="#services" data-i18n="nav_services">Services</a></li>
       <li><a href="#approach" data-i18n="nav_approach">Approach</a></li>
@@ -1117,19 +1119,23 @@
       <h2 data-i18n="contact_h2">Start with a conversation</h2>
       <p data-i18n="contact_p">Every engagement begins with a short call to understand the organization and where governance currently stands.</p>
       <ul class="contact-links">
-        <li><span class="k" data-i18n="contact_email_k">Email</span><span class="v">advisory@yourdomain.com</span></li>
-        <li><span class="k" data-i18n="contact_linkedin_k">LinkedIn</span><span class="v">linkedin.com/in/yourname</span></li>
+        <li><span class="k" data-i18n="contact_email_k">Email</span><a class="v" dir="ltr" href="mailto:contact@avenlorconsulting.com">contact@avenlorconsulting.com</a></li>
+        <li><span class="k" data-i18n="contact_website_k">Website</span><a class="v" dir="ltr" href="https://avenlorconsulting.com" target="_blank" rel="noopener">avenlorconsulting.com</a></li>
         <li><span class="k" data-i18n="contact_location_k">Based in</span><span class="v" data-i18n="contact_location_v">Saudi Arabia</span></li>
       </ul>
     </div>
-    <form onsubmit="return false;">
+    <form id="contactForm" onsubmit="return sendMail(event)">
       <div class="field">
         <label data-i18n="f_name">Name</label>
-        <input type="text" required>
+        <input type="text" name="name" required>
+      </div>
+      <div class="field">
+        <label data-i18n="f_email">Email</label>
+        <input type="email" name="email" dir="ltr" required>
       </div>
       <div class="field">
         <label data-i18n="f_org">Organization type</label>
-        <select>
+        <select name="org">
           <option data-i18n="f_org_1">Listed / large corporate</option>
           <option data-i18n="f_org_2">SME / family business</option>
           <option data-i18n="f_org_3">Government / semi-government</option>
@@ -1138,7 +1144,7 @@
       </div>
       <div class="field">
         <label data-i18n="f_interest">Area of interest</label>
-        <select>
+        <select name="interest">
           <option data-i18n="f_int_1">Governance framework design</option>
           <option data-i18n="f_int_2">Internal controls review</option>
           <option data-i18n="f_int_3">Risk & compliance advisory</option>
@@ -1147,7 +1153,7 @@
       </div>
       <div class="field">
         <label data-i18n="f_message">Message</label>
-        <textarea></textarea>
+        <textarea name="message"></textarea>
       </div>
       <button class="submit-btn" data-i18n="f_submit">Request a Consultation</button>
     </form>
@@ -1156,15 +1162,15 @@
 
 <footer>
   <div class="wrap footer-inner">
-    <span data-i18n="footer_left">© 2026 Governance & Internal Controls Advisory. All rights reserved.</span>
-    <span data-i18n="footer_right">Independent advisory — not affiliated with any current employer.</span>
+    <span data-i18n="footer_left">© 2026 Avenlor Consulting. All rights reserved.</span>
+    <span data-i18n="footer_right">Independent advisory — governance, internal controls & compliance.</span>
   </div>
 </footer>
 
 <script>
 const i18n = {
   en: {
-    logo:"GOVERNANCE ADVISORY", nav_services:"Services", nav_approach:"Approach", nav_credentials:"Credentials", nav_cases:"Insights", nav_cta:"Book a Call",
+    logo:"AVENLOR CONSULTING", nav_services:"Services", nav_approach:"Approach", nav_credentials:"Credentials", nav_cases:"Insights", nav_cta:"Book a Call",
     hero_eyebrow:"Independent Advisory",
     hero_h1:'Governance and internal controls <em>that hold up to scrutiny.</em>',
     hero_lead:"Independent advisory for listed companies, family businesses, and government entities building governance frameworks and internal controls that satisfy boards, auditors, and regulators alike.",
@@ -1217,17 +1223,17 @@ const i18n = {
     case3_outcome:"<b>Full alignment</b> confirmed ahead of the regulator's deadline.",
     contact_h2:"Start with a conversation",
     contact_p:"Every engagement begins with a short call to understand the organization and where governance currently stands.",
-    contact_email_k:"Email", contact_linkedin_k:"LinkedIn", contact_location_k:"Based in", contact_location_v:"Saudi Arabia",
-    f_name:"Name", f_org:"Organization type",
+    contact_email_k:"Email", contact_website_k:"Website", contact_location_k:"Based in", contact_location_v:"Saudi Arabia",
+    f_name:"Name", f_email:"Email", f_org:"Organization type",
     f_org_1:"Listed / large corporate", f_org_2:"SME / family business", f_org_3:"Government / semi-government", f_org_4:"Other",
     f_interest:"Area of interest",
     f_int_1:"Governance framework design", f_int_2:"Internal controls review", f_int_3:"Risk & compliance advisory", f_int_4:"Logistics operations advisory",
     f_message:"Message", f_submit:"Request a Consultation",
-    footer_left:"© 2026 Governance & Internal Controls Advisory. All rights reserved.",
-    footer_right:"Independent advisory — not affiliated with any current employer."
+    footer_left:"© 2026 Avenlor Consulting. All rights reserved.",
+    footer_right:"Independent advisory — governance, internal controls & compliance."
   },
   ar: {
-    logo:"الاستشارات الحوكمية", nav_services:"الخدمات", nav_approach:"المنهجية", nav_credentials:"الخبرات", nav_cases:"رؤى", nav_cta:"احجز مكالمة",
+    logo:"أفنلور للاستشارات", nav_services:"الخدمات", nav_approach:"المنهجية", nav_credentials:"الخبرات", nav_cases:"رؤى", nav_cta:"احجز مكالمة",
     hero_eyebrow:"استشارات مستقلة",
     hero_h1:'حوكمة وضبط داخلي <em>تصمد أمام أي تدقيق.</em>',
     hero_lead:"استشارات مستقلة للشركات المدرجة والمنشآت العائلية والجهات الحكومية، لبناء أطر حوكمة وأنظمة ضبط داخلي ترضي مجالس الإدارة والمدققين والجهات التنظيمية.",
@@ -1280,16 +1286,39 @@ const i18n = {
     case3_outcome:"<b>توافق كامل</b> تم تأكيده قبل الموعد النهائي للجهة التنظيمية.",
     contact_h2:"ابدأ بمحادثة",
     contact_p:"كل تكليف يبدأ بمكالمة قصيرة لفهم المنشأة والوضع الحالي للحوكمة فيها.",
-    contact_email_k:"البريد الإلكتروني", contact_linkedin_k:"لينكدإن", contact_location_k:"مقر العمل", contact_location_v:"المملكة العربية السعودية",
-    f_name:"الاسم", f_org:"نوع الجهة",
+    contact_email_k:"البريد الإلكتروني", contact_website_k:"الموقع الإلكتروني", contact_location_k:"مقر العمل", contact_location_v:"المملكة العربية السعودية",
+    f_name:"الاسم", f_email:"البريد الإلكتروني", f_org:"نوع الجهة",
     f_org_1:"شركة مدرجة / كبرى", f_org_2:"منشأة صغيرة أو متوسطة / عائلية", f_org_3:"جهة حكومية / شبه حكومية", f_org_4:"أخرى",
     f_interest:"مجال الاهتمام",
     f_int_1:"تصميم إطار الحوكمة", f_int_2:"مراجعة الضبط الداخلي", f_int_3:"استشارات المخاطر والامتثال", f_int_4:"استشارات عمليات اللوجستيات",
     f_message:"الرسالة", f_submit:"اطلب استشارة",
-    footer_left:"© 2026 الاستشارات الحوكمية وضبط الداخلي. جميع الحقوق محفوظة.",
-    footer_right:"استشارات مستقلة — غير مرتبطة بأي جهة عمل حالية."
+    footer_left:"© 2026 أفنلور للاستشارات. جميع الحقوق محفوظة.",
+    footer_right:"استشارات مستقلة — الحوكمة والضبط الداخلي والامتثال."
   }
 };
+
+function sendMail(e){
+  e.preventDefault();
+  const f = e.target;
+  const g = n => ((f.elements[n] && f.elements[n].value) || '').trim();
+  const lang = document.documentElement.lang === 'ar' ? 'ar' : 'en';
+  const t = i18n[lang];
+  const subject = 'Avenlor Consulting — Consultation request'
+    + (g('name') ? ' (' + g('name') + ')' : '');
+  const body = [
+    t.f_name + ': ' + g('name'),
+    t.f_email + ': ' + g('email'),
+    t.f_org + ': ' + g('org'),
+    t.f_interest + ': ' + g('interest'),
+    '',
+    t.f_message + ':',
+    g('message')
+  ].join('\n');
+  window.location.href = 'mailto:contact@avenlorconsulting.com'
+    + '?subject=' + encodeURIComponent(subject)
+    + '&body=' + encodeURIComponent(body);
+  return false;
+}
 
 function toggleNav(){
   const links = document.getElementById('navlinks');
