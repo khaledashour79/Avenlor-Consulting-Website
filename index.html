@@ -6,881 +6,217 @@
 <title>Avenlor Consulting — Governance & Internal Controls Advisory</title>
 <style>
   :root{
-    --ink:#0A1424;
-    --ink-2:#101E33;
-    --steel:#24425A;
-    --paper:#F1F3F2;
-    --paper-2:#E7EAE7;
-    --gold:#AD8A52;
-    --gold-soft:#C7AB7C;
-    --slate:#5B6672;
-    --line:#D7DBD8;
-    --line-dark:#233247;
-    --white:#FFFFFF;
-    --font-display: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-    --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-    --font-mono: "SF Mono", "IBM Plex Mono", "Courier New", monospace;
-    --font-ar: "Tahoma", "Segoe UI", Arial, sans-serif;
+    --bg:#0C0C0D;--bg-2:#111113;--ink:#F4F1E9;--muted:#8A867C;--muted-2:#B4AFA2;
+    --gold:#E9B44C;--gold-2:#C98F2E;--line:rgba(244,241,233,0.14);--line-2:rgba(244,241,233,0.08);
+    --card:rgba(255,255,255,0.02);
+    --maxw:1280px;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif;
+    --mono:"SF Mono","IBM Plex Mono","Roboto Mono",ui-monospace,"Courier New",monospace;
+    --ar:"Tahoma","Segoe UI",Arial,sans-serif;
   }
-
   *{margin:0;padding:0;box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
+  body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.55;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+  html[dir="rtl"] body{font-family:var(--ar);}
+  ::selection{background:var(--gold);color:var(--bg);}
+  a{color:inherit;text-decoration:none;}
+  button{font:inherit;cursor:pointer;border:none;background:none;color:inherit;}
+  img{max-width:100%;display:block;}
+  a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--gold);outline-offset:3px;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 30px;}
 
   @media (prefers-reduced-motion: reduce){
     html{scroll-behavior:auto;}
-    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important;}
+    *{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important;}
   }
 
-  body{
-    font-family:var(--font-body);
-    background:var(--paper);
-    color:var(--ink);
-    line-height:1.5;
-    -webkit-font-smoothing:antialiased;
-  }
+  /* starfield */
+  #net{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;}
+  .starfade{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(80% 70% at 50% 38%,transparent 40%,rgba(12,12,13,0.72) 100%);}
 
-  html[dir="rtl"] body{ font-family: var(--font-ar); }
-
-  a{color:inherit;text-decoration:none;}
-  button{font-family:inherit;cursor:pointer;border:none;background:none;}
-  img{max-width:100%;display:block;}
-
-  .wrap{
-    max-width:1180px;
-    margin:0 auto;
-    padding:0 32px;
+  /* NAV */
+  header{position:fixed;inset:0 0 auto 0;z-index:60;transition:background .4s,backdrop-filter .4s,border-color .4s;border-bottom:1px solid transparent;}
+  header.scrolled{background:rgba(12,12,13,0.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);}
+  .nav{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:20px 0;}
+  .brand{font-weight:800;letter-spacing:.16em;font-size:15px;text-transform:uppercase;display:flex;align-items:center;gap:11px;white-space:nowrap;}
+  .brand .mk{width:13px;height:13px;transform:rotate(45deg);background:linear-gradient(135deg,var(--gold),var(--gold-2));flex-shrink:0;}
+  .navlinks{display:flex;gap:30px;list-style:none;}
+  .navlinks a{font-family:var(--mono);font-size:12.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);position:relative;}
+  .navlinks a::after{content:"";position:absolute;inset-inline:0;bottom:-5px;height:2px;background:var(--gold);transform:scaleX(0);transform-origin:inline-start;transition:transform .3s;}
+  .navlinks a:hover{color:var(--ink);}
+  .navlinks a:hover::after{transform:scaleX(1);}
+  .navright{display:flex;align-items:center;gap:14px;}
+  .langtoggle{display:flex;border:1px solid var(--line);border-radius:999px;padding:3px;gap:2px;}
+  .langtoggle button{padding:6px 13px;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.05em;color:var(--muted);border-radius:999px;transition:.2s;}
+  .langtoggle button.active{background:var(--gold);color:var(--bg);}
+  .navcta{font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.05em;font-weight:700;border:1px solid var(--line);padding:10px 18px;border-radius:999px;transition:.25s;white-space:nowrap;}
+  .navcta:hover{background:var(--gold);color:var(--bg);border-color:var(--gold);}
+  .navtoggle{display:none;width:40px;height:40px;align-items:center;justify-content:center;color:var(--ink);}
+  .navtoggle svg{width:22px;height:22px;}
+  @media(max-width:900px){
+    .navtoggle{display:flex;}
+    .navlinks{position:absolute;top:100%;inset-inline:0;flex-direction:column;gap:0;background:rgba(12,12,13,0.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:8px 0;display:none;}
+    .navlinks.open{display:flex;}
+    .navlinks a{display:block;padding:14px 30px;font-size:14px;}
+    .navlinks a::after{display:none;}
+    .navcta{display:none;}
+    .navlinks-cta{display:block !important;}
+    .navlinks-cta a{color:var(--gold);}
   }
-
-  /* ---------- FOCUS STATES ---------- */
-  a:focus-visible, button:focus-visible{
-    outline:2px solid var(--gold);
-    outline-offset:3px;
-  }
-
-  /* ---------- NAV ---------- */
-  header{
-    position:sticky;
-    top:0;
-    z-index:100;
-    background:rgba(10,20,36,0.92);
-    backdrop-filter:blur(10px);
-    border-bottom:1px solid var(--line-dark);
-  }
-  .nav{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:20px 0;
-  }
-  .logo{
-    color:var(--white);
-    font-weight:800;
-    font-size:15px;
-    letter-spacing:0.08em;
-    text-transform:uppercase;
-    display:flex;
-    align-items:center;
-    gap:10px;
-  }
-  .logo-mark{
-    width:9px;height:9px;
-    background:var(--gold);
-    display:inline-block;
-    transform:rotate(45deg);
-    flex-shrink:0;
-  }
-  .navlinks{
-    display:flex;
-    gap:36px;
-    list-style:none;
-  }
-  .navlinks a{
-    color:#B7C2CE;
-    font-size:14px;
-    font-weight:500;
-    letter-spacing:0.01em;
-    transition:color 0.2s ease;
-  }
-  .navlinks a:hover{color:var(--white);}
-
-  .navright{display:flex;align-items:center;gap:20px;}
-
-  .langtoggle{
-    display:flex;
-    border:1px solid var(--line-dark);
-    border-radius:999px;
-    padding:3px;
-    gap:2px;
-  }
-  .langtoggle button{
-    padding:6px 14px;
-    font-size:12px;
-    font-weight:700;
-    letter-spacing:0.05em;
-    color:#8493A2;
-    border-radius:999px;
-    transition:all 0.2s ease;
-  }
-  .langtoggle button.active{
-    background:var(--gold);
-    color:var(--ink);
-  }
-
-  .navcta{
-    background:var(--gold);
-    color:var(--ink);
-    font-size:13px;
-    font-weight:700;
-    padding:10px 20px;
-    border-radius:2px;
-    letter-spacing:0.02em;
-    white-space:nowrap;
-    transition:background 0.2s ease;
-  }
-  .navcta:hover{background:var(--gold-soft);}
-
   .navlinks-cta{display:none;}
 
-  .navtoggle{
-    display:none;
-    width:40px;height:40px;
-    align-items:center;
-    justify-content:center;
-    color:var(--white);
+  /* HERO */
+  .hero{position:relative;z-index:2;min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding:130px 0 50px;}
+  .kicker{font-family:var(--mono);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:30px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;opacity:0;animation:fade .8s ease .2s forwards;}
+  .kicker::before{content:"";width:40px;height:1px;background:var(--gold);}
+  .mega{font-weight:800;text-transform:uppercase;letter-spacing:-.04em;line-height:.9;font-size:clamp(30px,10vw,140px);overflow-wrap:break-word;}
+  .mega .row{display:block;overflow:hidden;}
+  .mega .row>span{display:block;transform:translateY(105%);animation:rise 1s cubic-bezier(.16,1,.3,1) forwards;}
+  .mega .row:nth-child(1) span{animation-delay:.12s;}
+  .mega .row:nth-child(2) span{animation-delay:.24s;}
+  @keyframes rise{to{transform:translateY(0);}}
+  @keyframes fade{to{opacity:1;}}
+  .rotor{display:inline-block;position:relative;color:var(--gold);vertical-align:top;}
+  .rotor .slot{display:inline-block;position:relative;overflow:hidden;height:1em;vertical-align:top;}
+  .rotor .track{display:flex;flex-direction:column;}
+  .rotor .track span{height:1em;line-height:1;white-space:nowrap;}
+  @media(max-width:560px){
+    .mega{font-size:clamp(28px,8vw,40px);line-height:.98;letter-spacing:-.02em;}
   }
-  .navtoggle svg{width:22px;height:22px;}
+  .hero-foot{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;margin-top:54px;flex-wrap:wrap;opacity:0;animation:fade 1s ease 1s forwards;}
+  .hero-foot .lead{max-width:440px;color:var(--muted-2);font-size:17px;}
+  .cta-row{display:flex;gap:14px;flex-wrap:wrap;}
+  .btn{display:inline-flex;align-items:center;gap:9px;padding:16px 28px;font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.05em;font-family:var(--mono);transition:transform .18s;will-change:transform;}
+  .btn .arw{transition:transform .25s;}
+  .btn:hover .arw{transform:translateX(4px);}
+  html[dir="rtl"] .btn:hover .arw{transform:translateX(-4px);}
+  .btn-solid{background:var(--gold);color:var(--bg);}
+  .btn-ghost{border:1px solid var(--line);}
+  .btn-ghost:hover{border-color:var(--gold);}
+  .stats{display:flex;gap:38px;flex-wrap:wrap;margin-top:44px;opacity:0;animation:fade 1s ease 1.15s forwards;}
+  .stat .n{font-size:30px;font-weight:800;font-variant-numeric:tabular-nums;}
+  .stat .l{font-family:var(--mono);font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-top:5px;max-width:150px;}
 
-  @media (max-width:860px){
-    .navtoggle{display:flex;}
-    .navright{gap:12px;}
-    .navcta{display:none;}
-    .navlinks{
-      display:none;
-      position:absolute;
-      top:100%;
-      left:0;
-      right:0;
-      flex-direction:column;
-      gap:0;
-      background:rgba(10,20,36,0.98);
-      backdrop-filter:blur(10px);
-      border-bottom:1px solid var(--line-dark);
-      padding:8px 0;
-    }
-    .navlinks.open{display:flex;}
-    .navlinks a{
-      display:block;
-      padding:14px 32px;
-      font-size:15px;
-    }
-    .navlinks-cta{display:block;}
-    .navlinks-cta a{
-      color:var(--gold-soft);
-      font-weight:700;
-    }
-  }
+  /* MARQUEE */
+  .band{position:relative;z-index:2;border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden;white-space:nowrap;padding:22px 0;background:var(--bg);}
+  .band .t{display:inline-flex;animation:mq 26s linear infinite;}
+  .band .t span{font-weight:800;text-transform:uppercase;letter-spacing:-.02em;font-size:clamp(28px,5vw,58px);padding:0 38px;color:transparent;-webkit-text-stroke:1px var(--muted);}
+  .band .t span.fill{color:var(--gold);-webkit-text-stroke:0;}
+  @keyframes mq{to{transform:translateX(-50%);}}
+  html[dir="rtl"] .band .t{animation-direction:reverse;}
 
-  /* ---------- HERO ---------- */
-  .hero{
-    background:linear-gradient(180deg, var(--ink) 0%, var(--ink-2) 100%);
-    color:var(--white);
-    padding:96px 0 80px;
-    position:relative;
-    overflow:hidden;
-  }
-  .hero::before{
-    content:"";
-    position:absolute;
-    inset:0;
-    background-image:
-      linear-gradient(var(--line-dark) 1px, transparent 1px),
-      linear-gradient(90deg, var(--line-dark) 1px, transparent 1px);
-    background-size:64px 64px;
-    opacity:0.35;
-    mask-image:linear-gradient(180deg, transparent, black 30%, black 70%, transparent);
-  }
-  .hero-inner{
-    position:relative;
-    display:grid;
-    grid-template-columns:1.15fr 0.85fr;
-    gap:56px;
-    align-items:start;
-  }
-  @media (max-width:900px){
-    .hero-inner{grid-template-columns:1fr;}
+  /* SECTION */
+  section.block{position:relative;z-index:2;padding:110px 0;}
+  .sec-tag{font-family:var(--mono);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;}
+  .sec-h{font-weight:800;text-transform:uppercase;letter-spacing:-.03em;line-height:.98;font-size:clamp(30px,5vw,58px);margin-bottom:18px;max-width:900px;}
+  .sec-p{color:var(--muted-2);font-size:17px;max-width:600px;margin-bottom:56px;}
+
+  /* SERVICES rows */
+  .svc-list{border-top:1px solid var(--line);}
+  .svc{display:grid;grid-template-columns:74px 1fr 250px;gap:26px;align-items:start;padding:38px 12px;border-bottom:1px solid var(--line);position:relative;transition:padding .35s;}
+  .svc::before{content:"";position:absolute;inset-block:0;inset-inline-start:0;width:0;background:var(--gold);opacity:.08;transition:width .4s cubic-bezier(.16,1,.3,1);}
+  .svc:hover::before{width:100%;}
+  .svc:hover{padding-inline-start:28px;}
+  .svc .no{font-family:var(--mono);font-size:13px;color:var(--gold);letter-spacing:.08em;padding-top:6px;}
+  .svc h3{font-weight:800;text-transform:uppercase;letter-spacing:-.02em;font-size:clamp(22px,3vw,34px);margin-bottom:10px;transition:color .35s;}
+  .svc:hover h3{color:var(--gold);}
+  .svc .desc{color:var(--muted-2);font-size:15px;max-width:560px;}
+  .svc .for{font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.03em;color:var(--muted);text-align:end;padding-top:8px;}
+  .svc .for b{color:var(--gold);font-weight:400;}
+  @media(max-width:820px){
+    .svc{grid-template-columns:1fr;gap:12px;}
+    .svc .for{text-align:start;}
   }
 
-  .eyebrow{
-    font-family:var(--font-mono);
-    font-size:12px;
-    letter-spacing:0.14em;
-    text-transform:uppercase;
-    color:var(--gold-soft);
-    display:flex;
-    align-items:center;
-    gap:10px;
-    margin-bottom:24px;
-  }
-  .eyebrow .rule{width:28px;height:1px;background:var(--gold-soft);}
+  /* APPROACH */
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:26px;}
+  @media(max-width:860px){.steps{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:520px){.steps{grid-template-columns:1fr;}}
+  .step{position:relative;padding-top:24px;}
+  .step::before{content:"";position:absolute;top:0;inset-inline:0;height:2px;background:var(--gold);transform:scaleX(0);transform-origin:inline-start;transition:transform .7s cubic-bezier(.16,1,.3,1);transition-delay:var(--d,0s);}
+  .step.in::before{transform:scaleX(1);}
+  html:not(.anim) .step::before{transform:scaleX(1);}
+  .step .n{font-family:var(--mono);font-size:13px;color:var(--gold);margin-bottom:14px;}
+  .step h3{font-weight:800;text-transform:uppercase;letter-spacing:-.01em;font-size:19px;margin-bottom:10px;}
+  .step p{color:var(--muted);font-size:14px;}
 
-  .hero h1{
-    font-family:var(--font-display);
-    font-size:clamp(34px, 4.6vw, 54px);
-    font-weight:800;
-    letter-spacing:-0.02em;
-    line-height:1.1;
-    margin-bottom:24px;
-  }
-  .hero h1 em{
-    font-style:normal;
-    color:var(--gold-soft);
-  }
-  .hero p.lead{
-    font-size:18px;
-    color:#B7C2CE;
-    max-width:520px;
-    margin-bottom:36px;
-  }
-  .hero-actions{
-    display:flex;
-    gap:14px;
-    flex-wrap:wrap;
-    margin-bottom:48px;
-  }
-  .btn-primary{
-    background:var(--gold);
-    color:var(--ink);
-    padding:14px 26px;
-    font-weight:700;
-    font-size:14px;
-    border-radius:2px;
-    letter-spacing:0.02em;
-    transition:background 0.2s ease, transform 0.2s ease;
-  }
-  .btn-primary:hover{background:var(--gold-soft); transform:translateY(-1px);}
-  .btn-secondary{
-    border:1px solid var(--line-dark);
-    color:var(--white);
-    padding:14px 26px;
-    font-weight:600;
-    font-size:14px;
-    border-radius:2px;
-    transition:border-color 0.2s ease;
-  }
-  .btn-secondary:hover{border-color:var(--gold-soft);}
+  /* CREDENTIALS */
+  .creds{background:var(--bg-2);border-block:1px solid var(--line);}
+  .quote{font-weight:800;text-transform:uppercase;letter-spacing:-.02em;line-height:1.05;font-size:clamp(24px,3.6vw,44px);max-width:960px;margin-bottom:20px;}
+  .quote .g{color:var(--gold);}
+  .quote-attr{font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:60px;}
+  .cred-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;}
+  @media(max-width:820px){.cred-grid{grid-template-columns:1fr;}}
+  .cred{border-top:1px solid var(--gold);padding-top:20px;}
+  .cred .ci{font-family:var(--mono);font-size:12px;color:var(--gold);margin-bottom:12px;}
+  .cred h4{font-weight:700;font-size:18px;margin-bottom:8px;}
+  .cred p{color:var(--muted);font-size:14px;}
 
-  .hero-stats{
-    display:flex;
-    gap:40px;
-  }
-  .stat-num{
-    font-family:var(--font-mono);
-    font-size:26px;
-    font-weight:700;
-    color:var(--white);
-  }
-  .stat-label{
-    font-size:12px;
-    color:#8493A2;
-    margin-top:4px;
-  }
-
-  /* ---------- REGISTER (signature element) ---------- */
-  .register{
-    background:rgba(255,255,255,0.03);
-    border:1px solid var(--line-dark);
-    border-radius:4px;
-    overflow:hidden;
-  }
-  .register-head{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:16px 20px;
-    border-bottom:1px solid var(--line-dark);
-    font-family:var(--font-mono);
-    font-size:11px;
-    letter-spacing:0.08em;
-    text-transform:uppercase;
-    color:#8493A2;
-  }
-  .register-dot{
-    width:7px;height:7px;
-    border-radius:50%;
-    background:#5FAE7A;
-    display:inline-block;
-    margin-inline-end:8px;
-    box-shadow:0 0 0 3px rgba(95,174,122,0.15);
-  }
-  .register-list{list-style:none;}
-  .register-item{
-    display:flex;
-    gap:14px;
-    padding:15px 20px;
-    border-bottom:1px solid var(--line-dark);
-    opacity:0;
-    animation:fadeSlide 0.6s ease forwards;
-  }
-  .register-item:last-child{border-bottom:none;}
-  .register-item:nth-child(1){animation-delay:0.15s;}
-  .register-item:nth-child(2){animation-delay:0.35s;}
-  .register-item:nth-child(3){animation-delay:0.55s;}
-  .register-item:nth-child(4){animation-delay:0.75s;}
-  .register-item:nth-child(5){animation-delay:0.95s;}
-  @keyframes fadeSlide{
-    from{opacity:0; transform:translateY(6px);}
-    to{opacity:1; transform:translateY(0);}
-  }
-  .register-code{
-    font-family:var(--font-mono);
-    font-size:12px;
-    color:var(--gold-soft);
-    flex-shrink:0;
-    width:52px;
-  }
-  .register-text{
-    font-size:13.5px;
-    color:#C7CFD8;
-  }
-  .register-text b{color:var(--white); font-weight:600;}
-
-  /* ---------- SECTION SHELL ---------- */
-  section{padding:88px 0;}
-  .section-head{
-    max-width:640px;
-    margin-bottom:56px;
-  }
-  .section-eyebrow{
-    font-family:var(--font-mono);
-    font-size:12px;
-    letter-spacing:0.12em;
-    text-transform:uppercase;
-    color:var(--gold);
-    margin-bottom:14px;
-  }
-  .section-head h2{
-    font-family:var(--font-display);
-    font-size:clamp(26px, 3.2vw, 36px);
-    font-weight:800;
-    letter-spacing:-0.01em;
-    line-height:1.2;
-    margin-bottom:16px;
-    color:var(--ink);
-  }
-  .section-head p{
-    color:var(--slate);
-    font-size:16px;
-  }
-
-  /* ---------- SERVICES ---------- */
-  .services{background:var(--white);}
-  .service-grid{
-    display:grid;
-    grid-template-columns:repeat(2, 1fr);
-    gap:1px;
-    background:var(--line);
-    border:1px solid var(--line);
-  }
-  @media (max-width:760px){
-    .service-grid{grid-template-columns:1fr;}
-  }
-  .service-card{
-    background:var(--white);
-    padding:36px;
-  }
-  .service-card.featured{
-    background:var(--ink);
-    color:var(--white);
-  }
-  .service-tag{
-    font-family:var(--font-mono);
-    font-size:11px;
-    letter-spacing:0.08em;
-    text-transform:uppercase;
-    color:var(--gold);
-    margin-bottom:16px;
-    display:block;
-  }
-  .service-card.featured .service-tag{color:var(--gold-soft);}
-  .service-card h3{
-    font-size:20px;
-    font-weight:700;
-    margin-bottom:12px;
-    letter-spacing:-0.01em;
-  }
-  .service-card p{
-    color:var(--slate);
-    font-size:14.5px;
-    margin-bottom:18px;
-  }
-  .service-card.featured p{color:#B7C2CE;}
-  .service-for{
-    font-size:13px;
-    color:var(--ink);
-    padding-top:16px;
-    border-top:1px solid var(--line);
-  }
-  .service-card.featured .service-for{
-    color:var(--white);
-    border-top:1px solid var(--line-dark);
-  }
-  .service-for b{color:var(--gold); font-weight:700;}
-
-  /* ---------- APPROACH ---------- */
-  .approach{background:var(--paper);}
-  .approach-list{
-    display:grid;
-    grid-template-columns:repeat(4, 1fr);
-    gap:28px;
-  }
-  @media (max-width:860px){
-    .approach-list{grid-template-columns:repeat(2, 1fr);}
-  }
-  @media (max-width:520px){
-    .approach-list{grid-template-columns:1fr;}
-  }
-  .approach-step{
-    border-top:2px solid var(--ink);
-    padding-top:20px;
-  }
-  .approach-num{
-    font-family:var(--font-mono);
-    font-size:13px;
-    color:var(--gold);
-    margin-bottom:14px;
-    display:block;
-  }
-  .approach-step h3{
-    font-size:17px;
-    font-weight:700;
-    margin-bottom:10px;
-  }
-  .approach-step p{
-    font-size:14px;
-    color:var(--slate);
-  }
-
-  /* ---------- CREDENTIALS ---------- */
-  .credentials{background:var(--white);}
-  .cred-grid{
-    display:grid;
-    grid-template-columns:0.9fr 1.1fr;
-    gap:64px;
-    align-items:start;
-  }
-  @media (max-width:860px){
-    .cred-grid{grid-template-columns:1fr; gap:40px;}
-  }
-  .cred-list{list-style:none;}
-  .cred-item{
-    display:flex;
-    gap:16px;
-    padding:20px 0;
-    border-bottom:1px solid var(--line);
-  }
-  .cred-item:first-child{padding-top:0;}
-  .cred-icon{
-    width:32px;height:32px;
-    border:1px solid var(--gold);
-    border-radius:2px;
-    flex-shrink:0;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:var(--gold);
-    font-family:var(--font-mono);
-    font-size:12px;
-    font-weight:700;
-  }
-  .cred-item h4{font-size:15px;font-weight:700;margin-bottom:4px;}
-  .cred-item p{font-size:14px;color:var(--slate);}
-
-  .cred-quote{
-    background:var(--paper);
-    border-inline-start:3px solid var(--gold);
-    padding:32px;
-  }
-  .cred-quote p{
-    font-size:19px;
-    font-weight:500;
-    line-height:1.5;
-    color:var(--ink);
-    font-style:normal;
-  }
-  .cred-quote .attribution{
-    margin-top:20px;
-    font-family:var(--font-mono);
-    font-size:12px;
-    color:var(--slate);
-    letter-spacing:0.03em;
-  }
-
-  /* ---------- CASE STUDIES ---------- */
-  .cases{background:var(--ink); color:var(--white);}
-  .case-grid{
-    display:grid;
-    grid-template-columns:repeat(3, 1fr);
-    gap:28px;
-  }
-  @media (max-width:900px){
-    .case-grid{grid-template-columns:1fr;}
-  }
-  .case-card{
-    border:1px solid var(--line-dark);
-    padding:28px;
-    border-radius:2px;
-    background:rgba(255,255,255,0.02);
-  }
-  .case-sector{
-    font-family:var(--font-mono);
-    font-size:11px;
-    letter-spacing:0.08em;
-    text-transform:uppercase;
-    color:var(--gold-soft);
-    margin-bottom:18px;
-  }
-  .case-row{margin-bottom:14px;}
-  .case-row .k{
-    font-size:11px;
-    text-transform:uppercase;
-    letter-spacing:0.06em;
-    color:#8493A2;
-    margin-bottom:4px;
-  }
-  .case-row .v{
-    font-size:14.5px;
-    color:#DCE3E9;
-    line-height:1.45;
-  }
+  /* INSIGHTS */
+  .cases{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  @media(max-width:900px){.cases{grid-template-columns:1fr;}}
+  .case{border:1px solid var(--line);border-radius:4px;padding:30px;background:var(--card);transition:transform .2s,border-color .3s,background .3s;}
+  .case:hover{transform:translateY(-4px);border-color:rgba(233,180,76,.4);background:rgba(233,180,76,.03);}
+  .case .sector{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--gold);margin-bottom:22px;}
+  .case-row{margin-bottom:16px;}
   .case-row:last-child{margin-bottom:0;}
-  .case-row .v b{color:var(--white);}
+  .case-row .k{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:5px;}
+  .case-row .v{font-size:14.5px;color:var(--muted-2);line-height:1.45;}
+  .case-row .v b{color:var(--ink);}
 
-  /* ---------- CONTACT ---------- */
-  .contact{background:var(--paper);}
-  .contact-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:64px;
-  }
-  @media (max-width:860px){
-    .contact-grid{grid-template-columns:1fr; gap:40px;}
-  }
-  .contact-info h2{
-    font-family:var(--font-display);
-    font-size:clamp(26px,3.2vw,36px);
-    font-weight:800;
-    letter-spacing:-0.01em;
-    margin-bottom:18px;
-  }
-  .contact-info p{color:var(--slate); font-size:16px; margin-bottom:28px;}
+  /* CONTACT */
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;}
+  @media(max-width:860px){.contact-grid{grid-template-columns:1fr;gap:44px;}}
+  .contact-info h2{font-weight:800;text-transform:uppercase;letter-spacing:-.02em;font-size:clamp(28px,4vw,46px);line-height:.98;margin-bottom:18px;}
+  .contact-info p{color:var(--muted-2);font-size:16px;margin-bottom:30px;max-width:440px;}
   .contact-links{list-style:none;}
-  .contact-links li{
-    padding:14px 0;
-    border-bottom:1px solid var(--line);
-    display:flex;
-    justify-content:space-between;
-    font-size:14.5px;
-  }
-  .contact-links .k{color:var(--slate);}
-  .contact-links .v{font-weight:600;}
-  a.v{transition:color 0.2s ease;}
+  .contact-links li{display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px 16px;padding:15px 0;border-bottom:1px solid var(--line);font-size:14.5px;}
+  .contact-links .k{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);flex-shrink:0;}
+  .contact-links .v{font-weight:600;transition:color .2s;overflow-wrap:anywhere;min-width:0;}
   a.v:hover{color:var(--gold);}
-
   form{display:flex;flex-direction:column;gap:16px;}
-  .field label{
-    display:block;
-    font-size:12px;
-    font-weight:700;
-    text-transform:uppercase;
-    letter-spacing:0.05em;
-    color:var(--slate);
-    margin-bottom:8px;
-  }
-  .field input, .field select, .field textarea{
-    width:100%;
-    padding:13px 14px;
-    border:1px solid var(--line);
-    border-radius:2px;
-    font-family:inherit;
-    font-size:14.5px;
-    background:var(--white);
-    color:var(--ink);
-  }
-  .field input:focus, .field select:focus, .field textarea:focus{
-    outline:2px solid var(--gold);
-    outline-offset:1px;
-    border-color:var(--gold);
-  }
-  .field textarea{resize:vertical; min-height:100px;}
-  .submit-btn{
-    background:var(--ink);
-    color:var(--white);
-    padding:15px 26px;
-    font-weight:700;
-    font-size:14px;
-    border-radius:2px;
-    letter-spacing:0.02em;
-    margin-top:6px;
-    transition:background 0.2s ease;
-  }
-  .submit-btn:hover{background:var(--steel);}
+  .field label{display:block;font-family:var(--mono);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-bottom:8px;}
+  .field input,.field select,.field textarea{width:100%;padding:14px 15px;border:1px solid var(--line);border-radius:2px;font-family:inherit;font-size:14.5px;background:rgba(255,255,255,0.02);color:var(--ink);}
+  .field input::placeholder,.field textarea::placeholder{color:var(--muted);}
+  .field select{appearance:none;}
+  .field select option{background:var(--bg-2);color:var(--ink);}
+  .field textarea{resize:vertical;min-height:110px;}
+  .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--gold);}
+  .submit-btn{background:var(--gold);color:var(--bg);padding:16px 26px;font-family:var(--mono);font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.05em;border-radius:2px;margin-top:6px;transition:background .2s;}
+  .submit-btn:hover{background:#f3c463;}
 
-  /* ---------- FOOTER ---------- */
-  footer{
-    background:var(--ink);
-    color:#8493A2;
-    padding:32px 0;
-  }
-  .footer-inner{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    font-size:13px;
-    flex-wrap:wrap;
-    gap:12px;
-  }
-  .footer-inner a{color:#B7C2CE;}
+  /* FOOTER */
+  footer{position:relative;z-index:2;padding:40px 0;border-top:1px solid var(--line);}
+  .footer-inner{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;font-family:var(--mono);font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);}
 
-  /* ================= CREATIVE MOTION ================= */
+  /* reveal */
+  html.anim .reveal{opacity:0;transform:translateY(26px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1);transition-delay:var(--d,0s);}
+  html.anim .reveal.in{opacity:1;transform:none;}
 
-  /* Scroll progress bar */
-  .scroll-progress{
-    position:fixed;
-    top:0; left:0;
-    height:3px;
-    width:0%;
-    background:linear-gradient(90deg, var(--gold), var(--gold-soft));
-    z-index:200;
-    transition:width 0.1s linear;
-  }
-
-  /* Nav condense on scroll */
-  header{transition:padding 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;}
-  header.scrolled{
-    background:rgba(10,20,36,0.96);
-    box-shadow:0 8px 30px rgba(0,0,0,0.28);
-  }
-  header.scrolled .nav{padding:12px 0;}
-  .nav{transition:padding 0.3s ease;}
-
-  /* Animated underline for nav links (desktop) */
-  @media (min-width:861px){
-    .navlinks a{position:relative;}
-    .navlinks a::after{
-      content:"";
-      position:absolute;
-      left:0; right:0; bottom:-6px;
-      height:2px;
-      background:var(--gold);
-      transform:scaleX(0);
-      transform-origin:left;
-      transition:transform 0.28s cubic-bezier(.2,.7,.2,1);
-    }
-    html[dir="rtl"] .navlinks a::after{transform-origin:right;}
-    .navlinks a:hover::after,
-    .navlinks a.active::after{transform:scaleX(1);}
-    .navlinks a.active{color:var(--white);}
-  }
-
-  /* Scroll-reveal — only active when JS adds .anim to <html> */
-  html.anim [data-reveal]{
-    opacity:0;
-    transform:translateY(22px);
-    transition:opacity 0.75s cubic-bezier(.2,.7,.2,1),
-               transform 0.75s cubic-bezier(.2,.7,.2,1);
-    transition-delay:var(--d, 0s);
-    will-change:opacity, transform;
-  }
-  html.anim [data-reveal].in{
-    opacity:1;
-    transform:none;
-  }
-
-  /* Hero aurora glow */
-  .hero-glow{
-    position:absolute;
-    inset:0;
-    z-index:0;
-    pointer-events:none;
-    overflow:hidden;
-  }
-  .hero-glow span{
-    position:absolute;
-    border-radius:50%;
-    filter:blur(70px);
-    opacity:0.5;
-  }
-  .hero-glow .g1{
-    width:420px;height:420px;
-    top:-120px; right:-80px;
-    background:radial-gradient(circle, rgba(173,138,82,0.55), transparent 70%);
-    animation:drift1 16s ease-in-out infinite;
-  }
-  .hero-glow .g2{
-    width:360px;height:360px;
-    bottom:-140px; left:-60px;
-    background:radial-gradient(circle, rgba(36,66,90,0.85), transparent 70%);
-    animation:drift2 20s ease-in-out infinite;
-  }
-  @keyframes drift1{
-    0%,100%{transform:translate(0,0) scale(1);}
-    50%{transform:translate(-40px,40px) scale(1.12);}
-  }
-  @keyframes drift2{
-    0%,100%{transform:translate(0,0) scale(1);}
-    50%{transform:translate(50px,-30px) scale(1.08);}
-  }
-
-  /* Hero headline mask-reveal (load) */
-  html.anim .hero h1,
-  html.anim .hero .eyebrow,
-  html.anim .hero p.lead,
-  html.anim .hero-actions,
-  html.anim .hero-stats{
-    opacity:0;
-    transform:translateY(20px);
-    animation:heroRise 0.9s cubic-bezier(.2,.7,.2,1) forwards;
-  }
-  html.anim .hero .eyebrow{animation-delay:0.05s;}
-  html.anim .hero h1{animation-delay:0.15s;}
-  html.anim .hero p.lead{animation-delay:0.3s;}
-  html.anim .hero-actions{animation-delay:0.45s;}
-  html.anim .hero-stats{animation-delay:0.6s;}
-  @keyframes heroRise{
-    to{opacity:1; transform:none;}
-  }
-
-  /* Register card float + scan line */
-  html.anim .register{
-    animation:floatCard 7s ease-in-out infinite;
-  }
-  @keyframes floatCard{
-    0%,100%{transform:translateY(0);}
-    50%{transform:translateY(-8px);}
-  }
-  .register{position:relative;}
-  .register::after{
-    content:"";
-    position:absolute;
-    left:0; right:0; top:0;
-    height:90px;
-    background:linear-gradient(180deg, rgba(199,171,124,0.12), transparent);
-    pointer-events:none;
-    animation:scan 5.5s ease-in-out infinite;
-  }
-  @keyframes scan{
-    0%{transform:translateY(-90px); opacity:0;}
-    35%{opacity:1;}
-    70%{transform:translateY(360px); opacity:0;}
-    100%{transform:translateY(360px); opacity:0;}
-  }
-
-  /* Card hover lift */
-  .service-card,
-  .case-card,
-  .approach-step,
-  .register-item{
-    transition:transform 0.3s cubic-bezier(.2,.7,.2,1),
-               box-shadow 0.3s ease,
-               background 0.3s ease,
-               border-color 0.3s ease;
-  }
-  .service-card:hover{
-    transform:translateY(-4px);
-    box-shadow:0 18px 40px rgba(10,20,36,0.12);
-    z-index:1;
-  }
-  .case-card:hover{
-    transform:translateY(-4px);
-    border-color:var(--gold-soft);
-    background:rgba(255,255,255,0.04);
-  }
-  .register-item:hover{background:rgba(199,171,124,0.05);}
-
-  /* Approach step: line draws in on reveal */
-  .approach-step{
-    border-top:none;
-    position:relative;
-    padding-top:22px;
-  }
-  .approach-step::before{
-    content:"";
-    position:absolute;
-    top:0; left:0; right:0;
-    height:2px;
-    background:var(--ink);
-    transform:scaleX(0);
-    transform-origin:left;
-    transition:transform 0.7s cubic-bezier(.2,.7,.2,1);
-    transition-delay:var(--d, 0s);
-  }
-  html[dir="rtl"] .approach-step::before{transform-origin:right;}
-  .approach-step.in::before{transform:scaleX(1);}
-  html:not(.anim) .approach-step::before{transform:scaleX(1);}
-
-  /* Button sheen sweep */
-  .btn-primary, .navcta, .submit-btn{position:relative; overflow:hidden;}
-  .btn-primary::after, .navcta::after, .submit-btn::after{
-    content:"";
-    position:absolute;
-    top:0; left:-120%;
-    width:80%; height:100%;
-    background:linear-gradient(120deg, transparent, rgba(255,255,255,0.35), transparent);
-    transform:skewX(-20deg);
-    transition:left 0.6s ease;
-  }
-  .btn-primary:hover::after, .navcta:hover::after, .submit-btn:hover::after{left:140%;}
-
-  /* Cred icon pop on reveal */
-  .cred-icon{transition:transform 0.3s ease, background 0.3s ease, color 0.3s ease;}
-  .cred-item:hover .cred-icon{
-    background:var(--gold);
-    color:var(--ink);
-    transform:rotate(-6deg) scale(1.08);
-  }
-
-  /* Language crossfade */
-  .lang-fade{
-    transition:opacity 0.25s ease;
-  }
+  /* language crossfade */
+  .lang-fade{transition:opacity .25s ease;}
   .lang-fade.fading{opacity:0;}
 
-  @media (prefers-reduced-motion: reduce){
-    .hero-glow .g1, .hero-glow .g2,
-    html.anim .register,
-    .register::after{animation:none;}
-    .scroll-progress{display:none;}
-    html.anim [data-reveal]{opacity:1; transform:none;}
-    html.anim .hero h1,
-    html.anim .hero .eyebrow,
-    html.anim .hero p.lead,
-    html.anim .hero-actions,
-    html.anim .hero-stats{opacity:1; transform:none; animation:none;}
-  }
-
-  /* ---------- RTL OVERRIDES ---------- */
-  html[dir="rtl"] .cred-quote{
-    border-inline-start:none;
-    border-inline-end:3px solid var(--gold);
-  }
-  html[dir="rtl"] .register-code{
-    text-align:right;
-  }
+  /* RTL type fixes: Arabic shouldn't be tracked-tight or transformed */
+  html[dir="rtl"] .mega,html[dir="rtl"] .sec-h,html[dir="rtl"] .quote,html[dir="rtl"] .contact-info h2,html[dir="rtl"] .svc h3,html[dir="rtl"] .step h3{letter-spacing:normal;text-transform:none;line-height:1.08;}
+  html[dir="rtl"] .band .t span{letter-spacing:normal;text-transform:none;}
+  html[dir="rtl"] .brand,html[dir="rtl"] .navcta,html[dir="rtl"] .langtoggle button{font-family:var(--sans);}
 </style>
 </head>
 <body class="lang-fade">
 
-<div class="scroll-progress" id="scrollProgress"></div>
+<canvas id="net" aria-hidden="true"></canvas>
+<div class="starfade" aria-hidden="true"></div>
 
-<header>
+<header id="hdr">
   <div class="wrap nav">
-    <div class="logo"><span class="logo-mark"></span><span data-i18n="logo">AVENLOR CONSULTING</span></div>
+    <div class="brand"><span class="mk"></span><span data-i18n="logo">Avenlor</span></div>
     <ul class="navlinks" id="navlinks">
       <li><a href="#services" data-i18n="nav_services">Services</a></li>
       <li><a href="#approach" data-i18n="nav_approach">Approach</a></li>
       <li><a href="#credentials" data-i18n="nav_credentials">Credentials</a></li>
-      <li><a href="#cases" data-i18n="nav_cases">Insights</a></li>
-      <li class="navlinks-cta"><a href="#contact" data-i18n="nav_cta">Book a Call</a></li>
+      <li><a href="#insights" data-i18n="nav_cases">Insights</a></li>
+      <li class="navlinks-cta"><a href="#contact" data-i18n="nav_cta">Book a call</a></li>
     </ul>
     <div class="navright">
       <button class="navtoggle" id="navtoggle" aria-label="Toggle navigation menu" aria-controls="navlinks" aria-expanded="false" onclick="toggleNav()">
@@ -890,233 +226,111 @@
         <button id="btn-en" class="active" onclick="setLang('en')">EN</button>
         <button id="btn-ar" onclick="setLang('ar')">AR</button>
       </div>
-      <a class="navcta" href="#contact" data-i18n="nav_cta">Book a Call</a>
+      <a class="navcta" href="#contact" data-i18n="nav_cta">Book a call</a>
     </div>
   </div>
 </header>
 
 <section class="hero">
-  <div class="hero-glow" aria-hidden="true"><span class="g1"></span><span class="g2"></span></div>
-  <div class="wrap hero-inner">
-    <div>
-      <div class="eyebrow"><span class="rule"></span><span data-i18n="hero_eyebrow">Independent Advisory</span></div>
-      <h1 data-i18n="hero_h1">Governance and internal controls <em>that hold up to scrutiny.</em></h1>
-      <p class="lead" data-i18n="hero_lead">Independent advisory for listed companies, family businesses, and government entities building governance frameworks and internal controls that satisfy boards, auditors, and regulators alike.</p>
-      <div class="hero-actions">
-        <a class="btn-primary" href="#contact" data-i18n="hero_cta1">Discuss Your Governance Gap</a>
-        <a class="btn-secondary" href="#services" data-i18n="hero_cta2">View Services</a>
-      </div>
-      <div class="hero-stats">
-        <div>
-          <div class="stat-num">10+</div>
-          <div class="stat-label" data-i18n="stat1">Years in listed-company governance</div>
-        </div>
-        <div>
-          <div class="stat-num">3</div>
-          <div class="stat-label" data-i18n="stat2">Sectors advised</div>
-        </div>
-        <div>
-          <div class="stat-num">AR/EN</div>
-          <div class="stat-label" data-i18n="stat3">Bilingual engagement</div>
-        </div>
-      </div>
-    </div>
-    <div class="register">
-      <div class="register-head">
-        <span><span class="register-dot"></span><span data-i18n="reg_head">Active control register</span></span>
-        <span data-i18n="reg_year">FY2026</span>
-      </div>
-      <ul class="register-list">
-        <li class="register-item">
-          <span class="register-code">GOV-01</span>
-          <span class="register-text" data-i18n="reg1"><b>Board oversight</b> — charter & committee structure</span>
-        </li>
-        <li class="register-item">
-          <span class="register-code">IC-04</span>
-          <span class="register-text" data-i18n="reg2"><b>Segregation of duties</b> — control gap assessment</span>
-        </li>
-        <li class="register-item">
-          <span class="register-code">RC-02</span>
-          <span class="register-text" data-i18n="reg3"><b>Regulatory alignment</b> — compliance mapping</span>
-        </li>
-        <li class="register-item">
-          <span class="register-code">IC-07</span>
-          <span class="register-text" data-i18n="reg4"><b>Remediation plan</b> — control owner sign-off</span>
-        </li>
-        <li class="register-item">
-          <span class="register-code">GOV-05</span>
-          <span class="register-text" data-i18n="reg5"><b>Policy design</b> — delegation of authority</span>
-        </li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<section class="services" id="services">
   <div class="wrap">
-    <div class="section-head">
-      <div class="section-eyebrow" data-i18n="services_eyebrow">What I Do</div>
-      <h2 data-i18n="services_h2">Governance and controls, applied where they matter most</h2>
-      <p data-i18n="services_p">Every engagement starts with internal controls and governance — the foundation regulators, auditors, and boards all test against.</p>
+    <div class="kicker" data-i18n="hero_eyebrow">Independent Governance &amp; Internal Controls</div>
+    <h1 class="mega">
+      <span class="row"><span data-i18n="hero_l1">Governance</span></span>
+      <span class="row"><span><span data-i18n="hero_l2">that survives</span> <span class="rotor"><span class="slot"><span class="track" id="track"></span></span></span></span></span>
+    </h1>
+    <div class="hero-foot">
+      <p class="lead" data-i18n="hero_lead">Board-grade governance frameworks and internal controls for listed companies, family businesses, and government entities — built to satisfy regulators, auditors, and the boardroom alike.</p>
+      <div class="cta-row">
+        <a class="btn btn-solid mag" href="#contact" data-i18n="hero_cta1">Discuss your mandate</a>
+        <a class="btn btn-ghost mag" href="#services" data-i18n="hero_cta2">View services</a>
+      </div>
     </div>
-    <div class="service-grid">
-      <div class="service-card featured">
-        <span class="service-tag" data-i18n="s1_tag">Primary</span>
-        <h3 data-i18n="s1_h3">Governance Framework Design</h3>
-        <p data-i18n="s1_p">Board and committee structures, policy design, and delegation-of-authority frameworks built to withstand regulatory and audit review.</p>
-        <div class="service-for" data-i18n="s1_for"><b>For:</b> boards preparing for listing, restructuring, or regulatory review</div>
-      </div>
-      <div class="service-card featured">
-        <span class="service-tag" data-i18n="s2_tag">Primary</span>
-        <h3 data-i18n="s2_h3">Internal Controls Review</h3>
-        <p data-i18n="s2_p">Control gap assessments and remediation planning aligned to recognized frameworks, with clear ownership at every step.</p>
-        <div class="service-for" data-i18n="s2_for"><b>For:</b> finance and operations teams facing an upcoming audit</div>
-      </div>
-      <div class="service-card">
-        <span class="service-tag" data-i18n="s3_tag">Advisory</span>
-        <h3 data-i18n="s3_h3">Risk & Compliance Advisory</h3>
-        <p data-i18n="s3_p">Regulatory alignment and compliance mapping tailored to the entity's sector and regulator.</p>
-        <div class="service-for" data-i18n="s3_for"><b>For:</b> organizations navigating new or changing regulatory requirements</div>
-      </div>
-      <div class="service-card">
-        <span class="service-tag" data-i18n="s4_tag">Specialized</span>
-        <h3 data-i18n="s4_h3">Logistics Operations Advisory</h3>
-        <p data-i18n="s4_p">Governance and controls expertise applied specifically to logistics and supply chain operations.</p>
-        <div class="service-for" data-i18n="s4_for"><b>For:</b> logistics operators seeking operational discipline alongside compliance</div>
-      </div>
+    <div class="stats">
+      <div class="stat"><div class="n" data-count="10" data-suffix="+">10+</div><div class="l" data-i18n="stat1">Years in listed-company governance</div></div>
+      <div class="stat"><div class="n" data-count="3">3</div><div class="l" data-i18n="stat2">Core sectors advised</div></div>
+      <div class="stat"><div class="n">AR·EN</div><div class="l" data-i18n="stat3">Bilingual engagement</div></div>
     </div>
   </div>
 </section>
 
-<section class="approach" id="approach">
+<div class="band" aria-hidden="true"><div class="t">
+  <span class="fill">Governance</span><span>·</span><span>Internal Controls</span><span>·</span><span class="fill">Risk</span><span>·</span><span>Compliance</span><span>·</span>
+  <span class="fill">Governance</span><span>·</span><span>Internal Controls</span><span>·</span><span class="fill">Risk</span><span>·</span><span>Compliance</span><span>·</span>
+</div></div>
+
+<section class="block" id="services">
   <div class="wrap">
-    <div class="section-head">
-      <div class="section-eyebrow" data-i18n="approach_eyebrow">Methodology</div>
-      <h2 data-i18n="approach_h2">A structured, four-step engagement</h2>
-      <p data-i18n="approach_p">Governance work fails when it is ad hoc. Every engagement follows the same disciplined sequence.</p>
-    </div>
-    <div class="approach-list">
-      <div class="approach-step">
-        <span class="approach-num">01</span>
-        <h3 data-i18n="a1_h3">Assess</h3>
-        <p data-i18n="a1_p">Map the current control environment and identify gaps against regulatory and governance benchmarks.</p>
-      </div>
-      <div class="approach-step">
-        <span class="approach-num">02</span>
-        <h3 data-i18n="a2_h3">Design</h3>
-        <p data-i18n="a2_p">Build the framework, policy, or control structure specific to the organization's size and sector.</p>
-      </div>
-      <div class="approach-step">
-        <span class="approach-num">03</span>
-        <h3 data-i18n="a3_h3">Implement</h3>
-        <p data-i18n="a3_p">Work with control owners to embed the changes into daily operations, not just the policy manual.</p>
-      </div>
-      <div class="approach-step">
-        <span class="approach-num">04</span>
-        <h3 data-i18n="a4_h3">Monitor</h3>
-        <p data-i18n="a4_p">Establish ongoing testing and reporting so the framework stays effective after the engagement ends.</p>
-      </div>
+    <div class="sec-tag reveal" data-i18n="services_eyebrow">What we do</div>
+    <h2 class="sec-h reveal" data-i18n="services_h2">Four disciplines,<br>one standard of rigor.</h2>
+    <p class="sec-p reveal" data-i18n="services_p">Every engagement starts with governance and internal controls — the foundation regulators, auditors, and boards all test against.</p>
+    <div class="svc-list">
+      <div class="svc reveal"><div class="no">01</div><div><h3 data-i18n="s1_h3">Governance Framework Design</h3><p class="desc" data-i18n="s1_p">Board and committee structures, policy architecture, and delegation-of-authority frameworks built to withstand regulatory and audit review.</p></div><div class="for" data-i18n="s1_for"><b>For</b> boards preparing to list, restructure, or face regulatory review</div></div>
+      <div class="svc reveal"><div class="no">02</div><div><h3 data-i18n="s2_h3">Internal Controls Review</h3><p class="desc" data-i18n="s2_p">Control-gap assessments and remediation planning aligned to recognized frameworks, with clear ownership at every step.</p></div><div class="for" data-i18n="s2_for"><b>For</b> finance and operations teams facing an upcoming audit</div></div>
+      <div class="svc reveal"><div class="no">03</div><div><h3 data-i18n="s3_h3">Risk &amp; Compliance Advisory</h3><p class="desc" data-i18n="s3_p">Regulatory alignment and compliance mapping tailored to the entity's sector and its specific regulator.</p></div><div class="for" data-i18n="s3_for"><b>For</b> organizations navigating new or changing regulatory requirements</div></div>
+      <div class="svc reveal"><div class="no">04</div><div><h3 data-i18n="s4_h3">Logistics Operations Advisory</h3><p class="desc" data-i18n="s4_p">Governance and controls expertise applied specifically to logistics and supply-chain operations.</p></div><div class="for" data-i18n="s4_for"><b>For</b> logistics operators seeking operational discipline alongside compliance</div></div>
     </div>
   </div>
 </section>
 
-<section class="credentials" id="credentials">
-  <div class="wrap cred-grid">
-    <div>
-      <div class="section-eyebrow" data-i18n="cred_eyebrow">Background</div>
-      <h2 style="font-family:var(--font-display);font-size:clamp(26px,3.2vw,36px);font-weight:800;letter-spacing:-0.01em;margin-bottom:24px;" data-i18n="cred_h2">Experience across listed-company governance</h2>
-      <ul class="cred-list">
-        <li class="cred-item">
-          <div class="cred-icon">01</div>
-          <div>
-            <h4 data-i18n="c1_h4">Listed-Company Governance</h4>
-            <p data-i18n="c1_p">CEO-level and internal-controls oversight within a publicly listed logistics group.</p>
-          </div>
-        </li>
-        <li class="cred-item">
-          <div class="cred-icon">02</div>
-          <div>
-            <h4 data-i18n="c2_h4">Multi-Entity Oversight</h4>
-            <p data-i18n="c2_p">Governance and controls responsibility spanning multiple operating entities within one group.</p>
-          </div>
-        </li>
-        <li class="cred-item">
-          <div class="cred-icon">03</div>
-          <div>
-            <h4 data-i18n="c3_h4">Bilingual Operating Environment</h4>
-            <p data-i18n="c3_p">Engagements delivered fluently in both Arabic and English, matched to the client's governance language.</p>
-          </div>
-        </li>
-      </ul>
-    </div>
-    <div class="cred-quote">
-      <p data-i18n="quote_p">"Governance that only exists on paper is not governance — it's exposure. The work is making the framework the way the organization actually operates."</p>
-      <div class="attribution" data-i18n="quote_attr">— Engagement philosophy</div>
-    </div>
-  </div>
-</section>
-
-<section class="cases" id="cases">
+<section class="block" id="approach">
   <div class="wrap">
-    <div class="section-head">
-      <div class="section-eyebrow" data-i18n="cases_eyebrow">Insights</div>
-      <h2 style="color:var(--white);" data-i18n="cases_h2">Representative engagements</h2>
-      <p style="color:#B7C2CE;" data-i18n="cases_p">Anonymized to protect client confidentiality. Details available on request under NDA.</p>
+    <div class="sec-tag reveal" data-i18n="approach_eyebrow">Methodology</div>
+    <h2 class="sec-h reveal" data-i18n="approach_h2">A structured,<br>four-step engagement.</h2>
+    <p class="sec-p reveal" data-i18n="approach_p">Governance work fails when it is ad hoc. Every engagement follows the same disciplined sequence.</p>
+    <div class="steps">
+      <div class="step reveal" style="--d:.04s"><div class="n">01</div><h3 data-i18n="a1_h3">Assess</h3><p data-i18n="a1_p">Map the current control environment and identify gaps against regulatory and governance benchmarks.</p></div>
+      <div class="step reveal" style="--d:.12s"><div class="n">02</div><h3 data-i18n="a2_h3">Design</h3><p data-i18n="a2_p">Build the framework, policy, or control structure specific to the organization's size and sector.</p></div>
+      <div class="step reveal" style="--d:.2s"><div class="n">03</div><h3 data-i18n="a3_h3">Implement</h3><p data-i18n="a3_p">Work with control owners to embed the changes into daily operations, not just the policy manual.</p></div>
+      <div class="step reveal" style="--d:.28s"><div class="n">04</div><h3 data-i18n="a4_h3">Monitor</h3><p data-i18n="a4_p">Establish ongoing testing and reporting so the framework stays effective after the engagement ends.</p></div>
     </div>
-    <div class="case-grid">
-      <div class="case-card">
-        <div class="case-sector" data-i18n="case1_sector">Logistics — Listed Group</div>
-        <div class="case-row">
-          <div class="k" data-i18n="k_challenge">Challenge</div>
-          <div class="v" data-i18n="case1_challenge">Segregation-of-duties gaps flagged ahead of an external audit.</div>
-        </div>
-        <div class="case-row">
-          <div class="k" data-i18n="k_approach">Approach</div>
-          <div class="v" data-i18n="case1_approach">Control gap assessment, remediation plan, and control-owner sign-off process.</div>
-        </div>
-        <div class="case-row">
-          <div class="k" data-i18n="k_outcome">Outcome</div>
-          <div class="v" data-i18n="case1_outcome"><b>Zero material findings</b> at the following audit cycle.</div>
-        </div>
+  </div>
+</section>
+
+<section class="block creds" id="credentials">
+  <div class="wrap">
+    <div class="sec-tag reveal" data-i18n="cred_eyebrow">Background</div>
+    <blockquote class="quote reveal" data-i18n="quote_p">"Governance that only exists on paper is not governance — it's exposure. The work is making the framework the way the organization actually operates."</blockquote>
+    <div class="quote-attr reveal" data-i18n="quote_attr">— Engagement philosophy</div>
+    <div class="cred-grid">
+      <div class="cred reveal" style="--d:.04s"><div class="ci">01</div><h4 data-i18n="c1_h4">Listed-Company Governance</h4><p data-i18n="c1_p">CEO-level and internal-controls oversight within a publicly listed logistics group.</p></div>
+      <div class="cred reveal" style="--d:.12s"><div class="ci">02</div><h4 data-i18n="c2_h4">Multi-Entity Oversight</h4><p data-i18n="c2_p">Governance and controls responsibility spanning multiple operating entities within one group.</p></div>
+      <div class="cred reveal" style="--d:.2s"><div class="ci">03</div><h4 data-i18n="c3_h4">Bilingual Operating Environment</h4><p data-i18n="c3_p">Engagements delivered fluently in both Arabic and English, matched to the client's governance language.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="insights">
+  <div class="wrap">
+    <div class="sec-tag reveal" data-i18n="cases_eyebrow">Insights</div>
+    <h2 class="sec-h reveal" data-i18n="cases_h2">Representative engagements.</h2>
+    <p class="sec-p reveal" data-i18n="cases_p">Anonymized to protect client confidentiality. Details available on request under NDA.</p>
+    <div class="cases">
+      <div class="case reveal" style="--d:.04s">
+        <div class="sector" data-i18n="case1_sector">Logistics — Listed Group</div>
+        <div class="case-row"><div class="k" data-i18n="k_challenge">Challenge</div><div class="v" data-i18n="case1_challenge">Segregation-of-duties gaps flagged ahead of an external audit.</div></div>
+        <div class="case-row"><div class="k" data-i18n="k_approach">Approach</div><div class="v" data-i18n="case1_approach">Control-gap assessment, remediation plan, and control-owner sign-off process.</div></div>
+        <div class="case-row"><div class="k" data-i18n="k_outcome">Outcome</div><div class="v" data-i18n="case1_outcome"><b>Zero material findings</b> at the following audit cycle.</div></div>
       </div>
-      <div class="case-card">
-        <div class="case-sector" data-i18n="case2_sector">Family Business</div>
-        <div class="case-row">
-          <div class="k" data-i18n="k_challenge">Challenge</div>
-          <div class="v" data-i18n="case2_challenge">No formal governance structure ahead of a generational transition.</div>
-        </div>
-        <div class="case-row">
-          <div class="k" data-i18n="k_approach">Approach</div>
-          <div class="v" data-i18n="case2_approach">Board charter design and delegation-of-authority framework built from scratch.</div>
-        </div>
-        <div class="case-row">
-          <div class="k" data-i18n="k_outcome">Outcome</div>
-          <div class="v" data-i18n="case2_outcome"><b>Formal board</b> operating within one quarter.</div>
-        </div>
+      <div class="case reveal" style="--d:.12s">
+        <div class="sector" data-i18n="case2_sector">Family Business</div>
+        <div class="case-row"><div class="k" data-i18n="k_challenge">Challenge</div><div class="v" data-i18n="case2_challenge">No formal governance structure ahead of a generational transition.</div></div>
+        <div class="case-row"><div class="k" data-i18n="k_approach">Approach</div><div class="v" data-i18n="case2_approach">Board-charter design and delegation-of-authority framework built from scratch.</div></div>
+        <div class="case-row"><div class="k" data-i18n="k_outcome">Outcome</div><div class="v" data-i18n="case2_outcome"><b>Formal board</b> operating within one quarter.</div></div>
       </div>
-      <div class="case-card">
-        <div class="case-sector" data-i18n="case3_sector">Government-Linked Entity</div>
-        <div class="case-row">
-          <div class="k" data-i18n="k_challenge">Challenge</div>
-          <div class="v" data-i18n="case3_challenge">New regulatory requirements outpacing existing compliance mapping.</div>
-        </div>
-        <div class="case-row">
-          <div class="k" data-i18n="k_approach">Approach</div>
-          <div class="v" data-i18n="case3_approach">Full compliance mapping exercise against the updated regulatory framework.</div>
-        </div>
-        <div class="case-row">
-          <div class="k" data-i18n="k_outcome">Outcome</div>
-          <div class="v" data-i18n="case3_outcome"><b>Full alignment</b> confirmed ahead of the regulator's deadline.</div>
-        </div>
+      <div class="case reveal" style="--d:.2s">
+        <div class="sector" data-i18n="case3_sector">Government-Linked Entity</div>
+        <div class="case-row"><div class="k" data-i18n="k_challenge">Challenge</div><div class="v" data-i18n="case3_challenge">New regulatory requirements outpacing existing compliance mapping.</div></div>
+        <div class="case-row"><div class="k" data-i18n="k_approach">Approach</div><div class="v" data-i18n="case3_approach">Full compliance-mapping exercise against the updated regulatory framework.</div></div>
+        <div class="case-row"><div class="k" data-i18n="k_outcome">Outcome</div><div class="v" data-i18n="case3_outcome"><b>Full alignment</b> confirmed ahead of the regulator's deadline.</div></div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="contact" id="contact">
+<section class="block" id="contact">
   <div class="wrap contact-grid">
     <div class="contact-info">
-      <h2 data-i18n="contact_h2">Start with a conversation</h2>
+      <h2 data-i18n="contact_h2">Start with a conversation.</h2>
       <p data-i18n="contact_p">Every engagement begins with a short call to understand the organization and where governance currently stands.</p>
       <ul class="contact-links">
         <li><span class="k" data-i18n="contact_email_k">Email</span><a class="v" dir="ltr" href="mailto:contact@avenlorconsulting.com">contact@avenlorconsulting.com</a></li>
@@ -1126,16 +340,9 @@
       </ul>
     </div>
     <form id="contactForm" onsubmit="return sendMail(event)">
-      <div class="field">
-        <label data-i18n="f_name">Name</label>
-        <input type="text" name="name" required>
-      </div>
-      <div class="field">
-        <label data-i18n="f_email">Email</label>
-        <input type="email" name="email" dir="ltr" required>
-      </div>
-      <div class="field">
-        <label data-i18n="f_org">Organization type</label>
+      <div class="field"><label data-i18n="f_name">Name</label><input type="text" name="name" required></div>
+      <div class="field"><label data-i18n="f_email">Email</label><input type="email" name="email" dir="ltr" required></div>
+      <div class="field"><label data-i18n="f_org">Organization type</label>
         <select name="org">
           <option data-i18n="f_org_1">Listed / large corporate</option>
           <option data-i18n="f_org_2">SME / family business</option>
@@ -1143,20 +350,16 @@
           <option data-i18n="f_org_4">Other</option>
         </select>
       </div>
-      <div class="field">
-        <label data-i18n="f_interest">Area of interest</label>
+      <div class="field"><label data-i18n="f_interest">Area of interest</label>
         <select name="interest">
           <option data-i18n="f_int_1">Governance framework design</option>
           <option data-i18n="f_int_2">Internal controls review</option>
-          <option data-i18n="f_int_3">Risk & compliance advisory</option>
+          <option data-i18n="f_int_3">Risk &amp; compliance advisory</option>
           <option data-i18n="f_int_4">Logistics operations advisory</option>
         </select>
       </div>
-      <div class="field">
-        <label data-i18n="f_message">Message</label>
-        <textarea name="message"></textarea>
-      </div>
-      <button class="submit-btn" data-i18n="f_submit">Request a Consultation</button>
+      <div class="field"><label data-i18n="f_message">Message</label><textarea name="message"></textarea></div>
+      <button class="submit-btn" type="submit" data-i18n="f_submit">Request a consultation</button>
     </form>
   </div>
 </section>
@@ -1164,283 +367,215 @@
 <footer>
   <div class="wrap footer-inner">
     <span data-i18n="footer_left">© 2026 Avenlor Consulting. All rights reserved.</span>
-    <span data-i18n="footer_right">Independent advisory — governance, internal controls & compliance.</span>
+    <span data-i18n="footer_right">Independent advisory — governance, internal controls &amp; compliance.</span>
   </div>
 </footer>
 
 <script>
 const i18n = {
-  en: {
-    logo:"AVENLOR CONSULTING", nav_services:"Services", nav_approach:"Approach", nav_credentials:"Credentials", nav_cases:"Insights", nav_cta:"Book a Call",
-    hero_eyebrow:"Independent Advisory",
-    hero_h1:'Governance and internal controls <em>that hold up to scrutiny.</em>',
-    hero_lead:"Independent advisory for listed companies, family businesses, and government entities building governance frameworks and internal controls that satisfy boards, auditors, and regulators alike.",
-    hero_cta1:"Discuss Your Governance Gap", hero_cta2:"View Services",
-    stat1:"Years in listed-company governance", stat2:"Sectors advised", stat3:"Bilingual engagement",
-    reg_head:"Active control register", reg_year:"FY2026",
-    reg1:"<b>Board oversight</b> — charter & committee structure",
-    reg2:"<b>Segregation of duties</b> — control gap assessment",
-    reg3:"<b>Regulatory alignment</b> — compliance mapping",
-    reg4:"<b>Remediation plan</b> — control owner sign-off",
-    reg5:"<b>Policy design</b> — delegation of authority",
-    services_eyebrow:"What I Do", services_h2:"Governance and controls, applied where they matter most",
-    services_p:"Every engagement starts with internal controls and governance — the foundation regulators, auditors, and boards all test against.",
-    s1_tag:"Primary", s1_h3:"Governance Framework Design",
-    s1_p:"Board and committee structures, policy design, and delegation-of-authority frameworks built to withstand regulatory and audit review.",
-    s1_for:"<b>For:</b> boards preparing for listing, restructuring, or regulatory review",
-    s2_tag:"Primary", s2_h3:"Internal Controls Review",
-    s2_p:"Control gap assessments and remediation planning aligned to recognized frameworks, with clear ownership at every step.",
-    s2_for:"<b>For:</b> finance and operations teams facing an upcoming audit",
-    s3_tag:"Advisory", s3_h3:"Risk & Compliance Advisory",
-    s3_p:"Regulatory alignment and compliance mapping tailored to the entity's sector and regulator.",
-    s3_for:"<b>For:</b> organizations navigating new or changing regulatory requirements",
-    s4_tag:"Specialized", s4_h3:"Logistics Operations Advisory",
-    s4_p:"Governance and controls expertise applied specifically to logistics and supply chain operations.",
-    s4_for:"<b>For:</b> logistics operators seeking operational discipline alongside compliance",
-    approach_eyebrow:"Methodology", approach_h2:"A structured, four-step engagement",
+  en:{
+    logo:"Avenlor", nav_services:"Services", nav_approach:"Approach", nav_credentials:"Credentials", nav_cases:"Insights", nav_cta:"Book a call",
+    hero_eyebrow:"Independent Governance & Internal Controls",
+    hero_l1:"Governance", hero_l2:"that survives",
+    hero_lead:"Board-grade governance frameworks and internal controls for listed companies, family businesses, and government entities — built to satisfy regulators, auditors, and the boardroom alike.",
+    hero_cta1:"Discuss your mandate", hero_cta2:"View services",
+    stat1:"Years in listed-company governance", stat2:"Core sectors advised", stat3:"Bilingual engagement",
+    services_eyebrow:"What we do", services_h2:"Four disciplines,<br>one standard of rigor.",
+    services_p:"Every engagement starts with governance and internal controls — the foundation regulators, auditors, and boards all test against.",
+    s1_h3:"Governance Framework Design", s1_p:"Board and committee structures, policy architecture, and delegation-of-authority frameworks built to withstand regulatory and audit review.", s1_for:"<b>For</b> boards preparing to list, restructure, or face regulatory review",
+    s2_h3:"Internal Controls Review", s2_p:"Control-gap assessments and remediation planning aligned to recognized frameworks, with clear ownership at every step.", s2_for:"<b>For</b> finance and operations teams facing an upcoming audit",
+    s3_h3:"Risk & Compliance Advisory", s3_p:"Regulatory alignment and compliance mapping tailored to the entity's sector and its specific regulator.", s3_for:"<b>For</b> organizations navigating new or changing regulatory requirements",
+    s4_h3:"Logistics Operations Advisory", s4_p:"Governance and controls expertise applied specifically to logistics and supply-chain operations.", s4_for:"<b>For</b> logistics operators seeking operational discipline alongside compliance",
+    approach_eyebrow:"Methodology", approach_h2:"A structured,<br>four-step engagement.",
     approach_p:"Governance work fails when it is ad hoc. Every engagement follows the same disciplined sequence.",
     a1_h3:"Assess", a1_p:"Map the current control environment and identify gaps against regulatory and governance benchmarks.",
     a2_h3:"Design", a2_p:"Build the framework, policy, or control structure specific to the organization's size and sector.",
     a3_h3:"Implement", a3_p:"Work with control owners to embed the changes into daily operations, not just the policy manual.",
     a4_h3:"Monitor", a4_p:"Establish ongoing testing and reporting so the framework stays effective after the engagement ends.",
-    cred_eyebrow:"Background", cred_h2:"Experience across listed-company governance",
+    cred_eyebrow:"Background",
+    quote_p:'"Governance that only exists on paper is not governance — it\'s exposure. The work is making the framework the way the organization actually operates."',
+    quote_attr:"— Engagement philosophy",
     c1_h4:"Listed-Company Governance", c1_p:"CEO-level and internal-controls oversight within a publicly listed logistics group.",
     c2_h4:"Multi-Entity Oversight", c2_p:"Governance and controls responsibility spanning multiple operating entities within one group.",
     c3_h4:"Bilingual Operating Environment", c3_p:"Engagements delivered fluently in both Arabic and English, matched to the client's governance language.",
-    quote_p:'"Governance that only exists on paper is not governance — it\'s exposure. The work is making the framework the way the organization actually operates."',
-    quote_attr:"— Engagement philosophy",
-    cases_eyebrow:"Insights", cases_h2:"Representative engagements",
+    cases_eyebrow:"Insights", cases_h2:"Representative engagements.",
     cases_p:"Anonymized to protect client confidentiality. Details available on request under NDA.",
     case1_sector:"Logistics — Listed Group", case2_sector:"Family Business", case3_sector:"Government-Linked Entity",
     k_challenge:"Challenge", k_approach:"Approach", k_outcome:"Outcome",
-    case1_challenge:"Segregation-of-duties gaps flagged ahead of an external audit.",
-    case1_approach:"Control gap assessment, remediation plan, and control-owner sign-off process.",
-    case1_outcome:"<b>Zero material findings</b> at the following audit cycle.",
-    case2_challenge:"No formal governance structure ahead of a generational transition.",
-    case2_approach:"Board charter design and delegation-of-authority framework built from scratch.",
-    case2_outcome:"<b>Formal board</b> operating within one quarter.",
-    case3_challenge:"New regulatory requirements outpacing existing compliance mapping.",
-    case3_approach:"Full compliance mapping exercise against the updated regulatory framework.",
-    case3_outcome:"<b>Full alignment</b> confirmed ahead of the regulator's deadline.",
-    contact_h2:"Start with a conversation",
+    case1_challenge:"Segregation-of-duties gaps flagged ahead of an external audit.", case1_approach:"Control-gap assessment, remediation plan, and control-owner sign-off process.", case1_outcome:"<b>Zero material findings</b> at the following audit cycle.",
+    case2_challenge:"No formal governance structure ahead of a generational transition.", case2_approach:"Board-charter design and delegation-of-authority framework built from scratch.", case2_outcome:"<b>Formal board</b> operating within one quarter.",
+    case3_challenge:"New regulatory requirements outpacing existing compliance mapping.", case3_approach:"Full compliance-mapping exercise against the updated regulatory framework.", case3_outcome:"<b>Full alignment</b> confirmed ahead of the regulator's deadline.",
+    contact_h2:"Start with a conversation.",
     contact_p:"Every engagement begins with a short call to understand the organization and where governance currently stands.",
     contact_email_k:"Email", contact_website_k:"Website", contact_linkedin_k:"LinkedIn", contact_location_k:"Based in", contact_location_v:"Saudi Arabia",
-    f_name:"Name", f_email:"Email", f_org:"Organization type",
-    f_org_1:"Listed / large corporate", f_org_2:"SME / family business", f_org_3:"Government / semi-government", f_org_4:"Other",
-    f_interest:"Area of interest",
-    f_int_1:"Governance framework design", f_int_2:"Internal controls review", f_int_3:"Risk & compliance advisory", f_int_4:"Logistics operations advisory",
-    f_message:"Message", f_submit:"Request a Consultation",
+    f_name:"Name", f_email:"Email", f_org:"Organization type", f_org_1:"Listed / large corporate", f_org_2:"SME / family business", f_org_3:"Government / semi-government", f_org_4:"Other",
+    f_interest:"Area of interest", f_int_1:"Governance framework design", f_int_2:"Internal controls review", f_int_3:"Risk & compliance advisory", f_int_4:"Logistics operations advisory",
+    f_message:"Message", f_submit:"Request a consultation",
     footer_left:"© 2026 Avenlor Consulting. All rights reserved.",
-    footer_right:"Independent advisory — governance, internal controls & compliance."
+    footer_right:"Independent advisory — governance, internal controls & compliance.",
+    rotor:["scrutiny.","the audit.","the regulator.","the boardroom."]
   },
-  ar: {
-    logo:"أفنلور للاستشارات", nav_services:"الخدمات", nav_approach:"المنهجية", nav_credentials:"الخبرات", nav_cases:"رؤى", nav_cta:"احجز مكالمة",
-    hero_eyebrow:"استشارات مستقلة",
-    hero_h1:'حوكمة وضبط داخلي <em>تصمد أمام أي تدقيق.</em>',
-    hero_lead:"استشارات مستقلة للشركات المدرجة والمنشآت العائلية والجهات الحكومية، لبناء أطر حوكمة وأنظمة ضبط داخلي ترضي مجالس الإدارة والمدققين والجهات التنظيمية.",
-    hero_cta1:"ناقش فجوة الحوكمة لديك", hero_cta2:"عرض الخدمات",
-    stat1:"سنوات خبرة في حوكمة الشركات المدرجة", stat2:"قطاعات تمت استشارتها", stat3:"تعامل ثنائي اللغة",
-    reg_head:"سجل الضوابط النشطة", reg_year:"السنة المالية 2026",
-    reg1:"<b>رقابة مجلس الإدارة</b> — الميثاق وهيكل اللجان",
-    reg2:"<b>فصل المهام</b> — تقييم فجوات الضبط",
-    reg3:"<b>التوافق التنظيمي</b> — مطابقة الامتثال",
-    reg4:"<b>خطة المعالجة</b> — اعتماد مالك الضابط",
-    reg5:"<b>تصميم السياسات</b> — تفويض الصلاحيات",
-    services_eyebrow:"ما أقدمه", services_h2:"حوكمة وضوابط، مطبّقة حيث تُحدث الأثر الأكبر",
-    services_p:"كل تكليف يبدأ بالضبط الداخلي والحوكمة — الأساس الذي تختبره الجهات التنظيمية والمدققون ومجالس الإدارة.",
-    s1_tag:"أساسي", s1_h3:"تصميم إطار الحوكمة",
-    s1_p:"هياكل مجالس الإدارة واللجان، وتصميم السياسات، وأطر تفويض الصلاحيات المصممة لتصمد أمام المراجعة التنظيمية والتدقيق.",
-    s1_for:"<b>لمن:</b> مجالس الإدارة الاستعداد للإدراج أو إعادة الهيكلة أو المراجعة التنظيمية",
-    s2_tag:"أساسي", s2_h3:"مراجعة الضبط الداخلي",
-    s2_p:"تقييم فجوات الضبط وخطط المعالجة وفق أطر معتمدة، مع تحديد واضح للمسؤولية في كل خطوة.",
-    s2_for:"<b>لمن:</b> فرق المالية والعمليات استعداداً لتدقيق قادم",
-    s3_tag:"استشاري", s3_h3:"استشارات المخاطر والامتثال",
-    s3_p:"توافق تنظيمي ومطابقة امتثال مصممة وفق قطاع الجهة والجهة الرقابية المعنية.",
-    s3_for:"<b>لمن:</b> الجهات التي تواجه متطلبات تنظيمية جديدة أو متغيرة",
-    s4_tag:"متخصص", s4_h3:"استشارات عمليات اللوجستيات",
-    s4_p:"خبرة الحوكمة والضبط مطبّقة تحديداً على عمليات اللوجستيات وسلاسل الإمداد.",
-    s4_for:"<b>لمن:</b> مشغلو اللوجستيات الباحثون عن انضباط تشغيلي إلى جانب الامتثال",
-    approach_eyebrow:"المنهجية", approach_h2:"تكليف منظم من أربع خطوات",
+  ar:{
+    logo:"أفنلور", nav_services:"الخدمات", nav_approach:"المنهجية", nav_credentials:"الخبرات", nav_cases:"رؤى", nav_cta:"احجز مكالمة",
+    hero_eyebrow:"حوكمة وضبط داخلي مستقل",
+    hero_l1:"حوكمة", hero_l2:"تصمد أمام",
+    hero_lead:"أطر حوكمة وأنظمة ضبط داخلي بمستوى مجالس الإدارة، للشركات المدرجة والمنشآت العائلية والجهات الحكومية — مصممة لترضي الجهات التنظيمية والمدققين ومجلس الإدارة معاً.",
+    hero_cta1:"ناقش تكليفك", hero_cta2:"عرض الخدمات",
+    stat1:"سنوات خبرة في حوكمة الشركات المدرجة", stat2:"قطاعات رئيسية تمت استشارتها", stat3:"تعامل ثنائي اللغة",
+    services_eyebrow:"ما نقدمه", services_h2:"أربعة تخصصات،<br>ومعيار واحد من الدقة.",
+    services_p:"كل تكليف يبدأ بالحوكمة والضبط الداخلي — الأساس الذي تختبره الجهات التنظيمية والمدققون ومجالس الإدارة.",
+    s1_h3:"تصميم إطار الحوكمة", s1_p:"هياكل مجالس الإدارة واللجان، وتصميم السياسات، وأطر تفويض الصلاحيات المصممة لتصمد أمام المراجعة التنظيمية والتدقيق.", s1_for:"<b>لمن:</b> مجالس الإدارة الاستعداد للإدراج أو إعادة الهيكلة أو المراجعة التنظيمية",
+    s2_h3:"مراجعة الضبط الداخلي", s2_p:"تقييم فجوات الضبط وخطط المعالجة وفق أطر معتمدة، مع تحديد واضح للمسؤولية في كل خطوة.", s2_for:"<b>لمن:</b> فرق المالية والعمليات استعداداً لتدقيق قادم",
+    s3_h3:"استشارات المخاطر والامتثال", s3_p:"توافق تنظيمي ومطابقة امتثال مصممة وفق قطاع الجهة والجهة الرقابية المعنية.", s3_for:"<b>لمن:</b> الجهات التي تواجه متطلبات تنظيمية جديدة أو متغيرة",
+    s4_h3:"استشارات عمليات اللوجستيات", s4_p:"خبرة الحوكمة والضبط مطبّقة تحديداً على عمليات اللوجستيات وسلاسل الإمداد.", s4_for:"<b>لمن:</b> مشغلو اللوجستيات الباحثون عن انضباط تشغيلي إلى جانب الامتثال",
+    approach_eyebrow:"المنهجية", approach_h2:"تكليف منظم<br>من أربع خطوات.",
     approach_p:"عمل الحوكمة يفشل عندما يكون عشوائياً. كل تكليف يتبع نفس التسلسل المنضبط.",
     a1_h3:"التقييم", a1_p:"رسم بيئة الضبط الحالية وتحديد الفجوات مقابل المعايير التنظيمية والحوكمية.",
     a2_h3:"التصميم", a2_p:"بناء الإطار أو السياسة أو هيكل الضبط الملائم لحجم المنشأة وقطاعها.",
     a3_h3:"التنفيذ", a3_p:"العمل مع ملّاك الضوابط لترسيخ التغييرات في العمليات اليومية، لا في دليل السياسات فقط.",
     a4_h3:"المتابعة", a4_p:"إرساء اختبار وتقارير مستمرة لضمان بقاء الإطار فعّالاً بعد انتهاء التكليف.",
-    cred_eyebrow:"الخلفية", cred_h2:"خبرة في حوكمة الشركات المدرجة",
+    cred_eyebrow:"الخلفية",
+    quote_p:'"الحوكمة التي توجد على الورق فقط ليست حوكمة — إنها تعرّض للمخاطر. العمل الحقيقي هو جعل الإطار هو الطريقة التي تعمل بها المنشأة فعلياً."',
+    quote_attr:"— فلسفة العمل",
     c1_h4:"حوكمة الشركات المدرجة", c1_p:"إشراف على مستوى الرئيس التنفيذي والضبط الداخلي ضمن مجموعة لوجستية مدرجة علناً.",
     c2_h4:"إشراف متعدد الكيانات", c2_p:"مسؤولية حوكمة وضبط تمتد عبر عدة كيانات تشغيلية ضمن مجموعة واحدة.",
     c3_h4:"بيئة تشغيل ثنائية اللغة", c3_p:"تكليفات تُنفَّذ بطلاقة باللغتين العربية والإنجليزية، وفق لغة الحوكمة لدى العميل.",
-    quote_p:'"الحوكمة التي توجد على الورق فقط ليست حوكمة — إنها تعرّض للمخاطر. العمل الحقيقي هو جعل الإطار هو الطريقة التي تعمل بها المنشأة فعلياً."',
-    quote_attr:"— فلسفة العمل",
-    cases_eyebrow:"رؤى", cases_h2:"نماذج من التكليفات",
+    cases_eyebrow:"رؤى", cases_h2:"نماذج من التكليفات.",
     cases_p:"تم إخفاء الهوية لحماية سرية العملاء. التفاصيل متاحة عند الطلب بموجب اتفاقية عدم إفصاح.",
     case1_sector:"لوجستيات — مجموعة مدرجة", case2_sector:"منشأة عائلية", case3_sector:"جهة مرتبطة بالحكومة",
     k_challenge:"التحدي", k_approach:"المنهج", k_outcome:"النتيجة",
-    case1_challenge:"فجوات في فصل المهام تم رصدها قبل تدقيق خارجي.",
-    case1_approach:"تقييم فجوات الضبط، وخطة معالجة، وعملية اعتماد من ملّاك الضوابط.",
-    case1_outcome:"<b>صفر ملاحظات جوهرية</b> في دورة التدقيق التالية.",
-    case2_challenge:"غياب هيكل حوكمة رسمي قبل انتقال بين الأجيال.",
-    case2_approach:"تصميم ميثاق مجلس إدارة وإطار تفويض صلاحيات من الصفر.",
-    case2_outcome:"<b>مجلس إدارة رسمي</b> يعمل خلال ربع سنة واحد.",
-    case3_challenge:"متطلبات تنظيمية جديدة تفوق سرعة مطابقة الامتثال الحالية.",
-    case3_approach:"عملية مطابقة امتثال كاملة مقابل الإطار التنظيمي المحدَّث.",
-    case3_outcome:"<b>توافق كامل</b> تم تأكيده قبل الموعد النهائي للجهة التنظيمية.",
-    contact_h2:"ابدأ بمحادثة",
+    case1_challenge:"فجوات في فصل المهام تم رصدها قبل تدقيق خارجي.", case1_approach:"تقييم فجوات الضبط، وخطة معالجة، وعملية اعتماد من ملّاك الضوابط.", case1_outcome:"<b>صفر ملاحظات جوهرية</b> في دورة التدقيق التالية.",
+    case2_challenge:"غياب هيكل حوكمة رسمي قبل انتقال بين الأجيال.", case2_approach:"تصميم ميثاق مجلس إدارة وإطار تفويض صلاحيات من الصفر.", case2_outcome:"<b>مجلس إدارة رسمي</b> يعمل خلال ربع سنة واحد.",
+    case3_challenge:"متطلبات تنظيمية جديدة تفوق سرعة مطابقة الامتثال الحالية.", case3_approach:"عملية مطابقة امتثال كاملة مقابل الإطار التنظيمي المحدَّث.", case3_outcome:"<b>توافق كامل</b> تم تأكيده قبل الموعد النهائي للجهة التنظيمية.",
+    contact_h2:"ابدأ بمحادثة.",
     contact_p:"كل تكليف يبدأ بمكالمة قصيرة لفهم المنشأة والوضع الحالي للحوكمة فيها.",
     contact_email_k:"البريد الإلكتروني", contact_website_k:"الموقع الإلكتروني", contact_linkedin_k:"لينكدإن", contact_location_k:"مقر العمل", contact_location_v:"المملكة العربية السعودية",
-    f_name:"الاسم", f_email:"البريد الإلكتروني", f_org:"نوع الجهة",
-    f_org_1:"شركة مدرجة / كبرى", f_org_2:"منشأة صغيرة أو متوسطة / عائلية", f_org_3:"جهة حكومية / شبه حكومية", f_org_4:"أخرى",
-    f_interest:"مجال الاهتمام",
-    f_int_1:"تصميم إطار الحوكمة", f_int_2:"مراجعة الضبط الداخلي", f_int_3:"استشارات المخاطر والامتثال", f_int_4:"استشارات عمليات اللوجستيات",
+    f_name:"الاسم", f_email:"البريد الإلكتروني", f_org:"نوع الجهة", f_org_1:"شركة مدرجة / كبرى", f_org_2:"منشأة صغيرة أو متوسطة / عائلية", f_org_3:"جهة حكومية / شبه حكومية", f_org_4:"أخرى",
+    f_interest:"مجال الاهتمام", f_int_1:"تصميم إطار الحوكمة", f_int_2:"مراجعة الضبط الداخلي", f_int_3:"استشارات المخاطر والامتثال", f_int_4:"استشارات عمليات اللوجستيات",
     f_message:"الرسالة", f_submit:"اطلب استشارة",
     footer_left:"© 2026 أفنلور للاستشارات. جميع الحقوق محفوظة.",
-    footer_right:"استشارات مستقلة — الحوكمة والضبط الداخلي والامتثال."
+    footer_right:"استشارات مستقلة — الحوكمة والضبط الداخلي والامتثال.",
+    rotor:["أي تدقيق.","المدقق.","الجهة التنظيمية.","مجلس الإدارة."]
   }
 };
 
-function sendMail(e){
-  e.preventDefault();
-  const f = e.target;
-  const g = n => ((f.elements[n] && f.elements[n].value) || '').trim();
-  const lang = document.documentElement.lang === 'ar' ? 'ar' : 'en';
-  const t = i18n[lang];
-  const subject = 'Avenlor Consulting — Consultation request'
-    + (g('name') ? ' (' + g('name') + ')' : '');
-  const body = [
-    t.f_name + ': ' + g('name'),
-    t.f_email + ': ' + g('email'),
-    t.f_org + ': ' + g('org'),
-    t.f_interest + ': ' + g('interest'),
-    '',
-    t.f_message + ':',
-    g('message')
-  ].join('\n');
-  window.location.href = 'mailto:contact@avenlorconsulting.com'
-    + '?subject=' + encodeURIComponent(subject)
-    + '&body=' + encodeURIComponent(body);
-  return false;
+var REDUCE_MOTION = matchMedia('(prefers-reduced-motion: reduce)').matches;
+var curLang='en', rotorTimer=null, rotorIdx=0;
+
+function buildRotor(lang){
+  var track=document.getElementById('track');
+  var words=i18n[lang].rotor;
+  track.style.transition='none'; track.style.transform='translateY(0)'; rotorIdx=0;
+  track.innerHTML = words.concat(words[0]).map(function(w){return '<span>'+w+'</span>';}).join('');
+  if(rotorTimer) clearInterval(rotorTimer);
+  if(REDUCE_MOTION) return;
+  var total=words.length;
+  rotorTimer=setInterval(function(){
+    rotorIdx++;
+    track.style.transition='transform .6s cubic-bezier(.7,0,.2,1)';
+    track.style.transform='translateY(-'+rotorIdx+'em)';
+    if(rotorIdx===total){setTimeout(function(){track.style.transition='none';rotorIdx=0;track.style.transform='translateY(0)';},640);}
+  },2100);
+}
+
+function applyLang(lang){
+  curLang=lang;
+  document.documentElement.lang=lang;
+  document.documentElement.dir = lang==='ar'?'rtl':'ltr';
+  document.getElementById('btn-en').classList.toggle('active',lang==='en');
+  document.getElementById('btn-ar').classList.toggle('active',lang==='ar');
+  document.querySelectorAll('[data-i18n]').forEach(function(el){
+    var v=i18n[lang][el.getAttribute('data-i18n')];
+    if(v!==undefined) el.innerHTML=v;
+  });
+  buildRotor(lang);
+}
+function setLang(lang){
+  if(REDUCE_MOTION){applyLang(lang);return;}
+  var b=document.body; b.classList.add('fading');
+  setTimeout(function(){applyLang(lang);b.classList.remove('fading');},220);
 }
 
 function toggleNav(){
-  const links = document.getElementById('navlinks');
-  const btn = document.getElementById('navtoggle');
-  const open = links.classList.toggle('open');
-  btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  var links=document.getElementById('navlinks'), btn=document.getElementById('navtoggle');
+  var open=links.classList.toggle('open');
+  btn.setAttribute('aria-expanded',open?'true':'false');
 }
-document.getElementById('navlinks').addEventListener('click', function(e){
-  if(e.target.closest('a')){
-    this.classList.remove('open');
-    document.getElementById('navtoggle').setAttribute('aria-expanded','false');
-  }
+document.getElementById('navlinks').addEventListener('click',function(e){
+  if(e.target.closest('a')){this.classList.remove('open');document.getElementById('navtoggle').setAttribute('aria-expanded','false');}
 });
 
-const REDUCE_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-function applyLang(lang){
-  document.documentElement.lang = lang;
-  document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
-  document.getElementById('btn-en').classList.toggle('active', lang==='en');
-  document.getElementById('btn-ar').classList.toggle('active', lang==='ar');
-  document.querySelectorAll('[data-i18n]').forEach(el=>{
-    const key = el.getAttribute('data-i18n');
-    const val = i18n[lang][key];
-    if(val !== undefined) el.innerHTML = val;
-  });
+function sendMail(e){
+  e.preventDefault();
+  var f=e.target, g=function(n){return ((f.elements[n]&&f.elements[n].value)||'').trim();};
+  var t=i18n[curLang];
+  var subject='Avenlor Consulting — Consultation request'+(g('name')?' ('+g('name')+')':'');
+  var body=[t.f_name+': '+g('name'),t.f_email+': '+g('email'),t.f_org+': '+g('org'),t.f_interest+': '+g('interest'),'',t.f_message+':',g('message')].join('\n');
+  window.location.href='mailto:contact@avenlorconsulting.com?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
+  return false;
 }
 
-function setLang(lang){
-  if(REDUCE_MOTION){ applyLang(lang); return; }
-  const body = document.body;
-  body.classList.add('fading');
-  setTimeout(()=>{
-    applyLang(lang);
-    body.classList.remove('fading');
-  }, 220);
-}
-
-/* ================= MOTION ENGINE ================= */
+/* ===== motion engine ===== */
 (function(){
-  if(REDUCE_MOTION) return;
-  const root = document.documentElement;
-  root.classList.add('anim');
+  var root=document.documentElement;
+  if(!REDUCE_MOTION) root.classList.add('anim');
 
-  // --- Scroll reveal with per-group stagger ---
-  const groups = [
-    '.section-head', '.service-card', '.approach-step',
-    '.cred-item', '.cred-quote', '.case-card', '.contact-info', 'form'
-  ];
-  let revealEls = [];
-  groups.forEach(sel=>{
-    const nodes = document.querySelectorAll(sel);
-    nodes.forEach((el, i)=>{
-      el.setAttribute('data-reveal','');
-      el.style.setProperty('--d', Math.min(i, 6) * 0.09 + 's');
-      revealEls.push(el);
-    });
-  });
-  // Reveal sweep — jump-proof (anchor jumps can't skip elements the way
-  // IntersectionObserver sampling can). Reveals anything past ~90% of the fold.
-  function revealSweep(){
-    const trigger = window.innerHeight * 0.9;
-    revealEls = revealEls.filter(el=>{
-      if(el.getBoundingClientRect().top < trigger){ el.classList.add('in'); return false; }
+  // reveal + step lines (jump-proof sweep)
+  var revealEls=Array.prototype.slice.call(document.querySelectorAll('.reveal,.step'));
+  function sweep(){
+    var trig=innerHeight*0.9;
+    revealEls=revealEls.filter(function(el){
+      if(el.getBoundingClientRect().top<trig){el.classList.add('in');return false;}
       return true;
     });
   }
+  // counters
+  function count(el){var t=+el.getAttribute('data-count'),sfx=el.getAttribute('data-suffix')||'',s=performance.now(),d=1400;function f(n){var p=Math.min((n-s)/d,1),e=1-Math.pow(1-p,3);el.textContent=Math.round(e*t)+sfx;if(p<1)requestAnimationFrame(f);}requestAnimationFrame(f);}
+  var cs=document.querySelectorAll('[data-count]');
+  if(REDUCE_MOTION){cs.forEach(function(el){el.textContent=el.getAttribute('data-count')+(el.getAttribute('data-suffix')||'');});}
+  else{setTimeout(function(){cs.forEach(count);},1000);}
 
-  // --- Animated stat counters ---
-  document.querySelectorAll('.stat-num').forEach(el=>{
-    const raw = el.textContent.trim();
-    const m = raw.match(/^(\d+)(.*)$/);
-    if(!m) return;                       // e.g. "AR/EN" — leave as-is
-    const target = parseInt(m[1], 10);
-    const suffix = m[2] || '';
-    let started = false;
-    const run = ()=>{
-      if(started) return; started = true;
-      const dur = 1300, t0 = performance.now();
-      const tick = (now)=>{
-        const p = Math.min((now - t0) / dur, 1);
-        const eased = 1 - Math.pow(1 - p, 3);
-        el.textContent = Math.round(eased * target) + suffix;
-        if(p < 1) requestAnimationFrame(tick);
-      };
-      requestAnimationFrame(tick);
-    };
-    setTimeout(run, 700);                 // fire after hero rises in
-  });
-
-  // --- Scroll-driven: progress bar, nav condense, scrollspy ---
-  const bar = document.getElementById('scrollProgress');
-  const header = document.querySelector('header');
-  const spy = Array.from(document.querySelectorAll('.navlinks a'))
-    .map(a=>{
-      const id = (a.getAttribute('href')||'').replace('#','');
-      const sec = document.getElementById(id);
-      return sec ? { a, sec } : null;
-    }).filter(Boolean);
-
-  let ticking = false;
-  function onScroll(){
-    const st = window.scrollY || document.documentElement.scrollTop;
-    const h = document.documentElement.scrollHeight - window.innerHeight;
-    bar.style.width = (h > 0 ? (st / h) * 100 : 0) + '%';
-    header.classList.toggle('scrolled', st > 20);
-
-    let current = null;
-    for(const item of spy){
-      if(item.sec.getBoundingClientRect().top <= 140) current = item;
-    }
-    spy.forEach(item=>item.a.classList.toggle('active', item === current));
-    revealSweep();
-    ticking = false;
-  }
-  window.addEventListener('scroll', ()=>{
-    if(!ticking){ requestAnimationFrame(onScroll); ticking = true; }
-  }, { passive: true });
+  var hdr=document.getElementById('hdr');
+  var ticking=false;
+  function onScroll(){hdr.classList.toggle('scrolled',scrollY>24);sweep();ticking=false;}
+  addEventListener('scroll',function(){if(!ticking){requestAnimationFrame(onScroll);ticking=true;}},{passive:true});
   onScroll();
+
+  if(!REDUCE_MOTION&&matchMedia('(pointer:fine)').matches){
+    document.querySelectorAll('.mag').forEach(function(b){
+      b.addEventListener('pointermove',function(e){var r=b.getBoundingClientRect();b.style.transform='translate('+(e.clientX-r.left-r.width/2)*.2+'px,'+(e.clientY-r.top-r.height/2)*.3+'px)';});
+      b.addEventListener('pointerleave',function(){b.style.transform='';});
+    });
+  }
+
+  // starfield
+  var cv=document.getElementById('net'),ctx=cv.getContext('2d'),W,H,DPR,pts=[];
+  function resize(){DPR=Math.min(devicePixelRatio||1,2);W=cv.clientWidth;H=cv.clientHeight;cv.width=W*DPR;cv.height=H*DPR;ctx.setTransform(DPR,0,0,DPR,0,0);
+    var n=Math.min(Math.round(W*H/15000),90);pts=[];for(var i=0;i<n;i++){pts.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*0.28,vy:(Math.random()-.5)*0.28});}}
+  resize();addEventListener('resize',resize);
+  var mx=-999,my=-999;
+  addEventListener('pointermove',function(e){mx=e.clientX;my=e.clientY;},{passive:true});
+  addEventListener('pointerleave',function(){mx=-999;my=-999;});
+  var DIST=120;
+  function net(){
+    ctx.clearRect(0,0,W,H);
+    for(var i=0;i<pts.length;i++){var p=pts[i];p.x+=p.vx;p.y+=p.vy;
+      if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;
+      var dxm=mx-p.x,dym=my-p.y,dm=Math.hypot(dxm,dym);if(dm<160){p.x+=dxm/dm*0.45;p.y+=dym/dm*0.45;}}
+    for(var a=0;a<pts.length;a++){for(var b=a+1;b<pts.length;b++){
+      var dx=pts[a].x-pts[b].x,dy=pts[a].y-pts[b].y,d=Math.hypot(dx,dy);
+      if(d<DIST){var near=Math.min(Math.hypot(mx-pts[a].x,my-pts[a].y),Math.hypot(mx-pts[b].x,my-pts[b].y));var gold=near<150;
+        ctx.strokeStyle=(gold?'rgba(233,180,76,':'rgba(244,241,233,')+(0.4*(1-d/DIST))+')';ctx.lineWidth=gold?1.1:0.55;
+        ctx.beginPath();ctx.moveTo(pts[a].x,pts[a].y);ctx.lineTo(pts[b].x,pts[b].y);ctx.stroke();}}}
+    for(var i=0;i<pts.length;i++){var p=pts[i];var near=Math.hypot(mx-p.x,my-p.y)<150;
+      ctx.beginPath();ctx.arc(p.x,p.y,near?2.2:1.4,0,7);ctx.fillStyle=near?'rgba(233,180,76,0.95)':'rgba(244,241,233,0.45)';ctx.fill();}
+    if(!REDUCE_MOTION)raf=requestAnimationFrame(net);
+  }
+  var raf; net();
+  document.addEventListener('visibilitychange',function(){if(document.hidden){cancelAnimationFrame(raf);}else if(!REDUCE_MOTION){cancelAnimationFrame(raf);raf=requestAnimationFrame(net);}});
+
+  buildRotor('en');
 })();
 </script>
-
 </body>
 </html>
