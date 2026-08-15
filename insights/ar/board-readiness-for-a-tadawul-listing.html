@@ -9,6 +9,8 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
+  gtag('consent','default',{'ad_storage':'denied','analytics_storage':'denied','wait_for_update':500});
+  try{if(localStorage.getItem('avn_consent')==='granted'){gtag('consent','update',{'ad_storage':'granted','analytics_storage':'granted'});}}catch(e){}
   gtag('config', 'G-HL1YBSWBTE');
 </script>
 
@@ -119,8 +121,9 @@
 
 <footer><div class="wrap foot-in">
   <span>© 2026 أفنلور للاستشارات</span>
-  <span><a href="/insights/ar/">رؤى</a> · <a href="/#contact">احجز مكالمة</a></span>
+  <span><a href="/insights/ar/">رؤى</a> · <a href="/#contact">احجز مكالمة</a> · <a href="/privacy.html#ar">الخصوصية</a></span>
 </div></footer>
 <script>var p=document.getElementById('progress');addEventListener('scroll',function(){var h=document.documentElement.scrollHeight-innerHeight;p.style.width=(h>0?scrollY/h*100:0)+'%';},{passive:true});</script>
+<script src="/consent.js" defer></script>
 </body>
 </html>

@@ -9,6 +9,8 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
+  gtag('consent','default',{'ad_storage':'denied','analytics_storage':'denied','wait_for_update':500});
+  try{if(localStorage.getItem('avn_consent')==='granted'){gtag('consent','update',{'ad_storage':'granted','analytics_storage':'granted'});}}catch(e){}
   gtag('config', 'G-HL1YBSWBTE');
 </script>
 
@@ -433,7 +435,7 @@
 <footer>
   <div class="wrap footer-inner">
     <span data-i18n="footer_left">© 2026 Avenlor Consulting. All rights reserved.</span>
-    <span><a href="/insights/" data-i18n="footer_insights">Insights</a> · <a href="#contact" data-i18n="nav_cta">Book a call</a></span>
+    <span><a href="/insights/" data-i18n="footer_insights">Insights</a> · <a href="#contact" data-i18n="nav_cta">Book a call</a> · <a href="/privacy.html" data-i18n="footer_privacy">Privacy</a></span>
     <span data-i18n="footer_right">Independent advisory — governance, internal controls &amp; compliance.</span>
   </div>
 </footer>
@@ -467,7 +469,7 @@ const i18n = {
     c3_h4:"Bilingual Operating Environment", c3_p:"Engagements delivered fluently in both Arabic and English, matched to the client's governance language.",
     cases_eyebrow:"Insights", cases_h2:"Representative engagements.",
     cases_p:"Anonymized to protect client confidentiality. Details available on request under NDA.",
-    insights_link:"Read our insights →", footer_insights:"Insights",
+    insights_link:"Read our insights →", footer_insights:"Insights", footer_privacy:"Privacy",
     case1_sector:"Logistics — Listed Group", case2_sector:"Family Business", case3_sector:"Government-Linked Entity",
     k_challenge:"Challenge", k_approach:"Approach", k_outcome:"Outcome",
     case1_challenge:"Segregation-of-duties gaps flagged ahead of an external audit.", case1_approach:"Control-gap assessment, remediation plan, and control-owner sign-off process.", case1_outcome:"<b>Zero material findings</b> at the following audit cycle.",
@@ -510,7 +512,7 @@ const i18n = {
     c3_h4:"بيئة تشغيل ثنائية اللغة", c3_p:"تكليفات تُنفَّذ بطلاقة باللغتين العربية والإنجليزية، وفق لغة الحوكمة لدى العميل.",
     cases_eyebrow:"رؤى", cases_h2:"نماذج من التكليفات.",
     cases_p:"تم إخفاء الهوية لحماية سرية العملاء. التفاصيل متاحة عند الطلب بموجب اتفاقية عدم إفصاح.",
-    insights_link:"اقرأ رؤانا ←", footer_insights:"رؤى",
+    insights_link:"اقرأ رؤانا ←", footer_insights:"رؤى", footer_privacy:"الخصوصية",
     case1_sector:"لوجستيات — مجموعة مدرجة", case2_sector:"منشأة عائلية", case3_sector:"جهة مرتبطة بالحكومة",
     k_challenge:"التحدي", k_approach:"المنهج", k_outcome:"النتيجة",
     case1_challenge:"فجوات في فصل المهام تم رصدها قبل تدقيق خارجي.", case1_approach:"تقييم فجوات الضبط، وخطة معالجة، وعملية اعتماد من ملّاك الضوابط.", case1_outcome:"<b>صفر ملاحظات جوهرية</b> في دورة التدقيق التالية.",
@@ -646,5 +648,6 @@ function sendMail(e){
   buildRotor('en');
 })();
 </script>
+<script src="/consent.js" defer></script>
 </body>
 </html>
