@@ -77,3 +77,16 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--gold);outline-offse
 footer{border-top:1px solid var(--line);padding:34px 0;margin-top:40px;}
 .foot-in{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);}
 .foot-in a:hover{color:var(--gold);}
+
+/* ============ RTL / ARABIC ============ */
+:root{--ar:"Tahoma","Segoe UI",Arial,sans-serif;}
+html[dir="rtl"] body{font-family:var(--ar);}
+html[dir="rtl"] .body{font-family:var(--ar);line-height:1.95;font-size:18px;}
+html[dir="rtl"] .brand,html[dir="rtl"] .doc h1,html[dir="rtl"] .hub-head h1,html[dir="rtl"] .art-card h2,html[dir="rtl"] .body h2,html[dir="rtl"] .body h3,html[dir="rtl"] .cta h3,html[dir="rtl"] .callout,html[dir="rtl"] .contact-info h2{font-family:var(--ar);letter-spacing:normal;text-transform:none;line-height:1.35;}
+html[dir="rtl"] .eyebrow,html[dir="rtl"] .topic-tag,html[dir="rtl"] .byline,html[dir="rtl"] .crumb,html[dir="rtl"] .art-card .topic,html[dir="rtl"] .art-card .rt,html[dir="rtl"] .callout h4,html[dir="rtl"] .btn,html[dir="rtl"] .foot-in,html[dir="rtl"] .bar a.back,html[dir="rtl"] .more h4,html[dir="rtl"] .disclaimer,html[dir="rtl"] .langsw{font-family:var(--ar);letter-spacing:normal;}
+html[dir="rtl"] .body ul,html[dir="rtl"] .body ol{margin:0 22px 22px 0;}
+html[dir="rtl"] .dek{font-size:19px;}
+/* language switch */
+.bar-right{display:flex;align-items:center;gap:18px;}
+.langsw{font-family:var(--mono);font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--gold);border:1px solid var(--line);padding:5px 11px;border-radius:999px;transition:.2s;}
+.langsw:hover{background:var(--gold);color:var(--bg);border-color:var(--gold);}
