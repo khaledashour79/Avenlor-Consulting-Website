@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com; connect-src 'self' https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://analytics.google.com https://region1.google-analytics.com; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' mailto:; frame-src 'none'">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HL1YBSWBTE"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('consent','default',{'ad_storage':'denied','analytics_storage':'denied','wait_for_update':500});
+  try{if(localStorage.getItem('avn_consent')==='granted'){gtag('consent','update',{'ad_storage':'granted','analytics_storage':'granted'});}}catch(e){}
+  gtag('config', 'G-HL1YBSWBTE');
+</script>
+
+<title>Segregation of Duties When the Team Is Small | Avenlor</title>
+<meta name="description" content="Segregation of duties is the control auditors test first — and the hardest for small finance teams. How to separate the four incompatible functions, and the compensating controls that work when you can't.">
+<link rel="canonical" href="https://avenlorconsulting.com/insights/segregation-of-duties-small-finance-teams.html">
+<link rel="alternate" hreflang="en" href="https://avenlorconsulting.com/insights/segregation-of-duties-small-finance-teams.html">
+<link rel="alternate" hreflang="ar" href="https://avenlorconsulting.com/insights/ar/segregation-of-duties-small-finance-teams.html">
+<link rel="alternate" hreflang="x-default" href="https://avenlorconsulting.com/insights/segregation-of-duties-small-finance-teams.html">
+<meta name="theme-color" content="#0C0C0D">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Avenlor Consulting">
+<meta property="og:title" content="Segregation of Duties When the Team Is Small">
+<meta property="og:description" content="The control auditors test first is the hardest for small finance teams. How to separate the four incompatible functions, and the compensating controls that work when you can't.">
+<meta property="og:url" content="https://avenlorconsulting.com/insights/segregation-of-duties-small-finance-teams.html">
+<meta property="og:image" content="https://avenlorconsulting.com/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://avenlorconsulting.com/og-image.png">
+<link rel="stylesheet" href="/insights.css">
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org","@type":"Article",
+  "headline":"Segregation of Duties When the Team Is Small",
+  "description":"The control auditors test first is the hardest for small finance teams. How to separate the four incompatible functions, and the compensating controls that work when you can't.",
+  "author":{"@type":"Organization","name":"Avenlor Consulting"},
+  "publisher":{"@type":"Organization","name":"Avenlor Consulting","logo":{"@type":"ImageObject","url":"https://avenlorconsulting.com/og-image.png"}},
+  "image":"https://avenlorconsulting.com/og-image.png",
+  "mainEntityOfPage":"https://avenlorconsulting.com/insights/segregation-of-duties-small-finance-teams.html",
+  "inLanguage":"en","about":["Segregation of duties","Internal controls","Compensating controls","Small business finance","Fraud prevention"]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org","@type":"BreadcrumbList",
+  "itemListElement":[
+    {"@type":"ListItem","position":1,"name":"Home","item":"https://avenlorconsulting.com/"},
+    {"@type":"ListItem","position":2,"name":"Insights","item":"https://avenlorconsulting.com/insights/"},
+    {"@type":"ListItem","position":3,"name":"Segregation of Duties When the Team Is Small","item":"https://avenlorconsulting.com/insights/segregation-of-duties-small-finance-teams.html"}
+  ]
+}
+</script>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<div class="bar"><div class="wrap bar-in">
+  <a class="brand" href="/"><span class="mk"></span>Avenlor</a>
+  <div class="bar-right">
+    <a class="back" href="/insights/">← All insights</a>
+    <a class="langsw" href="/insights/ar/segregation-of-duties-small-finance-teams.html">العربية</a>
+  </div>
+</div></div>
+
+<article class="doc">
+  <div class="crumb"><a href="/">Home</a> / <a href="/insights/">Insights</a> / Internal controls</div>
+  <div class="topic-tag">Internal Controls</div>
+  <h1>Segregation of Duties When the Team Is Small</h1>
+  <p class="dek">It is the control an auditor tests first, and the one a small company finds hardest — because there simply are not enough people. The good news: you rarely need more headcount. You need the right duties kept apart, and deliberate compensating controls where they cannot be.</p>
+  <div class="byline"><span>Avenlor Consulting</span><span>Governance &amp; Internal Controls</span><span>7 min read</span></div>
+
+  <div class="body">
+    <p>In most growing companies, the finance function started with one trusted person who did everything — raised the payment, approved it, entered it in the ledger, and reconciled the bank at month-end. It worked because the person was capable and trusted. But "capable and trusted" is not a control, and it is precisely the arrangement that makes both honest error and quiet fraud possible. When an auditor arrives, or a bank, or an investor, this is the first place they look.</p>
+    <p>Segregation of duties (SoD) is the principle that no single person should control a transaction from beginning to end. It is simple to state and genuinely hard to apply in a team of two or three. This is how to do it without hiring an army.</p>
+
+    <h2>The four functions that must not sit together</h2>
+    <p>SoD is easier to reason about when you stop thinking "who does the finance" and start thinking about four distinct <em>functions</em> in every transaction. The risk lives in one person holding more than one of them:</p>
+    <ul>
+      <li><strong>Authorization</strong> — approving that a transaction should happen (a purchase, a payment, a credit note).</li>
+      <li><strong>Custody</strong> — access to the asset itself: the bank login, the cash, the cheque book, the payment run.</li>
+      <li><strong>Recording</strong> — entering the transaction in the accounting system.</li>
+      <li><strong>Reconciliation</strong> — independently checking that what was recorded matches what actually happened.</li>
+    </ul>
+    <p>The single most dangerous combination is <strong>custody plus recording</strong>: the person who can move money can also adjust the books to hide it. If you separate nothing else, separate those two.</p>
+
+    <h2>Why small teams are the most exposed</h2>
+    <p>In a large company, these four functions naturally fall to different people. In a company of thirty, they collapse into one or two — not through negligence, but through headcount. That concentration is exactly the condition every fraud case study describes after the fact, and auditors know it. A control weakness here does not just risk a finding; it lowers how much the auditor can rely on your numbers at all, which makes the whole audit longer and more expensive.</p>
+    <blockquote>Trust is not a control. The point of segregation is to protect the honest majority from suspicion, and the business from the rare exception.</blockquote>
+
+    <h2>What a two- or three-person split can look like</h2>
+    <p>You can achieve meaningful separation with very few people if you use the owner or a manager as one of the pairs of hands. A workable pattern for a small team:</p>
+    <ul>
+      <li>The <strong>finance officer</strong> prepares payments and records transactions, but <strong>cannot release money alone</strong>.</li>
+      <li>The <strong>owner or general manager</strong> authorizes payments — a second click in the bank, or a physical second signature — and never touches the ledger.</li>
+      <li>Someone <strong>outside the payment process</strong> — a part-time accountant, an external bookkeeper, or the owner — reviews the bank reconciliation each month against source documents.</li>
+    </ul>
+    <p>No one there does more than they should, and the owner's involvement is a control rather than a bottleneck, because it is limited to authorization and independent review.</p>
+
+    <h2>When you genuinely cannot separate: compensating controls</h2>
+    <p>Sometimes the numbers just are not there, and one person really must both record and pay. That is acceptable <em>if</em> you put deliberate compensating controls around it — documented, not assumed:</p>
+    <ul>
+      <li><strong>Independent review after the fact.</strong> Someone senior reviews the full bank statement and the list of payments every month, line by line, and initials it. This is the highest-value compensating control, and the cheapest.</li>
+      <li><strong>Dual authorization above a threshold.</strong> Small routine payments flow; anything above a set limit needs a second, independent approval.</li>
+      <li><strong>Bank-level controls.</strong> Two signatories for payments, view-only access for the owner, and automatic alerts on every transaction to someone outside the finance role.</li>
+      <li><strong>Mandatory leave and rotation.</strong> Requiring the finance person to take continuous leave, during which someone else covers the role, surfaces anything that depends on one person always being in the seat.</li>
+    </ul>
+
+    <h2>Let the system and the bank do the work</h2>
+    <p>Modern accounting systems and business banking give small teams separation that used to require extra staff. Use role-based access so people can only do their function; turn on approval workflows so a payment cannot be released without a second person; give the owner a view-only login to the books and the bank. These cost nothing but the discipline to configure them — and an auditor can see they are switched on.</p>
+
+    <h2>If it is not evidenced, it did not happen</h2>
+    <p>Every control above is worth far more when it leaves a trace. "The owner reviews the bank statement" is a claim; a bank statement with the owner's initials and the date, kept on file, is a control an auditor can test. As you design the split, ask of each control: <strong>could I prove, six months from now, that this operated?</strong> If not, add the signature, the timestamp, or the system log that makes it provable.</p>
+
+    <div class="callout">
+      <h4>A minimum SoD split for a small finance team</h4>
+      <ul>
+        <li>The person who records transactions cannot release payments alone</li>
+        <li>Payments need a second, independent authorizer (bank or signature)</li>
+        <li>The owner or a manager holds view-only access to the books and the bank</li>
+        <li>Bank reconciliations are reviewed by someone outside the payment process</li>
+        <li>Payments above a threshold require dual approval</li>
+        <li>System roles restrict each person to their own function</li>
+        <li>Every review is dated and initialled, and the evidence is retained</li>
+      </ul>
+    </div>
+
+    <p>Segregation of duties is not a luxury that arrives once you are big enough. It is a small number of deliberate choices about who can do what — choices that protect your people, your money, and the credibility of your numbers long before an auditor ever asks.</p>
+  </div>
+
+  <div class="cta">
+    <h3>Not enough people to separate duties?</h3>
+    <p>We design segregation-of-duties and compensating-control frameworks sized to your actual team — practical, evidenced, and ready for audit.</p>
+    <a class="btn" href="/#contact">Discuss your mandate →</a>
+  </div>
+
+  <div class="more">
+    <h4>Read next</h4>
+    <a href="/insights/internal-controls-before-an-external-audit.html">Internal Controls Before an External Audit →</a>
+    <a href="/insights/building-an-internal-control-framework-coso.html">Building an Internal Control Framework with COSO →</a>
+  </div>
+
+  <p class="disclaimer">This article is general guidance on internal-controls practice and does not constitute legal, audit, or regulatory advice. Obtain professional advice for your specific circumstances.</p>
+</article>
+
+<footer><div class="wrap foot-in">
+  <span>© 2026 Avenlor Consulting</span>
+  <span><a href="/insights/">Insights</a> · <a href="/#contact">Book a call</a> · <a href="/privacy.html">Privacy</a></span>
+</div></footer>
+<script>var p=document.getElementById('progress');addEventListener('scroll',function(){var h=document.documentElement.scrollHeight-innerHeight;p.style.width=(h>0?scrollY/h*100:0)+'%';},{passive:true});</script>
+<script src="/consent.js" defer></script>
+</body>
+</html>
