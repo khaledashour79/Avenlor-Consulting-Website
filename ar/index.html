@@ -263,6 +263,17 @@
   .submit-btn{background:var(--gold);color:var(--bg);padding:16px 26px;font-family:var(--mono);font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.05em;border-radius:2px;margin-top:6px;transition:background .2s;}
   .submit-btn:hover{background:#f3c463;}
 
+  /* VENTURE BAND */
+  .venture{position:relative;z-index:2;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--bg-2);}
+  .venture-in{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;padding-top:42px;padding-bottom:42px;}
+  .v-eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
+  .v-title{font-weight:800;text-transform:uppercase;letter-spacing:-.02em;font-size:clamp(22px,3.6vw,34px);max-width:22ch;}
+  .v-sub{color:var(--muted-2);font-size:15px;margin-top:8px;max-width:46ch;}
+  .v-cta{flex-shrink:0;display:inline-flex;align-items:center;gap:10px;padding:16px 28px;border:1px solid var(--gold);color:var(--gold);font-family:var(--mono);font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.05em;border-radius:999px;transition:background .25s,color .25s,box-shadow .25s;white-space:nowrap;}
+  .v-cta:hover{background:var(--gold);color:var(--bg);box-shadow:0 0 24px rgba(233,180,76,.3);}
+  html[dir="rtl"] .v-title{letter-spacing:normal;text-transform:none;line-height:1.3;}
+  html[dir="rtl"] .v-eyebrow,html[dir="rtl"] .v-cta{letter-spacing:normal;}
+
   /* FOOTER */
   footer{position:relative;z-index:2;padding:40px 0;border-top:1px solid var(--line);}
   .footer-inner{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;font-family:var(--mono);font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);}
@@ -407,6 +418,15 @@
     </div>
   </div>
 </section>
+
+<section class="venture"><div class="wrap venture-in">
+  <div>
+    <div class="v-eyebrow" data-i18n="venture_eyebrow">أيضاً من فريقنا</div>
+    <div class="v-title" data-i18n="venture_title">نبني البرمجيات كذلك.</div>
+    <div class="v-sub" data-i18n="venture_sub">FulcrumGrid هو مقرّ التطبيقات والأدوات التي نطوّرها.</div>
+  </div>
+  <a class="v-cta" href="https://fulcrumgrid.com" target="_blank" rel="noopener" data-i18n="venture_cta">زيارة FulcrumGrid ↗</a>
+</div></section>
 
 <section class="block" id="contact">
   <div class="wrap contact-grid">
