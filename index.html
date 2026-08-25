@@ -442,25 +442,25 @@
       </ul>
     </div>
     <form id="contactForm" onsubmit="return sendMail(event)">
-      <div class="field"><label data-i18n="f_name">Name</label><input type="text" name="name" required></div>
-      <div class="field"><label data-i18n="f_email">Email</label><input type="email" name="email" dir="ltr" required></div>
-      <div class="field"><label data-i18n="f_org">Organization type</label>
-        <select name="org">
+      <div class="field"><label for="c-name" data-i18n="f_name">Name</label><input id="c-name" type="text" name="name" required></div>
+      <div class="field"><label for="c-email" data-i18n="f_email">Email</label><input id="c-email" type="email" name="email" dir="ltr" required></div>
+      <div class="field"><label for="c-org" data-i18n="f_org">Organization type</label>
+        <select id="c-org" name="org">
           <option data-i18n="f_org_1">Listed / large corporate</option>
           <option data-i18n="f_org_2">SME / family business</option>
           <option data-i18n="f_org_3">Government / semi-government</option>
           <option data-i18n="f_org_4">Other</option>
         </select>
       </div>
-      <div class="field"><label data-i18n="f_interest">Area of interest</label>
-        <select name="interest">
+      <div class="field"><label for="c-interest" data-i18n="f_interest">Area of interest</label>
+        <select id="c-interest" name="interest">
           <option data-i18n="f_int_1">Governance framework design</option>
           <option data-i18n="f_int_2">Internal controls review</option>
           <option data-i18n="f_int_3">Risk &amp; compliance advisory</option>
           <option data-i18n="f_int_4">Logistics operations advisory</option>
         </select>
       </div>
-      <div class="field"><label data-i18n="f_message">Message</label><textarea name="message"></textarea></div>
+      <div class="field"><label for="c-message" data-i18n="f_message">Message</label><textarea id="c-message" name="message"></textarea></div>
       <button class="submit-btn" type="submit" data-i18n="f_submit">Request a consultation</button>
     </form>
   </div>

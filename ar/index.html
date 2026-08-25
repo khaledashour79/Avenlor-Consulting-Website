@@ -441,25 +441,25 @@
       </ul>
     </div>
     <form id="contactForm" onsubmit="return sendMail(event)">
-      <div class="field"><label data-i18n="f_name">الاسم</label><input type="text" name="name" required=""></div>
-      <div class="field"><label data-i18n="f_email">البريد الإلكتروني</label><input type="email" name="email" dir="ltr" required=""></div>
-      <div class="field"><label data-i18n="f_org">نوع الجهة</label>
-        <select name="org">
+      <div class="field"><label for="c-name" data-i18n="f_name">الاسم</label><input id="c-name" type="text" name="name" required=""></div>
+      <div class="field"><label for="c-email" data-i18n="f_email">البريد الإلكتروني</label><input id="c-email" type="email" name="email" dir="ltr" required=""></div>
+      <div class="field"><label for="c-org" data-i18n="f_org">نوع الجهة</label>
+        <select id="c-org" name="org">
           <option data-i18n="f_org_1">شركة مدرجة / كبرى</option>
           <option data-i18n="f_org_2">منشأة صغيرة أو متوسطة / عائلية</option>
           <option data-i18n="f_org_3">جهة حكومية / شبه حكومية</option>
           <option data-i18n="f_org_4">أخرى</option>
         </select>
       </div>
-      <div class="field"><label data-i18n="f_interest">مجال الاهتمام</label>
-        <select name="interest">
+      <div class="field"><label for="c-interest" data-i18n="f_interest">مجال الاهتمام</label>
+        <select id="c-interest" name="interest">
           <option data-i18n="f_int_1">تصميم إطار الحوكمة</option>
           <option data-i18n="f_int_2">مراجعة الضبط الداخلي</option>
           <option data-i18n="f_int_3">استشارات المخاطر والامتثال</option>
           <option data-i18n="f_int_4">استشارات عمليات اللوجستيات</option>
         </select>
       </div>
-      <div class="field"><label data-i18n="f_message">الرسالة</label><textarea name="message"></textarea></div>
+      <div class="field"><label for="c-message" data-i18n="f_message">الرسالة</label><textarea id="c-message" name="message"></textarea></div>
       <button class="submit-btn" type="submit" data-i18n="f_submit">اطلب استشارة</button>
     </form>
   </div>
