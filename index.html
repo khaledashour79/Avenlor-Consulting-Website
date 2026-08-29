@@ -82,6 +82,20 @@
   "publisher": { "@id": "https://avenlorconsulting.com/#organization" }
 }
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "How does an engagement start?", "acceptedAnswer": {"@type": "Answer", "text": "Every engagement begins with a short call to understand where governance currently stands. From there we scope the assessment, timeline, and fee before any work begins — no engagement starts without a clear, agreed scope."}},
+    {"@type": "Question", "name": "Who do you typically work with?", "acceptedAnswer": {"@type": "Answer", "text": "Listed companies preparing for or already subject to CMA oversight, family businesses managing a generational transition, and government or semi-government entities navigating new regulatory requirements."}},
+    {"@type": "Question", "name": "How long does a typical engagement take?", "acceptedAnswer": {"@type": "Answer", "text": "It depends on scope — a focused internal-controls review can run four to eight weeks, while a full governance-framework build for a board preparing to list typically spans a full quarter. Timelines are agreed upfront, not open-ended."}},
+    {"@type": "Question", "name": "We don't have a formal board yet — can you still help?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Many engagements start exactly there — building the first board charter, delegation-of-authority framework, or committee structure from scratch for a founder-led or family business."}},
+    {"@type": "Question", "name": "Is our information kept confidential?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Engagements are covered by a mutual NDA before any documents or data are shared, and all case references are anonymized unless a client explicitly agrees otherwise."}},
+    {"@type": "Question", "name": "Do you work in Arabic, English, or both?", "acceptedAnswer": {"@type": "Answer", "text": "Both, fluently. Engagements are delivered in whichever language matches the client's governance documentation and boardroom — often a mix of the two."}}
+  ]
+}
+</script>
 <style>
   :root{
     --bg:#0C0C0D;--bg-2:#111113;--ink:#F4F1E9;--muted:#8A867C;--muted-2:#B4AFA2;
@@ -275,6 +289,15 @@
   html[dir="rtl"] .v-title{letter-spacing:normal;text-transform:none;line-height:1.3;}
   html[dir="rtl"] .v-eyebrow,html[dir="rtl"] .v-cta{letter-spacing:normal;}
 
+  /* FAQ */
+  .faq-list{border-top:1px solid var(--line);max-width:760px;}
+  .faq-item{border-bottom:1px solid var(--line);}
+  .faq-item summary{list-style:none;cursor:pointer;padding:26px 4px;display:flex;align-items:center;justify-content:space-between;gap:20px;font-weight:700;font-size:17px;color:var(--ink);}
+  .faq-item summary::-webkit-details-marker{display:none;}
+  .faq-item summary::after{content:'+';font-family:var(--mono);font-size:20px;line-height:1;color:var(--gold);flex-shrink:0;transition:transform .3s;}
+  .faq-item[open] summary::after{transform:rotate(45deg);}
+  .faq-item p{color:var(--muted-2);font-size:15px;max-width:640px;padding:0 4px 26px;margin:0;}
+
   /* FOOTER */
   footer{position:relative;z-index:2;padding:40px 0;border-top:1px solid var(--line);}
   .footer-inner{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;font-family:var(--mono);font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);}
@@ -420,6 +443,21 @@
   </div>
 </section>
 
+<section class="block" id="faq">
+  <div class="wrap">
+    <div class="sec-tag reveal" data-i18n="faq_eyebrow">FAQ</div>
+    <h2 class="sec-h reveal" data-i18n="faq_h2">Questions we hear often.</h2>
+    <div class="faq-list">
+      <details class="faq-item reveal" style="--d:.04s"><summary><span data-i18n="faq1_q">How does an engagement start?</span></summary><p data-i18n="faq1_a">Every engagement begins with a short call to understand where governance currently stands. From there we scope the assessment, timeline, and fee before any work begins — no engagement starts without a clear, agreed scope.</p></details>
+      <details class="faq-item reveal" style="--d:.08s"><summary><span data-i18n="faq2_q">Who do you typically work with?</span></summary><p data-i18n="faq2_a">Listed companies preparing for or already subject to CMA oversight, family businesses managing a generational transition, and government or semi-government entities navigating new regulatory requirements.</p></details>
+      <details class="faq-item reveal" style="--d:.12s"><summary><span data-i18n="faq3_q">How long does a typical engagement take?</span></summary><p data-i18n="faq3_a">It depends on scope — a focused internal-controls review can run four to eight weeks, while a full governance-framework build for a board preparing to list typically spans a full quarter. Timelines are agreed upfront, not open-ended.</p></details>
+      <details class="faq-item reveal" style="--d:.16s"><summary><span data-i18n="faq4_q">We don't have a formal board yet — can you still help?</span></summary><p data-i18n="faq4_a">Yes. Many engagements start exactly there — building the first board charter, delegation-of-authority framework, or committee structure from scratch for a founder-led or family business.</p></details>
+      <details class="faq-item reveal" style="--d:.2s"><summary><span data-i18n="faq5_q">Is our information kept confidential?</span></summary><p data-i18n="faq5_a">Yes. Engagements are covered by a mutual NDA before any documents or data are shared, and all case references are anonymized unless a client explicitly agrees otherwise.</p></details>
+      <details class="faq-item reveal" style="--d:.24s"><summary><span data-i18n="faq6_q">Do you work in Arabic, English, or both?</span></summary><p data-i18n="faq6_a">Both, fluently. Engagements are delivered in whichever language matches the client's governance documentation and boardroom — often a mix of the two.</p></details>
+    </div>
+  </div>
+</section>
+
 <section class="venture"><div class="wrap venture-in">
   <div>
     <div class="v-eyebrow" data-i18n="venture_eyebrow">Also from us</div>
@@ -504,6 +542,13 @@ const i18n = {
     cases_eyebrow:"Insights", cases_h2:"Representative engagements.",
     cases_p:"Anonymized to protect client confidentiality. Details available on request under NDA.",
     insights_link:"Read our insights →", footer_insights:"Insights", footer_privacy:"Privacy", footer_apps:"FulcrumGrid ↗",
+    faq_eyebrow:"FAQ", faq_h2:"Questions we hear often.",
+    faq1_q:"How does an engagement start?", faq1_a:"Every engagement begins with a short call to understand where governance currently stands. From there we scope the assessment, timeline, and fee before any work begins — no engagement starts without a clear, agreed scope.",
+    faq2_q:"Who do you typically work with?", faq2_a:"Listed companies preparing for or already subject to CMA oversight, family businesses managing a generational transition, and government or semi-government entities navigating new regulatory requirements.",
+    faq3_q:"How long does a typical engagement take?", faq3_a:"It depends on scope — a focused internal-controls review can run four to eight weeks, while a full governance-framework build for a board preparing to list typically spans a full quarter. Timelines are agreed upfront, not open-ended.",
+    faq4_q:"We don't have a formal board yet — can you still help?", faq4_a:"Yes. Many engagements start exactly there — building the first board charter, delegation-of-authority framework, or committee structure from scratch for a founder-led or family business.",
+    faq5_q:"Is our information kept confidential?", faq5_a:"Yes. Engagements are covered by a mutual NDA before any documents or data are shared, and all case references are anonymized unless a client explicitly agrees otherwise.",
+    faq6_q:"Do you work in Arabic, English, or both?", faq6_a:"Both, fluently. Engagements are delivered in whichever language matches the client's governance documentation and boardroom — often a mix of the two.",
     venture_eyebrow:"Also from us", venture_title:"We build software, too.", venture_sub:"FulcrumGrid is our home for the apps and tools we develop.", venture_cta:"Visit FulcrumGrid ↗",
     case1_sector:"Logistics — Listed Group", case2_sector:"Family Business", case3_sector:"Government-Linked Entity",
     k_challenge:"Challenge", k_approach:"Approach", k_outcome:"Outcome",
@@ -548,6 +593,13 @@ const i18n = {
     cases_eyebrow:"رؤى", cases_h2:"نماذج من التكليفات.",
     cases_p:"تم إخفاء الهوية لحماية سرية العملاء. التفاصيل متاحة عند الطلب بموجب اتفاقية عدم إفصاح.",
     insights_link:"اقرأ رؤانا ←", footer_insights:"رؤى", footer_privacy:"الخصوصية", footer_apps:"FulcrumGrid ↗",
+    faq_eyebrow:"الأسئلة الشائعة", faq_h2:"أسئلة نسمعها كثيراً.",
+    faq1_q:"كيف يبدأ التكليف؟", faq1_a:"يبدأ كل تكليف بمكالمة قصيرة لفهم الوضع الحالي للحوكمة. بعدها نحدد نطاق التقييم والجدول الزمني والأتعاب قبل بدء أي عمل — لا يبدأ أي تكليف دون نطاق واضح ومتفق عليه.",
+    faq2_q:"مع من تعملون عادة؟", faq2_a:"شركات مدرجة تستعد لإشراف هيئة السوق المالية أو خاضعة له فعلاً، ومنشآت عائلية تدير انتقالاً بين الأجيال، وجهات حكومية أو شبه حكومية تواجه متطلبات تنظيمية جديدة.",
+    faq3_q:"كم تستغرق مدة التكليف عادة؟", faq3_a:"يعتمد ذلك على النطاق — مراجعة مركزة للضبط الداخلي قد تستغرق من أربعة إلى ثمانية أسابيع، بينما بناء إطار حوكمة كامل لمجلس يستعد للإدراج يمتد عادة لربع سنة كامل. تُتفق الجداول الزمنية مسبقاً، وليست مفتوحة.",
+    faq4_q:"ليس لدينا مجلس إدارة رسمي بعد — هل يمكنكم المساعدة؟", faq4_a:"نعم. كثير من التكليفات تبدأ من هذه النقطة تحديداً — بناء أول ميثاق مجلس إدارة، أو إطار تفويض صلاحيات، أو هيكل لجان من الصفر لمنشأة يقودها المؤسس أو عائلية.",
+    faq5_q:"هل تُحفظ معلوماتنا بسرية؟", faq5_a:"نعم. تُغطّى التكليفات باتفاقية عدم إفصاح متبادلة قبل مشاركة أي مستندات أو بيانات، وتُخفى هوية جميع الحالات المرجعية ما لم يوافق العميل صراحة على خلاف ذلك.",
+    faq6_q:"هل تعملون بالعربية أم الإنجليزية أم كلتيهما؟", faq6_a:"كلتاهما بطلاقة. تُقدَّم التكليفات باللغة التي تطابق مستندات الحوكمة لدى العميل وقاعة مجلس الإدارة — وغالباً مزيج من اللغتين.",
     venture_eyebrow:"أيضاً من فريقنا", venture_title:"نبني البرمجيات كذلك.", venture_sub:"FulcrumGrid هو مقرّ التطبيقات والأدوات التي نطوّرها.", venture_cta:"زيارة FulcrumGrid ↗",
     case1_sector:"لوجستيات — مجموعة مدرجة", case2_sector:"منشأة عائلية", case3_sector:"جهة مرتبطة بالحكومة",
     k_challenge:"التحدي", k_approach:"المنهج", k_outcome:"النتيجة",

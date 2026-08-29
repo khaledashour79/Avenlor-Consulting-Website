@@ -81,6 +81,20 @@
   "publisher": { "@id": "https://avenlorconsulting.com/#organization" }
 }
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "كيف يبدأ التكليف؟", "acceptedAnswer": {"@type": "Answer", "text": "يبدأ كل تكليف بمكالمة قصيرة لفهم الوضع الحالي للحوكمة. بعدها نحدد نطاق التقييم والجدول الزمني والأتعاب قبل بدء أي عمل — لا يبدأ أي تكليف دون نطاق واضح ومتفق عليه."}},
+    {"@type": "Question", "name": "مع من تعملون عادة؟", "acceptedAnswer": {"@type": "Answer", "text": "شركات مدرجة تستعد لإشراف هيئة السوق المالية أو خاضعة له فعلاً، ومنشآت عائلية تدير انتقالاً بين الأجيال، وجهات حكومية أو شبه حكومية تواجه متطلبات تنظيمية جديدة."}},
+    {"@type": "Question", "name": "كم تستغرق مدة التكليف عادة؟", "acceptedAnswer": {"@type": "Answer", "text": "يعتمد ذلك على النطاق — مراجعة مركزة للضبط الداخلي قد تستغرق من أربعة إلى ثمانية أسابيع، بينما بناء إطار حوكمة كامل لمجلس يستعد للإدراج يمتد عادة لربع سنة كامل. تُتفق الجداول الزمنية مسبقاً، وليست مفتوحة."}},
+    {"@type": "Question", "name": "ليس لدينا مجلس إدارة رسمي بعد — هل يمكنكم المساعدة؟", "acceptedAnswer": {"@type": "Answer", "text": "نعم. كثير من التكليفات تبدأ من هذه النقطة تحديداً — بناء أول ميثاق مجلس إدارة، أو إطار تفويض صلاحيات، أو هيكل لجان من الصفر لمنشأة يقودها المؤسس أو عائلية."}},
+    {"@type": "Question", "name": "هل تُحفظ معلوماتنا بسرية؟", "acceptedAnswer": {"@type": "Answer", "text": "نعم. تُغطّى التكليفات باتفاقية عدم إفصاح متبادلة قبل مشاركة أي مستندات أو بيانات، وتُخفى هوية جميع الحالات المرجعية ما لم يوافق العميل صراحة على خلاف ذلك."}},
+    {"@type": "Question", "name": "هل تعملون بالعربية أم الإنجليزية أم كلتيهما؟", "acceptedAnswer": {"@type": "Answer", "text": "كلتاهما بطلاقة. تُقدَّم التكليفات باللغة التي تطابق مستندات الحوكمة لدى العميل وقاعة مجلس الإدارة — وغالباً مزيج من اللغتين."}}
+  ]
+}
+</script>
 <style>
   :root{
     --bg:#0C0C0D;--bg-2:#111113;--ink:#F4F1E9;--muted:#8A867C;--muted-2:#B4AFA2;
@@ -274,6 +288,15 @@
   html[dir="rtl"] .v-title{letter-spacing:normal;text-transform:none;line-height:1.3;}
   html[dir="rtl"] .v-eyebrow,html[dir="rtl"] .v-cta{letter-spacing:normal;}
 
+  /* FAQ */
+  .faq-list{border-top:1px solid var(--line);max-width:760px;}
+  .faq-item{border-bottom:1px solid var(--line);}
+  .faq-item summary{list-style:none;cursor:pointer;padding:26px 4px;display:flex;align-items:center;justify-content:space-between;gap:20px;font-weight:700;font-size:17px;color:var(--ink);}
+  .faq-item summary::-webkit-details-marker{display:none;}
+  .faq-item summary::after{content:'+';font-family:var(--mono);font-size:20px;line-height:1;color:var(--gold);flex-shrink:0;transition:transform .3s;}
+  .faq-item[open] summary::after{transform:rotate(45deg);}
+  .faq-item p{color:var(--muted-2);font-size:15px;max-width:640px;padding:0 4px 26px;margin:0;}
+
   /* FOOTER */
   footer{position:relative;z-index:2;padding:40px 0;border-top:1px solid var(--line);}
   .footer-inner{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;font-family:var(--mono);font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);}
@@ -415,6 +438,21 @@
     </div>
     <div class="reveal" style="margin-top:44px;">
       <a class="btn btn-ghost mag" href="/insights/ar/" data-i18n="insights_link">اقرأ رؤانا ←</a>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="faq">
+  <div class="wrap">
+    <div class="sec-tag reveal">الأسئلة الشائعة</div>
+    <h2 class="sec-h reveal">أسئلة نسمعها كثيراً.</h2>
+    <div class="faq-list">
+      <details class="faq-item reveal" style="--d:.04s"><summary>كيف يبدأ التكليف؟</summary><p>يبدأ كل تكليف بمكالمة قصيرة لفهم الوضع الحالي للحوكمة. بعدها نحدد نطاق التقييم والجدول الزمني والأتعاب قبل بدء أي عمل — لا يبدأ أي تكليف دون نطاق واضح ومتفق عليه.</p></details>
+      <details class="faq-item reveal" style="--d:.08s"><summary>مع من تعملون عادة؟</summary><p>شركات مدرجة تستعد لإشراف هيئة السوق المالية أو خاضعة له فعلاً، ومنشآت عائلية تدير انتقالاً بين الأجيال، وجهات حكومية أو شبه حكومية تواجه متطلبات تنظيمية جديدة.</p></details>
+      <details class="faq-item reveal" style="--d:.12s"><summary>كم تستغرق مدة التكليف عادة؟</summary><p>يعتمد ذلك على النطاق — مراجعة مركزة للضبط الداخلي قد تستغرق من أربعة إلى ثمانية أسابيع، بينما بناء إطار حوكمة كامل لمجلس يستعد للإدراج يمتد عادة لربع سنة كامل. تُتفق الجداول الزمنية مسبقاً، وليست مفتوحة.</p></details>
+      <details class="faq-item reveal" style="--d:.16s"><summary>ليس لدينا مجلس إدارة رسمي بعد — هل يمكنكم المساعدة؟</summary><p>نعم. كثير من التكليفات تبدأ من هذه النقطة تحديداً — بناء أول ميثاق مجلس إدارة، أو إطار تفويض صلاحيات، أو هيكل لجان من الصفر لمنشأة يقودها المؤسس أو عائلية.</p></details>
+      <details class="faq-item reveal" style="--d:.2s"><summary>هل تُحفظ معلوماتنا بسرية؟</summary><p>نعم. تُغطّى التكليفات باتفاقية عدم إفصاح متبادلة قبل مشاركة أي مستندات أو بيانات، وتُخفى هوية جميع الحالات المرجعية ما لم يوافق العميل صراحة على خلاف ذلك.</p></details>
+      <details class="faq-item reveal" style="--d:.24s"><summary>هل تعملون بالعربية أم الإنجليزية أم كلتيهما؟</summary><p>كلتاهما بطلاقة. تُقدَّم التكليفات باللغة التي تطابق مستندات الحوكمة لدى العميل وقاعة مجلس الإدارة — وغالباً مزيج من اللغتين.</p></details>
     </div>
   </div>
 </section>
