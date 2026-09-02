@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl" class=""><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com; connect-src 'self' https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://formsubmit.co; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' mailto:; frame-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com; connect-src 'self' https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://api.web3forms.com; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' mailto:; frame-src 'none'">
 <!-- Google tag (gtag.js) -->
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-HL1YBSWBTE"></script>
 <script>
@@ -502,10 +502,9 @@
         </select>
       </div>
       <div class="field"><label for="c-message" data-i18n="f_message">الرسالة</label><textarea id="c-message" name="message"></textarea></div>
-      <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
-      <input type="hidden" name="_subject" value="Avenlor Consulting — Consultation request">
-      <input type="hidden" name="_template" value="table">
-      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="access_key" value="51242534-fc79-4ef7-a99b-f767f1765d90">
+      <input type="hidden" name="subject" value="Avenlor Consulting — Consultation request">
+      <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
       <button class="submit-btn" type="submit" data-i18n="f_submit">اطلب استشارة</button>
       <p class="form-note" id="form-note" role="status" aria-live="polite"></p>
     </form>
@@ -662,16 +661,17 @@ function sendMail(e){
   e.preventDefault();
   var f=e.target, t=i18n[curLang];
   var btn=f.querySelector('.submit-btn'), note=document.getElementById('form-note');
-  if(f.elements['_honey'] && f.elements['_honey'].value){return false;}
+  if(f.elements['botcheck'] && f.elements['botcheck'].checked){return false;}
   btn.disabled=true;
   note.className='form-note';
   note.textContent=t.f_sending;
-  fetch('https://formsubmit.co/ajax/contact@avenlorconsulting.com',{
+  var data=Object.fromEntries(new FormData(f));
+  fetch('https://api.web3forms.com/submit',{
     method:'POST',
-    headers:{'Accept':'application/json'},
-    body:new FormData(f)
-  }).then(function(r){return r.json();}).then(function(data){
-    if(!data || (data.success!==true && data.success!=='true')) throw new Error((data&&data.message)||'submit failed');
+    headers:{'Content-Type':'application/json','Accept':'application/json'},
+    body:JSON.stringify(data)
+  }).then(function(r){return r.json();}).then(function(json){
+    if(!json || json.success!==true) throw new Error((json&&json.message)||'submit failed');
     note.className='form-note ok';
     note.textContent=t.f_success;
     f.reset();
