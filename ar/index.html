@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl" class=""><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com; connect-src 'self' https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://analytics.google.com https://region1.google-analytics.com; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' mailto:; frame-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com; connect-src 'self' https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://formsubmit.co; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' mailto:; frame-src 'none'">
 <!-- Google tag (gtag.js) -->
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-HL1YBSWBTE"></script>
 <script>
@@ -276,6 +276,10 @@
   .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--gold);}
   .submit-btn{background:var(--gold);color:var(--bg);padding:16px 26px;font-family:var(--mono);font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.05em;border-radius:2px;margin-top:6px;transition:background .2s;}
   .submit-btn:hover{background:#f3c463;}
+  .submit-btn:disabled{opacity:.6;cursor:default;}
+  .form-note{font-size:13px;margin-top:12px;color:var(--muted-2);}
+  .form-note.ok{color:var(--gold);}
+  .form-note.err{color:#e06a5b;}
 
   /* VENTURE BAND */
   .venture{position:relative;z-index:2;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--bg-2);}
@@ -498,7 +502,12 @@
         </select>
       </div>
       <div class="field"><label for="c-message" data-i18n="f_message">الرسالة</label><textarea id="c-message" name="message"></textarea></div>
+      <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+      <input type="hidden" name="_subject" value="Avenlor Consulting — Consultation request">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_captcha" value="false">
       <button class="submit-btn" type="submit" data-i18n="f_submit">اطلب استشارة</button>
+      <p class="form-note" id="form-note" role="status" aria-live="polite"></p>
     </form>
   </div>
 </section>
@@ -552,6 +561,7 @@ const i18n = {
     f_name:"Name", f_email:"Email", f_org:"Organization type", f_org_1:"Listed / large corporate", f_org_2:"SME / family business", f_org_3:"Government / semi-government", f_org_4:"Other",
     f_interest:"Area of interest", f_int_1:"Governance framework design", f_int_2:"Internal controls review", f_int_3:"Risk & compliance advisory", f_int_4:"Logistics operations advisory",
     f_message:"Message", f_submit:"Request a consultation",
+    f_sending:"Sending…", f_success:"Thanks — your message has been sent. We'll be in touch shortly.", f_error:"Something went wrong. Please email us directly at contact@avenlorconsulting.com.",
     footer_left:"© 2026 Avenlor Consulting. All rights reserved.",
     footer_right:"Independent advisory — governance, internal controls & compliance.",
     rotor:["scrutiny.","the audit.","the regulator.","the boardroom."]
@@ -595,6 +605,7 @@ const i18n = {
     f_name:"الاسم", f_email:"البريد الإلكتروني", f_org:"نوع الجهة", f_org_1:"شركة مدرجة / كبرى", f_org_2:"منشأة صغيرة أو متوسطة / عائلية", f_org_3:"جهة حكومية / شبه حكومية", f_org_4:"أخرى",
     f_interest:"مجال الاهتمام", f_int_1:"تصميم إطار الحوكمة", f_int_2:"مراجعة الضبط الداخلي", f_int_3:"استشارات المخاطر والامتثال", f_int_4:"استشارات عمليات اللوجستيات",
     f_message:"الرسالة", f_submit:"اطلب استشارة",
+    f_sending:"جارٍ الإرسال…", f_success:"شكراً — تم إرسال رسالتك. سنتواصل معك قريباً.", f_error:"حدث خطأ ما. يرجى مراسلتنا مباشرة على contact@avenlorconsulting.com.",
     footer_left:"© 2026 أفنلور للاستشارات. جميع الحقوق محفوظة.",
     footer_right:"استشارات مستقلة — الحوكمة والضبط الداخلي والامتثال.",
     rotor:["أي تدقيق.","المدقق.","الجهة التنظيمية.","مجلس الإدارة."]
@@ -649,11 +660,27 @@ document.getElementById('navlinks').addEventListener('click',function(e){
 
 function sendMail(e){
   e.preventDefault();
-  var f=e.target, g=function(n){return ((f.elements[n]&&f.elements[n].value)||'').trim();};
-  var t=i18n[curLang];
-  var subject='Avenlor Consulting — Consultation request'+(g('name')?' ('+g('name')+')':'');
-  var body=[t.f_name+': '+g('name'),t.f_email+': '+g('email'),t.f_org+': '+g('org'),t.f_interest+': '+g('interest'),'',t.f_message+':',g('message')].join('\n');
-  window.location.href='mailto:contact@avenlorconsulting.com?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
+  var f=e.target, t=i18n[curLang];
+  var btn=f.querySelector('.submit-btn'), note=document.getElementById('form-note');
+  if(f.elements['_honey'] && f.elements['_honey'].value){return false;}
+  btn.disabled=true;
+  note.className='form-note';
+  note.textContent=t.f_sending;
+  fetch('https://formsubmit.co/ajax/contact@avenlorconsulting.com',{
+    method:'POST',
+    headers:{'Accept':'application/json'},
+    body:new FormData(f)
+  }).then(function(r){return r.json();}).then(function(data){
+    if(!data || (data.success!==true && data.success!=='true')) throw new Error((data&&data.message)||'submit failed');
+    note.className='form-note ok';
+    note.textContent=t.f_success;
+    f.reset();
+  }).catch(function(){
+    note.className='form-note err';
+    note.textContent=t.f_error;
+  }).finally(function(){
+    btn.disabled=false;
+  });
   return false;
 }
 
