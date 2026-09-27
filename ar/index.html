@@ -116,7 +116,7 @@
   header.scrolled{background:rgba(12,12,13,0.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);}
   .nav{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:20px 0;}
   .brand{font-weight:800;letter-spacing:.16em;font-size:15px;text-transform:uppercase;display:flex;align-items:center;gap:11px;white-space:nowrap;}
-  .brand .mk{width:15px;height:15px;flex-shrink:0;display:block;}
+  .brand .mk-full{height:28px;width:auto;flex-shrink:0;display:block;}
   .navlinks{display:flex;gap:30px;list-style:none;}
   .navlinks a{font-family:var(--mono);font-size:12.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);position:relative;}
   .navlinks a::after{content:"";position:absolute;inset-inline:0;bottom:-5px;height:2px;background:var(--gold);transform:scaleX(0);transform-origin:inline-start;transition:transform .3s;}
@@ -235,7 +235,7 @@
 
 <header id="hdr">
   <div class="wrap nav">
-    <div class="brand"><img class="mk" src="/logo-mark.png" alt=""><span data-i18n="logo">أفنلور</span></div>
+    <div class="brand"><img class="mk-full" src="/logo-full.png" alt="Avenlor Consulting"></div>
     <ul class="navlinks" id="navlinks">
       <li><a href="/ar/services/" data-i18n="nav_services">الخدمات</a></li>
       <li><a href="/ar/approach/" data-i18n="nav_approach">المنهجية</a></li>
@@ -350,7 +350,7 @@
 <footer>
   <div class="wrap">
     <div class="foot-top">
-      <div class="brand"><img class="mk" src="/logo-mark.png" alt=""><span data-i18n="logo">أفنلور</span></div>
+      <div class="brand"><img class="mk-full" src="/logo-full.png" alt="Avenlor Consulting"></div>
       <nav class="foot-nav">
         <a href="/ar/" data-i18n="nav_home">الرئيسية</a>
         <a href="/ar/services/" data-i18n="nav_services">الخدمات</a>

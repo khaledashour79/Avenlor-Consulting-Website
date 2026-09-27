@@ -22,7 +22,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--gold);outline-offse
 .bar{position:sticky;top:0;z-index:60;background:rgba(12,12,13,0.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);}
 .bar-in{display:flex;align-items:center;justify-content:space-between;padding:16px 0;}
 .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.15em;font-size:14px;text-transform:uppercase;}
-.brand .mk{width:14px;height:14px;flex-shrink:0;display:block;}
+.brand .mk-full{height:26px;width:auto;flex-shrink:0;display:block;}
 .bar a.back{font-family:var(--mono);font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);transition:color .2s;}
 .bar a.back:hover{color:var(--gold);}
 
