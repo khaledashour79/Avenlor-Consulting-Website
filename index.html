@@ -117,7 +117,7 @@
   header.scrolled{background:rgba(12,12,13,0.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);}
   .nav{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:20px 0;}
   .brand{font-weight:800;letter-spacing:.16em;font-size:15px;text-transform:uppercase;display:flex;align-items:center;gap:11px;white-space:nowrap;}
-  .brand .mk{width:13px;height:13px;transform:rotate(45deg);background:linear-gradient(135deg,var(--gold),var(--gold-2));flex-shrink:0;}
+  .brand .mk{width:15px;height:15px;flex-shrink:0;display:block;}
   .navlinks{display:flex;gap:30px;list-style:none;}
   .navlinks a{font-family:var(--mono);font-size:12.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);position:relative;}
   .navlinks a::after{content:"";position:absolute;inset-inline:0;bottom:-5px;height:2px;background:var(--gold);transform:scaleX(0);transform-origin:inline-start;transition:transform .3s;}
@@ -236,7 +236,7 @@
 
 <header id="hdr">
   <div class="wrap nav">
-    <div class="brand"><span class="mk"></span><span data-i18n="logo">Avenlor</span></div>
+    <div class="brand"><img class="mk" src="/logo-mark.svg" alt=""><span data-i18n="logo">Avenlor</span></div>
     <ul class="navlinks" id="navlinks">
       <li><a href="/services/" data-i18n="nav_services">Services</a></li>
       <li><a href="/approach/" data-i18n="nav_approach">Approach</a></li>
@@ -351,7 +351,7 @@
 <footer>
   <div class="wrap">
     <div class="foot-top">
-      <div class="brand"><span class="mk"></span><span data-i18n="logo">Avenlor</span></div>
+      <div class="brand"><img class="mk" src="/logo-mark.svg" alt=""><span data-i18n="logo">Avenlor</span></div>
       <nav class="foot-nav">
         <a href="/" data-i18n="nav_home">Home</a>
         <a href="/services/" data-i18n="nav_services">Services</a>
